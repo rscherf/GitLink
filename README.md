@@ -21,6 +21,11 @@ Right click anywhere within the file you are currently editing. Your cursor posi
 
 Use your default web browser (Chrome) to skip a step and open any of the links automatically in a new tab.
 
+# Installation
+* Install Package Control 2 <https://sublime.wbond.net/installation>
+* Restart Sublime Text
+* Sublime Text > Preferences > Package Control
+* Install Gitlink
 
 # Contribute
 Github and Sublime Text are powerful; I know all of you can make this way better than me.
