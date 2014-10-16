@@ -1,5 +1,4 @@
 # Gitlink
-------------
 Sublime Text 2 plugin to derive <http://github.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
 
 Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
@@ -24,7 +23,6 @@ Use your default web browser (Chrome) to skip a step and open any of the links a
 
 
 # Contribute
-------------
 Github and Sublime Text are powerful; I know all of you can make this way better than me.
 
 1. Fork/clone the repository
@@ -34,7 +32,6 @@ Github and Sublime Text are powerful; I know all of you can make this way better
 
 
 # Copyright
-------------
 1. Star the Github repository
 2. Follow http://twitter.com/ryanscherf on Twitter and tell me how much you love this plugin
 3. Use it however you'd like
