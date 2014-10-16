@@ -1,0 +1,30 @@
+[
+  {
+    "caption" : "-", 
+    "id"      : "gitlink-start-separator"
+  },
+  {
+    "caption"  : "Gitlink", 
+    "id"       : "gitlink-options",
+    "children" :
+    [
+      {
+        "caption" : "Copy URL to Github file",
+        "id"      : "gitlink-link-file",
+        "command" : "gitlink",
+        "args"    : {
+          "line" : false
+        } 
+      },
+      { 
+        "caption" : "Open URL to Github file", 
+        "id"      : "gitlink-link-file",    
+        "command" : "gitlink",
+        "args"    : {
+          "line"  : false,
+          "web"   : true
+        } 
+      }
+    ]
+  }
+]
