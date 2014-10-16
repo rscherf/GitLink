@@ -4,8 +4,8 @@ Sublime Text 2 plugin to derive <http://github.com> URLs to files in your projec
 
 ## How it works
 
-![Right click in side menu](http://i.ryan.sc/Y4dO)
-![Right click in a file](http://i.ryan.sc/Y4lJ)
+![Right click in side menu](http://f.cl.ly/items/2q1j3W2y311Y2c1R2G2d/sidebar.png)
+![Right click in a file](http://f.cl.ly/items/220X3q2j1m3z370P2S1A/file.png)
 
 #### Copy URLs to files
 
