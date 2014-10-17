@@ -1,4 +1,4 @@
-import os, commands, difflib, re, webbrowser, sublime, sublime_plugin
+import os, commands, re, webbrowser, sublime, sublime_plugin
 
 class GitlinkCommand(sublime_plugin.TextCommand):
   def run(self, edit, **args):
@@ -18,6 +18,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
     # Find top level repo in current dir structure
     basename = commands.getoutput("basename `git rev-parse --show-toplevel`")
+
     remote_path = path.split(basename)[1]
 
     # Find the current branch
