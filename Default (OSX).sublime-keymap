@@ -1,0 +1,18 @@
+[
+  { 
+    "keys": ["super+shift+o"],
+    "command": "gitlink" ,
+    "args" : {
+      "line" : false,
+      "web"  : true
+    } 
+  },
+  { 
+    "keys": ["super+shift+c"],
+    "command": "gitlink",
+    "args" : {
+      "line" : false,
+      "web"  : false
+    } 
+  }
+]
