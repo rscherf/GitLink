@@ -2,15 +2,9 @@ import sys, os, re, webbrowser, sublime, sublime_plugin
 
 # Backwards compatibility
 try:
-  import commands
+  import commands as cmd
 except:
-  import subprocess
-
-def run_cmd(cmd):
-  if sys.version_info < (2,7):
-    return commands.getoutput(cmd)
-  else:
-    return subprocess.getoutput(cmd)
+  import subprocess as cmd
 
 class GitlinkCommand(sublime_plugin.TextCommand):
   def run(self, edit, **args):
@@ -21,7 +15,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
     os.chdir(path + "/")
 
     # Find the repo
-    git_config_path = run_cmd("git remote show origin")
+    git_config_path = cmd.getoutput("git remote show origin")
 
     p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
     git_config = p.findall(git_config_path)[0][2]
@@ -30,11 +24,11 @@ class GitlinkCommand(sublime_plugin.TextCommand):
     user, repo = git_config.replace(".git", "").split("/")
 
     # Find top level repo in current dir structure
-    basename = run_cmd("basename `git rev-parse --show-toplevel`")
+    basename = cmd.getoutput("basename `git rev-parse --show-toplevel`")
     remote_path = path.split(basename)[1]
 
     # Find the current branch
-    branch = run_cmd("git rev-parse --abbrev-ref HEAD")
+    branch = cmd.getoutput("git rev-parse --abbrev-ref HEAD")
 
     # Build the URL
     url = "https://github.com/{0}/{1}/blob/{2}{3}/{4}".format(user, repo, branch, remote_path, filename)
