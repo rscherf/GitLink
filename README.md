@@ -1,4 +1,4 @@
-# GithubLinker
+# GithubLink
 Sublime Text 2 plugin to derive <http://github.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
 
 Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
@@ -11,7 +11,7 @@ Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 
 #### Copy URLs to files
 
-`command + shift + c` Right click any file in the sidebar (that is part of a Github.com repository) and go to the `GithubLinker` menu item to see options. 
+`command + shift + c` Right click any file in the sidebar (that is part of a Github.com repository) and go to the `GithubLink` menu item to see options. 
 
 #### Copy URLs to files with a deeplink the line number
 
@@ -26,7 +26,7 @@ Right click anywhere within the file you are currently editing. Your cursor posi
 * Install Package Control 2 <https://sublime.wbond.net/installation>
 * Restart Sublime Text
 * Sublime Text > Preferences > Package Control
-* Install GithubLinker
+* Install GithubLink
 
 #### Manually
 * Clone repository into ~/Library/Application Support/Sublime Text 2/Packages

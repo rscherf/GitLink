@@ -1,7 +1,7 @@
 [
   { 
     "keys": ["super+shift+o"],
-    "command": "githublinker",
+    "command": "githublink",
     "args" : {
       "line" : false,
       "web"  : true
@@ -9,7 +9,7 @@
   },
   { 
     "keys": ["super+shift+c"],
-    "command": "githublinker",
+    "command": "githublink",
     "args" : {
       "line" : false,
       "web"  : false
