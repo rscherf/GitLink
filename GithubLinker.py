@@ -6,7 +6,7 @@ try:
 except:
   import subprocess as cmd
 
-class GitlinkCommand(sublime_plugin.TextCommand):
+class GithubLinkerCommand(sublime_plugin.TextCommand):
   def run(self, edit, **args):
     # Current file path & filename
     path, filename = os.path.split(self.view.file_name())

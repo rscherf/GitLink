@@ -1,37 +1,37 @@
 [
   {
     "caption" : "-", 
-    "id"      : "gitlink-start-separator"
+    "id"      : "githublinker-start-separator"
   },
   {
-    "caption"  : "Gitlink", 
-    "id"       : "gitlink-options",
+    "caption"  : "GithubLinker", 
+    "id"       : "githublinker-options",
     "children" :
     [
       { 
         "caption" : "Copy URL to Github file", 
-        "id"      : "gitlink-link-file",    
-        "command" : "gitlink",
+        "id"      : "githublinker-link-file",    
+        "command" : "githublinker",
         "args"    : {
           "line" : false
         } 
       },
       {
         "caption" : "Copy URL to Github line", 
-        "id"      : "gitlink-link-line",
-        "command" : "gitlink",
+        "id"      : "githublinker-link-line",
+        "command" : "githublinker",
         "args"    : {
           "line" : true
         }
       },
       {
         "caption" : "-",
-        "id"      : "gitlink-web-separator"
+        "id"      : "githublinker-web-separator"
       },
       { 
         "caption" : "Open URL to Github file", 
-        "id"      : "gitlink-link-file",    
-        "command" : "gitlink",
+        "id"      : "githublinker-link-file",    
+        "command" : "githublinker",
         "args"    : {
           "line"  : false,
           "web"   : true
@@ -39,8 +39,8 @@
       },
       {
         "caption" : "Open URL to Github line", 
-        "id"      : "gitlink-link-line",
-        "command" : "gitlink",
+        "id"      : "githublinker-link-line",
+        "command" : "githublinker",
         "args"    : {
           "line"  : true,
           "web"   : true
