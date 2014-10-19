@@ -39,9 +39,7 @@ class GithublinkCommand(sublime_plugin.TextCommand):
 
     if(args['web']):
       webbrowser.open_new_tab(url)
-      print "Opened '" + url + "' in a new tab."
     else:
-      print "Copied '" + url + "' to clipboard."
       os.system("echo '%s' | pbcopy" % url)
 
 
