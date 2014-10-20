@@ -6,8 +6,8 @@ Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 
 ## How it works
 
-![Right click in side menu](http://f.cl.ly/items/2q1j3W2y311Y2c1R2G2d/sidebar.png)
-![Right click in a file](http://f.cl.ly/items/220X3q2j1m3z370P2S1A/file.png)
+![Right click in side menu](http://f.cl.ly/items/1O100K122E0a1x0y3V1k/Screen%20Shot%202014-10-20%20at%209.46.38%20AM.png)
+![Right click in a file](http://f.cl.ly/items/3f1r0h0q1t2J003M2W0A/Screen%20Shot%202014-10-20%20at%209.46.24%20AM.png)
 
 #### Copy URLs to files
 
