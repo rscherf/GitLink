@@ -1,5 +1,5 @@
 # GithubLink
-Sublime Text 2 plugin to derive <http://github.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
+Sublime Text plugin to derive <http://github.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
 
 Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 
