@@ -21,15 +21,9 @@ Right click anywhere within the file you are currently editing. Your cursor posi
 
 `command + shift + o` Use your default web browser (Chrome) to skip a step and open any of the links automatically in a new tab.
 
-# Installation
-#### Package Control
-* Install Package Control 2 <https://sublime.wbond.net/installation>
-* Restart Sublime Text
-* Sublime Text > Preferences > Package Control
-* Install GithubLink
-
-#### Manually
-* Clone repository into ~/Library/Application Support/Sublime Text 2/Packages
+# Installation (this is not merged into Package Control yet)
+* `cd ~/Library/Application Support/Sublime Text 2/Packages/`
+* `git clone git@github.com:rscherf/GithubLink.git`
 * Restart Sublime Text
 
 # Contribute
