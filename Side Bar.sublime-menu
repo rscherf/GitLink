@@ -9,7 +9,7 @@
     "children" :
     [
       {
-        "caption" : "Copy URL to Github file",
+        "caption" : "Copy URL to GitHub file",
         "id"      : "githublink-link-file",
         "command" : "githublink",
         "args"    : {
@@ -17,7 +17,7 @@
         } 
       },
       { 
-        "caption" : "Open URL to Github file", 
+        "caption" : "Open URL to GitHub file", 
         "id"      : "githublink-link-file",    
         "command" : "githublink",
         "args"    : {

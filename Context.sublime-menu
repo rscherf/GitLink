@@ -4,7 +4,7 @@
     "id"      : "githublink-start-separator"
   },
   {
-    "caption"  : "GithubLink", 
+    "caption"  : "GitHubLink", 
     "id"       : "githublink-options",
     "children" :
     [
@@ -17,7 +17,7 @@
         } 
       },
       {
-        "caption" : "Copy URL to Github line", 
+        "caption" : "Copy URL to GitHub line", 
         "id"      : "githublink-link-line",
         "command" : "githublink",
         "args"    : {
@@ -29,7 +29,7 @@
         "id"      : "githublink-web-separator"
       },
       { 
-        "caption" : "Open URL to Github file", 
+        "caption" : "Open URL to GitHub file", 
         "id"      : "githublink-link-file",    
         "command" : "githublink",
         "args"    : {
@@ -38,7 +38,7 @@
         } 
       },
       {
-        "caption" : "Open URL to Github line", 
+        "caption" : "Open URL to GitHub line", 
         "id"      : "githublink-link-line",
         "command" : "githublink",
         "args"    : {
