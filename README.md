@@ -21,7 +21,8 @@ Right click anywhere within the file you are currently editing. Your cursor posi
 
 `command + shift + o` Use your default web browser (Chrome) to skip a step and open any of the links automatically in a new tab.
 
-# Installation (this is not merged into Package Control yet)
+# Installation
+This plugin has not yet been merged into Package Control. Sorry!
 * `cd ~/Library/Application Support/Sublime Text 2/Packages/`
 * `git clone git@github.com:rscherf/GithubLink.git`
 * Restart Sublime Text
