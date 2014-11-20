@@ -44,7 +44,8 @@ class GithublinkCommand(sublime_plugin.TextCommand):
         user, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
-        basename = cmd.getoutput("basename `git rev-parse --show-toplevel`")
+        folder = cmd.getoutput("git rev-parse --show-toplevel")
+        basename = os.path.basename(folder)
         remote_path = path.split(basename, 1)[1]
 
         # Find the current branch
