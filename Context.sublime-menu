@@ -1,23 +1,23 @@
 [
   {
-    "caption" : "-", 
+    "caption" : "-",
     "id"      : "githublink-start-separator"
   },
   {
-    "caption"  : "GitHubLink", 
+    "caption"  : "GitHubLink",
     "id"       : "githublink-options",
     "children" :
     [
-      { 
-        "caption" : "Copy URL to Github file", 
-        "id"      : "githublink-link-file",    
+      {
+        "caption" : "Copy URL to Github file",
+        "id"      : "githublink-link-file",
         "command" : "githublink",
         "args"    : {
           "line" : false
-        } 
+        }
       },
       {
-        "caption" : "Copy URL to GitHub line", 
+        "caption" : "Copy URL to GitHub line",
         "id"      : "githublink-link-line",
         "command" : "githublink",
         "args"    : {
@@ -28,17 +28,17 @@
         "caption" : "-",
         "id"      : "githublink-web-separator"
       },
-      { 
-        "caption" : "Open URL to GitHub file", 
-        "id"      : "githublink-link-file",    
+      {
+        "caption" : "Open URL to GitHub file",
+        "id"      : "githublink-link-file",
         "command" : "githublink",
         "args"    : {
           "line"  : false,
           "web"   : true
-        } 
+        }
       },
       {
-        "caption" : "Open URL to GitHub line", 
+        "caption" : "Open URL to GitHub line",
         "id"      : "githublink-link-line",
         "command" : "githublink",
         "args"    : {

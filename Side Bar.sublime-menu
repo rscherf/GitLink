@@ -1,10 +1,10 @@
 [
   {
-    "caption" : "-", 
+    "caption" : "-",
     "id"      : "githublink-start-separator"
   },
   {
-    "caption"  : "GithubLink", 
+    "caption"  : "GithubLink",
     "id"       : "githublink-options",
     "children" :
     [
@@ -14,16 +14,16 @@
         "command" : "githublink",
         "args"    : {
           "line" : false
-        } 
+        }
       },
-      { 
-        "caption" : "Open URL to GitHub file", 
-        "id"      : "githublink-link-file",    
+      {
+        "caption" : "Open URL to GitHub file",
+        "id"      : "githublink-link-file",
         "command" : "githublink",
         "args"    : {
           "line"  : false,
           "web"   : true
-        } 
+        }
       }
     ]
   }

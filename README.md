@@ -11,7 +11,7 @@ Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 
 #### Copy URLs to files
 
-`command + shift + c` Right click any file in the sidebar (that is part of a GitHub.com repository) and go to the `GithubLink` menu item to see options. 
+`command + shift + c` Right click any file in the sidebar (that is part of a GitHub.com repository) and go to the `GithubLink` menu item to see options.
 
 #### Copy URLs to files with a deeplink the line number
 
