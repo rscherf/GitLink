@@ -13,7 +13,8 @@
         "id"      : "githublink-link-file",
         "command" : "githublink",
         "args"    : {
-          "line" : false
+          "line" : false,
+          "web"  : false
         }
       },
       {
@@ -21,7 +22,8 @@
         "id"      : "githublink-link-line",
         "command" : "githublink",
         "args"    : {
-          "line" : true
+          "line" : true,
+          "web"  : false
         }
       },
       {
