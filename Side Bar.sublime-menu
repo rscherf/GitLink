@@ -1,25 +1,25 @@
 [
   {
     "caption" : "-",
-    "id"      : "githublink-start-separator"
+    "id"      : "gitlink-start-separator"
   },
   {
-    "caption"  : "GithubLink",
-    "id"       : "githublink-options",
+    "caption"  : "GitLink",
+    "id"       : "gitlink-options",
     "children" :
     [
       {
-        "caption" : "Copy URL to GitHub file",
-        "id"      : "githublink-link-file",
-        "command" : "githublink",
+        "caption" : "Copy Git URL to file",
+        "id"      : "gitlink-link-file",
+        "command" : "gitlink",
         "args"    : {
           "line" : false
         }
       },
       {
-        "caption" : "Open URL to GitHub file",
-        "id"      : "githublink-link-file",
-        "command" : "githublink",
+        "caption" : "Open Git URL to file",
+        "id"      : "gitlink-link-file",
+        "command" : "gitlink",
         "args"    : {
           "line"  : false,
           "web"   : true

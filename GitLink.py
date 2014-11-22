@@ -23,7 +23,7 @@ REMOTE_CONFIG = {
 }
 
 
-class GithublinkCommand(sublime_plugin.TextCommand):
+class GitLinkCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **args):
         # Current file path & filename
@@ -40,7 +40,7 @@ class GithublinkCommand(sublime_plugin.TextCommand):
         site_name = parts[0][1]  # github.com or bitbucket.org, whatever
         git_config = parts[0][2]
 
-        # Get Github username and repository
+        # Get username and repository
         user, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
@@ -68,4 +68,4 @@ class GithublinkCommand(sublime_plugin.TextCommand):
             webbrowser.open_new_tab(url)
         else:
             os.system("echo '%s' | pbcopy" % url)
-            sublime.status_message('GIT url has been copied to clipboard')
+            # sublime.status_message('GIT url has been copied to clipboard')
