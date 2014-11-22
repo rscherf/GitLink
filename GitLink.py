@@ -23,7 +23,7 @@ REMOTE_CONFIG = {
 }
 
 
-class GitLinkCommand(sublime_plugin.TextCommand):
+class GitlinkCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **args):
         # Current file path & filename
