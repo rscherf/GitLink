@@ -68,4 +68,4 @@ class GitLinkCommand(sublime_plugin.TextCommand):
             webbrowser.open_new_tab(url)
         else:
             os.system("echo '%s' | pbcopy" % url)
-            # sublime.status_message('GIT url has been copied to clipboard')
+            sublime.status_message('GIT url has been copied to clipboard')
