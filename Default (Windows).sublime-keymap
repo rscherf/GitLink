@@ -1,18 +1,18 @@
 [
-  { 
+  {
     "keys": ["ctrl+shift+o"],
-    "command": "githublink",
+    "command": "gitlink",
     "args" : {
       "line" : false,
       "web"  : true
-    } 
+    }
   },
-  { 
+  {
     "keys": ["ctrl+shift+c"],
-    "command": "githublink",
+    "command": "gitlink",
     "args" : {
       "line" : false,
       "web"  : false
-    } 
+    }
   }
 ]
