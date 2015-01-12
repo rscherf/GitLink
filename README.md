@@ -1,8 +1,8 @@
 # GitLink
-Sublime Text plugin to derive <http://github.com> or <http://bitbucket.org> URLs to files in your project. No more traversing your file structure finding the file you are working on.
+Sublime Text plugin to derive <http://github.com>, <http://bitbucket.org> or <http://codebasehq.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
 
-Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
-
+Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>  
+CodebaseHQ support by <http://iRonin.pl>
 
 ## How it works
 
