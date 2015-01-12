@@ -19,6 +19,10 @@ REMOTE_CONFIG = {
     'bitbucket': {
         'url': 'https://bitbucket.org/{0}/{1}/src/{2}{3}/{4}',
         'line_param': '#cl-'
+    },
+    'codebasehq': {
+        'url': 'https://{0}.codebasehq.com/projects/{1}/repositories/{2}/blob/{3}{4}/{5}',
+        'line_param': '#L'
     }
 }
 
@@ -38,10 +42,21 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
         parts = p.findall(git_config_path)
         site_name = parts[0][1]  # github.com or bitbucket.org, whatever
+
+        remote_name = 'github'
+        if 'bitbucket' in site_name:
+            remote_name = 'bitbucket'
+        if 'codebasehq.com' in site_name:
+            remote_name = 'codebasehq'
+        remote = REMOTE_CONFIG[remote_name]
+
         git_config = parts[0][2]
 
         # Get username and repository
-        user, repo = git_config.replace(".git", "").split("/")
+        if remote_name != 'codebasehq':
+            user, repo = git_config.replace(".git", "").split("/")
+        else:
+           user, project, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
         folder = cmd.getoutput("git rev-parse --show-toplevel")
@@ -51,14 +66,11 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Find the current branch
         branch = cmd.getoutput("git rev-parse --abbrev-ref HEAD")
 
-        remote_name = 'github'
-        if 'bitbucket' in site_name:
-            remote_name = 'bitbucket'
-
-        remote = REMOTE_CONFIG[remote_name]
-
         # Build the URL
-        url = remote['url'].format(user, repo, branch, remote_path, filename)
+        if remote_name != 'codebasehq':
+            url = remote['url'].format(user, repo, branch, remote_path, filename)
+        else:
+            url = remote['url'].format(user, project, repo, branch, remote_path, filename)
 
         if(args['line']):
             row = self.view.rowcol(self.view.sel()[0].begin())[0] + 1
