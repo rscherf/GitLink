@@ -26,7 +26,7 @@ The easiest is to install using [Package control](https://sublime.wbond.net/).
 
 To install manually, you can clone Git repository directly:
 * `cd ~/Library/Application Support/Sublime Text 2/Packages/`
-* `git clone git@github.com:rscherf/GitHubLink.git`
+* `git clone git@github.com:rscherf/GitLink.git`
 * Restart Sublime Text
 
 # Contribute
