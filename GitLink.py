@@ -7,11 +7,11 @@ import subprocess
 
 REMOTE_CONFIG = {
     'github': {
-        'url': 'https://github.com/{0}/{1}/blob/{2}{3}/{4}',
+        'url': 'https://github.com/{0}/{1}/blob/{2}/{3}{4}',
         'line_param': '#L'
     },
     'bitbucket': {
-        'url': 'https://bitbucket.org/{0}/{1}/src/{2}{3}/{4}',
+        'url': 'https://bitbucket.org/{0}/{1}/src/{2}/{3}{4}',
         'line_param': '#cl-'
     },
     'codebasehq': {
@@ -57,9 +57,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
            user, project, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
-        folder = self.getoutput("git rev-parse --show-toplevel")
-        basename = os.path.basename(folder)
-        remote_path = path.split(basename, 1)[1]
+        remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current branch
         branch = self.getoutput("git rev-parse --abbrev-ref HEAD")
