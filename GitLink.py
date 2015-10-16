@@ -35,7 +35,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         os.chdir(path + "/")
 
         # Find the repo
-        git_config_path = self.getoutput("git remote show origin")
+        git_config_path = self.getoutput("git remote show origin -n")
 
         p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
         parts = p.findall(git_config_path)
