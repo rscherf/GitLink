@@ -29,6 +29,8 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **args):
         # Current file path & filename
+
+        # only works on current open file
         path, filename = os.path.split(self.view.file_name())
 
         # Switch to cwd of file
@@ -39,7 +41,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
         parts = p.findall(git_config_path)
-        site_name = parts[0][1]  # github.com or bitbucket.org, whatever
+        site_name = parts[0][2]  # github.com or bitbucket.org, whatever
 
         remote_name = 'github'
         if 'bitbucket' in site_name:
@@ -50,11 +52,13 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         git_config = parts[0][2]
 
+        # need to get username from full url
+
         # Get username and repository
         if remote_name != 'codebasehq':
-            user, repo = git_config.replace(".git", "").split("/")
+            source, user, repo = git_config.replace(".git", "").replace("https://", "").split("/")
         else:
-           user, project, repo = git_config.replace(".git", "").split("/")
+           user, project, repo = git_config.replace(".git", "").replace("https://", "").split("/")
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
