@@ -3,21 +3,15 @@ import re
 import webbrowser
 import sublime
 import sublime_plugin
-
-# Backwards compatibility
-try:
-    import commands as cmd
-except:
-    import subprocess as cmd
-
+import subprocess
 
 REMOTE_CONFIG = {
     'github': {
-        'url': 'https://github.com/{0}/{1}/blob/{2}{3}/{4}',
+        'url': 'https://github.com/{0}/{1}/blob/{2}/{3}{4}',
         'line_param': '#L'
     },
     'bitbucket': {
-        'url': 'https://bitbucket.org/{0}/{1}/src/{2}{3}/{4}',
+        'url': 'https://bitbucket.org/{0}/{1}/src/{2}/{3}{4}',
         'line_param': '#cl-'
     },
     'codebasehq': {
@@ -29,6 +23,10 @@ REMOTE_CONFIG = {
 
 class GitlinkCommand(sublime_plugin.TextCommand):
 
+    def getoutput(self, command):
+        out, err = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True).communicate()
+        return out.decode().strip()
+
     def run(self, edit, **args):
         # Current file path & filename
         path, filename = os.path.split(self.view.file_name())
@@ -37,7 +35,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         os.chdir(path + "/")
 
         # Find the repo
-        git_config_path = cmd.getoutput("git remote show origin")
+        git_config_path = self.getoutput("git remote show origin -n")
 
         p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
         parts = p.findall(git_config_path)
@@ -59,12 +57,10 @@ class GitlinkCommand(sublime_plugin.TextCommand):
            user, project, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
-        folder = cmd.getoutput("git rev-parse --show-toplevel")
-        basename = os.path.basename(folder)
-        remote_path = path.split(basename, 1)[1]
+        remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current branch
-        branch = cmd.getoutput("git rev-parse --abbrev-ref HEAD")
+        branch = self.getoutput("git rev-parse --abbrev-ref HEAD")
 
         # Build the URL
         if remote_name != 'codebasehq':
@@ -79,5 +75,5 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         if(args['web']):
             webbrowser.open_new_tab(url)
         else:
-            os.system("echo '%s' | pbcopy" % url)
+            sublime.set_clipboard(url)
             sublime.status_message('GIT url has been copied to clipboard')
