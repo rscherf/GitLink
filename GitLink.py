@@ -59,11 +59,24 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         # need to get username from full url
 
-        # Get username and repository
-        if remote_name != 'codebasehq':
-            source, user, repo = git_config.replace(".git", "").replace("https://", "").split("/")
+        # Get username and repository (& also project for codebasehq)
+        if ':' in git_config:
+            # SSH repository
+            if remote_name == 'codebasehq':
+                # format is codebasehq.com:{user}/{project}/{repo}.git
+                domain, user, project, repo = git_config.replace(".git", "").replace(":", "/").split("/")
+            else:
+                # format is {domain}:{user}/{repo}.git
+                domain, user, repo = git_config.replace(".git", "").replace(":", "/").split("/")
         else:
-           user, project, repo = git_config.replace(".git", "").replace("https://", "").split("/")
+            # HTTP repository
+            if remote_name == 'codebasehq':
+                # format is {user}.codebasehq.com/{project}/{repo}.git
+                domain, project, repo = git_config.replace(".git", "").split("/")
+                user = domain.split('.', 1)[0] # user is first segment of domain
+            else:
+                # format is {domain}/{user}/{repo}.git
+                domain, user, repo = git_config.replace(".git", "").split("/")
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
@@ -72,10 +85,10 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         branch = self.getoutput("git rev-parse --abbrev-ref HEAD")
 
         # Build the URL
-        if remote_name != 'codebasehq':
-            url = remote['url'].format(user, repo, branch, remote_path, filename)
-        else:
+        if remote_name == 'codebasehq':
             url = remote['url'].format(user, project, repo, branch, remote_path, filename)
+        else:
+            url = remote['url'].format(user, repo, branch, remote_path, filename)
 
         if(args['line']):
             row = self.view.rowcol(self.view.sel()[0].begin())[0] + 1
