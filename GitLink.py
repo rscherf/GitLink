@@ -39,18 +39,23 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Find the repo
         git_config_path = self.getoutput("git remote show origin -n")
 
-        p = re.compile(r"(.+@)*([\w\d\.]+):(.*)")
+        # Determine git URL which may be either HTTPS or SSH form
+        # (i.e. https://domain/user/repo or git@domain:user/repo)
+        #
+        # parts[0][2] will contain 'domain/user/repo' or 'domain:user/repo'
+        #
+        # see https://regex101.com/r/pZ3tN3/2 & https://regex101.com/r/iS5tQ4/2
+        p = re.compile(r"(.+: )*([\w\d\.]+)[:|@]/?/?(.*)")
         parts = p.findall(git_config_path)
-        site_name = parts[0][2]  # github.com or bitbucket.org, whatever
+        git_config = parts[0][2]
 
         remote_name = 'github'
-        if 'bitbucket' in site_name:
+        if 'bitbucket' in git_config:
             remote_name = 'bitbucket'
-        if 'codebasehq.com' in site_name:
+        if 'codebasehq.com' in git_config:
             remote_name = 'codebasehq'
         remote = REMOTE_CONFIG[remote_name]
 
-        git_config = parts[0][2]
 
         # need to get username from full url
 
