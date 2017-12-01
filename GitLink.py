@@ -7,7 +7,7 @@ import subprocess
 
 REMOTE_CONFIG = {
     'github': {
-        'url': 'https://github.com/{0}/{1}/blob/{2}/{3}{4}',
+        'url': 'https://github.deezerdev.com/Deezer/{1}/blob/master/{3}{4}',
         'line_param': '#L'
     },
     'bitbucket': {
