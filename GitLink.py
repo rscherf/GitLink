@@ -91,8 +91,13 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             url = remote['url'].format(user, repo, branch, remote_path, filename)
 
         if(args['line']):
-            row = self.view.rowcol(self.view.sel()[0].begin())[0] + 1
-            url += "{0}{1}".format(remote['line_param'], row)
+            region = self.view.sel()[0]
+            first_line = self.view.rowcol(region.begin())[0] + 1
+            last_line = self.view.rowcol(region.end())[0] + 1
+            if first_line == last_line:
+                url += "{0}{1}".format(remote['line_param'], first_line)
+            else:
+                url += "{0}{1}:{2}".format(remote['line_param'], first_line, last_line)
 
         if(args['web']):
             webbrowser.open_new_tab(url)
