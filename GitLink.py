@@ -81,14 +81,18 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
-        # Find the current branch
-        branch = self.getoutput("git rev-parse --abbrev-ref HEAD")
+        # Find the current revision
+        rev_type = self.view.settings.get('gitlink_revision_type', 'branch')
+        if rev_type == 'branch':
+            git_rev = self.getoutput("git rev-parse --abbrev-ref HEAD")
+        elif rev_type == 'commithash':
+            git_rev = self.getoutput("git rev-parse HEAD")
 
         # Build the URL
         if remote_name == 'codebasehq':
-            url = remote['url'].format(user, project, repo, branch, remote_path, filename)
+            url = remote['url'].format(user, project, repo, git_rev, remote_path, filename)
         else:
-            url = remote['url'].format(user, repo, branch, remote_path, filename)
+            url = remote['url'].format(user, repo, git_rev, remote_path, filename)
 
         if(args['line']):
             region = self.view.sel()[0]
