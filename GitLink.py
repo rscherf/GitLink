@@ -82,7 +82,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current revision
-        rev_type = self.view.settings.get('gitlink_revision_type', 'branch')
+        rev_type = self.view.settings().get('gitlink_revision_type', 'branch')
         if rev_type == 'branch':
             git_rev = self.getoutput("git rev-parse --abbrev-ref HEAD")
         elif rev_type == 'commithash':
