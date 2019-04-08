@@ -1,7 +1,7 @@
 # GitLink
 Sublime Text plugin to derive <http://github.com>, <http://bitbucket.org> or <http://codebasehq.com> URLs to files in your project. No more traversing your file structure finding the file you are working on.
 
-Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>  
+Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 CodebaseHQ support by <http://iRonin.pl>
 
 ## How it works
@@ -29,14 +29,15 @@ To install manually, you can clone Git repository directly:
 * `git clone git@github.com:rscherf/GitLink.git`
 * Restart Sublime Text
 
+# Configuration
+To switch to generating permanent links that reference a git commit hash instead of branch name, add `"gitlink_revision_type": "commithash"` to your Preferences.sublime-settings file.
+
 # Contribute
 GitHub and Sublime Text are powerful; I know all of you can make this way better than me.
 
 1. Fork/clone the repository
 2. Add whatever you'd like
 3. Submit a Pull Request
-
-
 
 # Copyright
 1. Star the Github repository
