@@ -8,21 +8,25 @@ import subprocess
 REMOTE_CONFIG = {
     'github': {
         'url': 'https://github.com/{0}/{1}/blob/{2}/{3}{4}',
+        'blame_url': 'https://github.com/{0}/{1}/blame/{2}/{3}{4}',
         'line_param': '#L',
         'line_param_sep': ':'
     },
     'bitbucket': {
         'url': 'https://bitbucket.org/{0}/{1}/src/{2}/{3}{4}',
+        'blame_url': 'https://bitbucket.org/{0}/{1}/annotate/{2}/{3}{4}',
         'line_param': '#cl-',
         'line_param_sep': ':'
     },
     'codebasehq': {
         'url': 'https://{0}.codebasehq.com/projects/{1}/repositories/{2}/blob/{3}{4}/{5}',
+        'blame_url': 'https://{0}.codebasehq.com/projects/{1}/repositories/{2}/blame/{3}{4}/{5}',
         'line_param': '#L',
         'line_param_sep': ':'
     },
     'gitlab': {
         'url': 'https://{0}/{1}/{2}/-/blob/{3}/{4}{5}',
+        'blame_url': 'https://{0}/{1}/{2}/-/blame/{3}/{4}{5}',
         'line_param': '#L',
         'line_param_sep': '-'
     }
@@ -99,13 +103,19 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         elif rev_type == 'commithash':
             git_rev = self.getoutput("git rev-parse HEAD")
 
+        # Choose the view type we'll use
+        if('blame' in args && args['blame']):
+            view_type = 'blame_url'
+        else:
+            view_type = 'url'
+
         # Build the URL
         if remote_name == 'codebasehq':
-            url = remote['url'].format(user, project, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(user, project, repo, git_rev, remote_path, filename)
         elif remote_name == 'gitlab':
-            url = remote['url'].format(domain, user, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(domain, user, repo, git_rev, remote_path, filename)
         else:
-            url = remote['url'].format(user, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(user, repo, git_rev, remote_path, filename)
 
         if(args['line']):
             region = self.view.sel()[0]
