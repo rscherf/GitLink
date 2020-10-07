@@ -104,7 +104,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             git_rev = self.getoutput("git rev-parse HEAD")
 
         # Choose the view type we'll use
-        if('blame' in args && args['blame']):
+        if('blame' in args and args['blame']):
             view_type = 'blame_url'
         else:
             view_type = 'url'
