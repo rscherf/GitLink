@@ -10,7 +10,7 @@ REMOTE_CONFIG = {
         'url': 'https://github.com/{0}/{1}/blob/{2}/{3}{4}',
         'blame_url': 'https://github.com/{0}/{1}/blame/{2}/{3}{4}',
         'line_param': '#L',
-        'line_param_sep': ':'
+        'line_param_sep': '-L'
     },
     'bitbucket': {
         'url': 'https://bitbucket.org/{0}/{1}/src/{2}/{3}{4}',
