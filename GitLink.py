@@ -97,11 +97,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current revision
-        rev_type = self.view.settings().get('gitlink_revision_type', 'branch')
-        if rev_type == 'branch':
-            git_rev = self.getoutput("git rev-parse --abbrev-ref HEAD")
-        elif rev_type == 'commithash':
-            git_rev = self.getoutput("git rev-parse HEAD")
+        revsion = self.getoutput("git rev-parse HEAD")
 
         # Choose the view type we'll use
         if('blame' in args and args['blame']):
@@ -111,11 +107,11 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         # Build the URL
         if remote_name == 'codebasehq':
-            url = remote[view_type].format(user, project, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(user, project, repo, revsion, remote_path, filename)
         elif remote_name == 'gitlab':
-            url = remote[view_type].format(domain, user, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(domain, user, repo, revsion, remote_path, filename)
         else:
-            url = remote[view_type].format(user, repo, git_rev, remote_path, filename)
+            url = remote[view_type].format(user, repo, revsion, remote_path, filename)
 
         if(args['line']):
             region = self.view.sel()[0]
