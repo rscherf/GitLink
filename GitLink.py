@@ -26,7 +26,6 @@ HOSTINGS = {
     }
 }
 
-REMOTE_URL_PATTERN = re.compile(r"Fetch URL: [\w\d\.]+[:|@]/?/?(.*)")
 
 class GitlinkCommand(sublime_plugin.TextCommand):
 
@@ -43,29 +42,43 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Switch to cwd of file
         os.chdir(path + "/")
 
-        # Find the remote
-        remote_name = self.getoutput("git remote show | grep upstream || echo origin")
-        fetch_url = self.getoutput(f"git remote show {remote_name} -n | grep 'Fetch URL: '")
-        # Determine git URL which may be either HTTPS or SSH form
-        # (i.e. https://domain/user/repo or git@domain:user/repo)
-        #
-        # 'remote' would be 'domain/user/repo' or 'domain:user/repo'
-        remote = REMOTE_URL_PATTERN.search(fetch_url).group(1)
+        # Find the remote of the current branch
+        branch_name = self.getoutput("git branch --show-current")
+        remote_name = self.getoutput(
+            "git config --get branch.{}.remote".format(branch_name)
+        )
+        remote = self.getoutput("git remote get-url {}".format(remote_name))
         remote = re.sub('.git$', '', remote)
 
-        for hosting_name, hosting in HOSTINGS.items():
-            if hosting_name in remote:
-                break
-
-        # Get username and repository
-        if ':' in remote:
-            # SSH repository
-            # format is {domain}:{user}/{repo}.git
-            domain, user, repo = remote.replace(":", "/").split("/")
+        # Use ssh, except when the remote url starts with http:// or https://
+        use_ssh = re.match(r'^https?://', remote) is None
+        if use_ssh:
+            # Below index lookups always succeed, nu matter whether the split
+            # character exists
+            domain = remote.split(':', 1)[0].split('@', 1)[-1]
+            # `domain` may be an alias configured in ssh
+            try:
+                ssh_output = self.getoutput("ssh -G " + domain)
+            except:  # noqa intended unconditional except
+                # This is just an attempt at being smart. Let's not crash if
+                # it didn't work
+                pass
+            if ssh_output:
+                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+                if match:
+                    domain = match.group(1)
+            _ignored, user, repo = remote.replace(":", "/").split("/")
+            del _ignored
         else:
             # HTTP repository
             # format is {domain}/{user}/{repo}.git
             domain, user, repo = remote.split("/")
+
+        # Select the right hosting configuration
+        for hosting_name, hosting in HOSTINGS.items():
+            if hosting_name in remote:
+                # We found a match, so keep these variable assignments
+                break
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
