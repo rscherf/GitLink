@@ -18,6 +18,12 @@ HOSTINGS = {
         'line_param': '#cl-',
         'line_param_sep': ':'
     },
+    'codebasehq': {
+        'url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}{remote_path}/{filename}',
+        'blame_url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}{remote_path}/{filename}',
+        'line_param': '#L',
+        'line_param_sep': ':'
+    },
     'gitlab': {
         'url': 'https://{domain}/{user}/{repo}/-/blob/{revision}/{remote_path}{filename}',
         'blame_url': 'https://{domain}/{user}/{repo}/-/blame/{revision}/{remote_path}{filename}',
@@ -50,6 +56,12 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         remote = self.getoutput("git remote get-url {}".format(remote_name))
         remote = re.sub('.git$', '', remote)
 
+        # Select the right hosting configuration
+        for hosting_name, hosting in HOSTINGS.items():
+            if hosting_name in remote:
+                # We found a match, so keep these variable assignments
+                break
+
         # Use ssh, except when the remote url starts with http:// or https://
         use_ssh = re.match(r'^https?://', remote) is None
         if use_ssh:
@@ -67,18 +79,26 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
                 if match:
                     domain = match.group(1)
-            _ignored, user, repo = remote.replace(":", "/").split("/")
-            del _ignored
+
+            pieces = remote.split(':', 1)[-1].split("/")
+            if hosting_name == 'codebasehq':
+                # format is codebasehq.com:{user}/{project}/{repo}.git
+                user, project, repo = pieces
+            else:
+                # format is {domain}:{user}/{repo}.git
+                user, repo = pieces
+                project = None
         else:
             # HTTP repository
-            # format is {domain}/{user}/{repo}.git
-            domain, user, repo = remote.split("/")
-
-        # Select the right hosting configuration
-        for hosting_name, hosting in HOSTINGS.items():
-            if hosting_name in remote:
-                # We found a match, so keep these variable assignments
-                break
+            if hosting_name == 'codebasehq':
+                # format is {user}.codebasehq.com/{project}/{repo}.git
+                domain, project, repo = remote.split("/")
+                # user is first segment of domain
+                user, domain = domain.split('.', 1)
+            else:
+                # format is {domain}/{user}/{repo}.git
+                domain, user, repo = remote.split("/")
+                project = None
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
@@ -93,7 +113,14 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             view_type = 'url'
 
         # Build the URL
-        url = hosting[view_type].format(domain=domain, user=user, repo=repo, revision=revision, remote_path=remote_path, filename=filename)
+        url = hosting[view_type].format(
+            domain=domain,
+            user=user,
+            project=project,
+            repo=repo,
+            revision=revision,
+            remote_path=remote_path,
+            filename=filename)
 
         if args['line']:
             region = self.view.sel()[0]
