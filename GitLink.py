@@ -65,9 +65,28 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Use ssh, except when the remote url starts with http:// or https://
         use_ssh = re.match(r'^https?://', remote) is None
         if use_ssh:
-            # Below index lookups always succeed, nu matter whether the split
-            # character exists
-            domain = remote.split(':', 1)[0].split('@', 1)[-1]
+            # Allow `ssh://` and a port to be part of the remote
+            project = None
+            match = re.match(
+                r'^(?:ssh://)?([^:]+):\d*/?([^/]+)/([^/]+)',
+                remote
+            )
+            if match:
+                pieces = match.groups()
+                domain, user, repo = pieces
+            else:
+                # failsafe if regex doesn't match
+                # Below index lookups always succeed, nu matter whether the
+                # split character exists
+                domain = remote.split(':', 1)[0].split('@', 1)[-1]
+                pieces = remote.split(':', 1)[-1].split("/")
+                if hosting_name == 'codebasehq':
+                    # format is codebasehq.com:{user}/{project}/{repo}.git
+                    user, project, repo = pieces
+                else:
+                    # format is {domain}:{user}/{repo}.git
+                    user, repo = pieces
+
             # `domain` may be an alias configured in ssh
             try:
                 ssh_output = self.getoutput("ssh -G " + domain)
@@ -80,14 +99,6 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 if match:
                     domain = match.group(1)
 
-            pieces = remote.split(':', 1)[-1].split("/")
-            if hosting_name == 'codebasehq':
-                # format is codebasehq.com:{user}/{project}/{repo}.git
-                user, project, repo = pieces
-            else:
-                # format is {domain}:{user}/{repo}.git
-                user, repo = pieces
-                project = None
         else:
             # HTTP repository
             if hosting_name == 'codebasehq':
@@ -99,7 +110,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 # format is {domain}/{user}/{repo}.git
                 domain, user, repo = remote.split("/")
                 project = None
-
+        print(domain, user, repo)
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
