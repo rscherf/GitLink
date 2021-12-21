@@ -1,17 +1,48 @@
 [
-	{
-		"caption": "GitLink: Copy Git URL to file",
-		"command": "gitlink",
-		"args": {
-			"line" : false
-		}
-	},
-	{
-		"caption": "GitLink: Open Git URL to file",
-		"command": "gitlink",
-		"args": {
-			"line" : false,
-			"web"   : true
-		}
-	}
+    {
+        "caption": "GitLink: Copy Git URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false
+        }
+    },
+    {
+        "caption": "GitLink: Open Git URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": true
+        }
+    },
+    {
+        "caption": "GitLink: Copy Git URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true
+        }
+    },
+    {
+        "caption": "GitLink: Open Git URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true
+        }
+    },
+    {
+        "caption": "GitLink: Copy Git Blame URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "blame": true
+        }
+    },
+    {
+        "caption": "GitLink: Open Git Blame URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": true,
+            "blame": true
+        }
+    }
 ]
