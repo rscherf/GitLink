@@ -1,13 +1,13 @@
 [
 	{
-		"caption": "Copy Git URL to file",
+		"caption": "GitLink: Copy Git URL to file",
 		"command": "gitlink",
 		"args": {
 			"line" : false
 		}
 	},
 	{
-		"caption": "Open Git URL to file",
+		"caption": "GitLink: Open Git URL to file",
 		"command": "gitlink",
 		"args": {
 			"line" : false,
