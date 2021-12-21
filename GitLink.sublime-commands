@@ -1,0 +1,17 @@
+[
+	{
+		"caption": "Copy Git URL to file",
+		"command": "gitlink",
+		"args": {
+			"line" : false
+		}
+	},
+	{
+		"caption": "Open Git URL to file",
+		"command": "gitlink",
+		"args": {
+			"line" : false,
+			"web"   : true
+		}
+	}
+]
