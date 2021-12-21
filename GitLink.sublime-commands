@@ -44,5 +44,22 @@
             "web": true,
             "blame": true
         }
+    },
+    {
+        "caption": "GitLink: Copy Git Blame URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "blame": true
+        }
+    },
+    {
+        "caption": "GitLink: Open Git Blame URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "web": true,
+            "blame": true
+        }
     }
 ]
