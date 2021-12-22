@@ -1,53 +1,52 @@
 [
-  {
-    "caption" : "-",
-    "id"      : "gitlink-start-separator"
-  },
-  {
-    "caption"  : "GitLink",
-    "id"       : "gitlink-options",
-    "children" :
-    [
-      {
-        "caption" : "Copy Git URL to file",
-        "id"      : "gitlink-link-file",
-        "command" : "gitlink",
-        "args"    : {
-          "line" : false,
-          "web"  : false
-        }
-      },
-      {
-        "caption" : "Copy Git URL to line",
-        "id"      : "gitlink-link-line",
-        "command" : "gitlink",
-        "args"    : {
-          "line" : true,
-          "web"  : false
-        }
-      },
-      {
-        "caption" : "-",
-        "id"      : "gitlink-web-separator"
-      },
-      {
-        "caption" : "Open Git URL to file",
-        "id"      : "gitlink-link-file",
-        "command" : "gitlink",
-        "args"    : {
-          "line"  : false,
-          "web"   : true
-        }
-      },
-      {
-        "caption" : "Open Git URL to line",
-        "id"      : "gitlink-link-line",
-        "command" : "gitlink",
-        "args"    : {
-          "line"  : true,
-          "web"   : true
-        }
-      }
-    ]
-  }
+    {
+        "caption": "-",
+        "id": "gitlink-start-separator"
+    },
+    {
+        "caption": "GitLink",
+        "id": "gitlink-options",
+        "children": [
+            {
+                "caption": "Copy Git URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": false
+                }
+            },
+            {
+                "caption": "Copy Git URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": false
+                }
+            },
+            {
+                "caption": "-",
+                "id": "gitlink-web-separator"
+            },
+            {
+                "caption": "Open Git URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": true
+                }
+            },
+            {
+                "caption": "Open Git URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": true
+                }
+            }
+        ]
+    }
 ]
