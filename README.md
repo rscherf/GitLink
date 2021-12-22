@@ -14,6 +14,8 @@ Written by Ryan Scherf : <http://ryan.sc> - <http://twitter.com/ryanscherf>
 ![Right click in side menu](http://f.cl.ly/items/1O100K122E0a1x0y3V1k/Screen%20Shot%202014-10-20%20at%209.46.38%20AM.png)
 ![Right click in a file](http://f.cl.ly/items/3f1r0h0q1t2J003M2W0A/Screen%20Shot%202014-10-20%20at%209.46.24%20AM.png)
 
+Or search for "GitLink" in the Command Palette
+
 #### Copy URLs to files
 
 `command + shift + c` Right click any file in the sidebar (that is part of a Git repository) and go to the `GitLink` menu item to see options.

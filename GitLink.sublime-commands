@@ -3,7 +3,9 @@
         "caption": "GitLink: Copy Git URL to file",
         "command": "gitlink",
         "args": {
-            "line": false
+            "line": false,
+            "web": false,
+            "blame": false
         }
     },
     {
@@ -11,21 +13,26 @@
         "command": "gitlink",
         "args": {
             "line": false,
-            "web": true
+            "web": true,
+            "blame": false
         }
     },
     {
         "caption": "GitLink: Copy Git URL to line",
         "command": "gitlink",
         "args": {
-            "line": true
+            "line": true,
+            "web": false,
+            "blame": false
         }
     },
     {
         "caption": "GitLink: Open Git URL to line",
         "command": "gitlink",
         "args": {
-            "line": true
+            "line": true,
+            "web": true,
+            "blame": false
         }
     },
     {
@@ -33,6 +40,7 @@
         "command": "gitlink",
         "args": {
             "line": false,
+            "web": false,
             "blame": true
         }
     },
@@ -50,6 +58,7 @@
         "command": "gitlink",
         "args": {
             "line": true,
+            "web": false,
             "blame": true
         }
     },
