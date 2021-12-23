@@ -1,30 +1,96 @@
 [
-  {
-    "caption" : "-",
-    "id"      : "gitlink-start-separator"
-  },
-  {
-    "caption"  : "GitLink",
-    "id"       : "gitlink-options",
-    "children" :
-    [
-      {
-        "caption" : "Copy Git URL to file",
-        "id"      : "gitlink-link-file",
-        "command" : "gitlink",
-        "args"    : {
-          "line" : false
-        }
-      },
-      {
-        "caption" : "Open Git URL to file",
-        "id"      : "gitlink-link-file",
-        "command" : "gitlink",
-        "args"    : {
-          "line"  : false,
-          "web"   : true
-        }
-      }
-    ]
-  }
+    {
+        "caption": "-",
+        "id": "gitlink-start-separator"
+    },
+    {
+        "caption": "GitLink",
+        "id": "gitlink-options",
+        "children": [
+            {
+                "caption": "Copy Git URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": false,
+                    "blame": false
+                }
+            },
+            {
+                "caption": "Copy Git URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": false,
+                    "blame": false
+                }
+            },
+            {
+                "caption": "Copy Git Blame URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": false,
+                    "blame": true
+                }
+            },
+            {
+                "caption": "Copy Git Blame URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": false,
+                    "blame": true
+                }
+            },
+            {
+                "caption": "-",
+                "id": "gitlink-web-separator"
+            },
+            {
+                "caption": "Open Git URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": true,
+                    "blame": false
+                }
+            },
+            {
+                "caption": "Open Git URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": true,
+                    "blame": false
+                }
+            },
+            {
+                "caption": "Open Git Blame URL to file",
+                "id": "gitlink-link-file",
+                "command": "gitlink",
+                "args": {
+                    "line": false,
+                    "web": true,
+                    "blame": true
+                }
+            },
+            {
+                "caption": "Open Git Blame URL to line",
+                "id": "gitlink-link-line",
+                "command": "gitlink",
+                "args": {
+                    "line": true,
+                    "web": true,
+                    "blame": true
+                }
+            }
+        ]
+    }
 ]

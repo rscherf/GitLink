@@ -108,7 +108,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 user, domain = domain.split('.', 1)
             else:
                 # format is {domain}/{user}/{repo}.git
-                domain, user, repo = remote.split("/")
+                domain, user, repo = remote.split("://")[-1].split("/")
                 project = None
         print(domain, user, repo)
         # Find top level repo in current dir structure

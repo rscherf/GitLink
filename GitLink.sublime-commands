@@ -1,0 +1,74 @@
+[
+    {
+        "caption": "GitLink: Copy Git URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": false,
+            "blame": false
+        }
+    },
+    {
+        "caption": "GitLink: Open Git URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": true,
+            "blame": false
+        }
+    },
+    {
+        "caption": "GitLink: Copy Git URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "web": false,
+            "blame": false
+        }
+    },
+    {
+        "caption": "GitLink: Open Git URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "web": true,
+            "blame": false
+        }
+    },
+    {
+        "caption": "GitLink: Copy Git Blame URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": false,
+            "blame": true
+        }
+    },
+    {
+        "caption": "GitLink: Open Git Blame URL to file",
+        "command": "gitlink",
+        "args": {
+            "line": false,
+            "web": true,
+            "blame": true
+        }
+    },
+    {
+        "caption": "GitLink: Copy Git Blame URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "web": false,
+            "blame": true
+        }
+    },
+    {
+        "caption": "GitLink: Open Git Blame URL to line",
+        "command": "gitlink",
+        "args": {
+            "line": true,
+            "web": true,
+            "blame": true
+        }
+    }
+]
