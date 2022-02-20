@@ -36,7 +36,15 @@ HOSTINGS = {
 class GitlinkCommand(sublime_plugin.TextCommand):
 
     def getoutput(self, command):
-        out, err = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True).communicate()
+        proc = subprocess.Popen(
+            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,
+        )
+        out, err = proc.communicate()
+        return_code = proc.returncode
+        if return_code != 0:
+            raise RuntimeError("Failed to run: '{}' (code:{}) with error: {}".format(
+                command, return_code, err.decode().strip())
+            )
         return out.decode().strip()
 
     def run(self, edit, **args):
@@ -49,7 +57,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         os.chdir(path + "/")
 
         # Find the remote of the current branch
-        branch_name = self.getoutput("git branch --show-current")
+        branch_name = self.getoutput("git symbolic-ref --short HEAD")
         remote_name = self.getoutput(
             "git config --get branch.{}.remote".format(branch_name)
         )
