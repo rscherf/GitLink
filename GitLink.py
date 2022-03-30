@@ -118,12 +118,15 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 # format is {domain}/{user}/{repo}.git
                 domain, user, repo = remote.split("://")[-1].split("/")
                 project = None
-        print(domain, user, repo)
+
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current revision
-        revision = self.getoutput("git rev-parse HEAD")
+        if 'revision_type' in args and args['revision_type'] == 'commithash':
+            revision = self.getoutput("git rev-parse HEAD")
+        else:
+            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
 
         # Choose the view type we'll use
         if 'blame' in args and args['blame']:
