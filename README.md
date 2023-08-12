@@ -31,9 +31,9 @@ The easiest is to install using [Package control](https://sublime.wbond.net/).
 
 To install manually, you can clone the Git repository directly:
 * Mac:
-  * `cd ~/Library/Application Support/Sublime Text 3/Packages/`
+  * `cd ~/Library/Application Support/Sublime Text/Packages/`
 * Linux:
-  * `cd ~/.config/sublime-text-3/Packages`
+  * `cd ~/.config/sublime-text/Packages`
 * `git clone git@github.com:rscherf/GitLink.git`
 * Restart Sublime Text
 
