@@ -29,8 +29,11 @@ Right click anywhere within the file you are currently editing. Your cursor posi
 # Installation
 The easiest is to install using [Package control](https://sublime.wbond.net/).
 
-To install manually, you can clone Git repository directly:
-* `cd ~/Library/Application Support/Sublime Text 2/Packages/`
+To install manually, you can clone the Git repository directly:
+* Mac:
+  * `cd ~/Library/Application Support/Sublime Text/Packages/`
+* Linux:
+  * `cd ~/.config/sublime-text/Packages`
 * `git clone git@github.com:rscherf/GitLink.git`
 * Restart Sublime Text
 

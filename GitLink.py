@@ -35,13 +35,16 @@ HOSTINGS = {
 
 class GitlinkCommand(sublime_plugin.TextCommand):
 
-    def getoutput(self, command):
+    def getoutput(self, command, fallback=None):
         proc = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,
         )
         out, err = proc.communicate()
         return_code = proc.returncode
         if return_code != 0:
+            if fallback:
+                return fallback
+
             raise RuntimeError("Failed to run: '{}' (code:{}) with error: {}".format(
                 command, return_code, err.decode().strip())
             )
@@ -59,7 +62,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Find the remote of the current branch
         branch_name = self.getoutput("git symbolic-ref --short HEAD")
         remote_name = self.getoutput(
-            "git config --get branch.{}.remote".format(branch_name)
+            "git config --get branch.{}.remote".format(branch_name), 'origin'
         )
         remote = self.getoutput("git remote get-url {}".format(remote_name))
         remote = re.sub('.git$', '', remote)
@@ -123,7 +126,8 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current revision
-        if 'revision_type' in args and args['revision_type'] == 'commithash':
+        settings = sublime.load_settings("Preferences.sublime-settings")
+        if settings.get('gitlink_revision_type') == 'commithash':
             revision = self.getoutput("git rev-parse HEAD")
         else:
             revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
