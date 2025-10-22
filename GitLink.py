@@ -114,12 +114,12 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             # HTTP repository
             if hosting_name == 'codebasehq':
                 # format is {user}.codebasehq.com/{project}/{repo}.git
-                domain, project, repo = remote.split("/")
+                domain, project, repo = remote.split("/", 2)
                 # user is first segment of domain
                 user, domain = domain.split('.', 1)
             else:
                 # format is {domain}/{user}/{repo}.git
-                domain, user, repo = remote.split("://")[-1].split("/")
+                domain, user, repo = remote.split("://")[-1].split("/", 2)
                 project = None
 
         # Find top level repo in current dir structure
