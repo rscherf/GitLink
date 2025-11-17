@@ -90,13 +90,15 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 # Below index lookups always succeed, nu matter whether the
                 # split character exists
                 domain = remote.split(':', 1)[0].split('@', 1)[-1]
-                pieces = remote.split(':', 1)[-1].split("/")
+                pieces = remote.split(':', 1)[-1].split("/", 2)
                 if hosting_name == 'codebasehq':
                     # format is codebasehq.com:{user}/{project}/{repo}.git
-                    user, project, repo = pieces
+                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
+                    user, project, repo = pieces[0], pieces[1], "/".join(pieces[2:])
                 else:
                     # format is {domain}:{user}/{repo}.git
-                    user, repo = pieces
+                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
+                    user, repo = pieces[0], "/".join(pieces[1:])
 
             # `domain` may be an alias configured in ssh
             try:
@@ -114,11 +116,13 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             # HTTP repository
             if hosting_name == 'codebasehq':
                 # format is {user}.codebasehq.com/{project}/{repo}.git
+                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
                 domain, project, repo = remote.split("/", 2)
                 # user is first segment of domain
                 user, domain = domain.split('.', 1)
             else:
                 # format is {domain}/{user}/{repo}.git
+                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
                 domain, user, repo = remote.split("://")[-1].split("/", 2)
                 project = None
 
