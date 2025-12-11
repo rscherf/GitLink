@@ -4,29 +4,30 @@ import webbrowser
 import sublime
 import sublime_plugin
 import subprocess
+from RepositoryParser import RepositoryParser
 
 HOSTINGS = {
     'github': {
-        'url': 'https://github.com/{user}/{repo}/blob/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://github.com/{user}/{repo}/blame/{revision}/{remote_path}{filename}',
+        'url': 'https://github.com/{owner}/{repo}/blob/{revision}/{remote_path}{filename}',
+        'blame_url': 'https://github.com/{owner}/{repo}/blame/{revision}/{remote_path}{filename}',
         'line_param': '#L',
         'line_param_sep': '-L'
     },
     'bitbucket': {
-        'url': 'https://bitbucket.org/{user}/{repo}/src/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://bitbucket.org/{user}/{repo}/annotate/{revision}/{remote_path}{filename}',
+        'url': 'https://bitbucket.org/{owner}/{repo}/src/{revision}/{remote_path}{filename}',
+        'blame_url': 'https://bitbucket.org/{owner}/{repo}/annotate/{revision}/{remote_path}{filename}',
         'line_param': '#cl-',
         'line_param_sep': ':'
     },
     'codebasehq': {
-        'url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}{remote_path}/{filename}',
-        'blame_url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}{remote_path}/{filename}',
+        'url': 'https://{domain}/projects/{project}/repositories/{repo}/blob/{revision}{remote_path}/{filename}',
+        'blame_url': 'https://{domain}/projects/{project}/repositories/{repo}/blame/{revision}{remote_path}/{filename}',
         'line_param': '#L',
         'line_param_sep': ':'
     },
     'gitlab': {
-        'url': 'https://{domain}/{user}/{repo}/-/blob/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://{domain}/{user}/{repo}/-/blame/{revision}/{remote_path}{filename}',
+        'url': 'https://{domain}/{owner}/{repo}/-/blob/{revision}/{remote_path}{filename}',
+        'blame_url': 'https://{domain}/{owner}/{repo}/-/blame/{revision}/{remote_path}{filename}',
         'line_param': '#L',
         'line_param_sep': '-'
     }
@@ -65,66 +66,25 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             "git config --get branch.{}.remote".format(branch_name), 'origin'
         )
         remote = self.getoutput("git remote get-url {}".format(remote_name))
-        remote = re.sub('.git$', '', remote)
+        repo_obj = RepositoryParser(remote)
+
+        if 'ssh' in repo_obj.scheme:
+            # `domain` may be an alias configured in ssh
+            try:
+                ssh_output = self.getoutput("ssh -G " + repo_obj.domain)
+            except:  # noqa intended unconditional except
+                domain = repo_obj.domain
+            else:
+                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+                domain = match.group(1) if match else repo_obj.domain
 
         # Select the right hosting configuration
         for hosting_name, hosting in HOSTINGS.items():
             if hosting_name in remote:
                 # We found a match, so keep these variable assignments
                 break
-
-        # Use ssh, except when the remote url starts with http:// or https://
-        use_ssh = re.match(r'^https?://', remote) is None
-        if use_ssh:
-            # Allow `ssh://` and a port to be part of the remote
-            project = None
-            match = re.match(
-                r'^(?:ssh://)?([^:]+):\d*/?([^/]+)/([^/]+)',
-                remote
-            )
-            if match:
-                pieces = match.groups()
-                domain, user, repo = pieces
-            else:
-                # failsafe if regex doesn't match
-                # Below index lookups always succeed, nu matter whether the
-                # split character exists
-                domain = remote.split(':', 1)[0].split('@', 1)[-1]
-                pieces = remote.split(':', 1)[-1].split("/", 2)
-                if hosting_name == 'codebasehq':
-                    # format is codebasehq.com:{user}/{project}/{repo}.git
-                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
-                    user, project, repo = pieces[0], pieces[1], "/".join(pieces[2:])
-                else:
-                    # format is {domain}:{user}/{repo}.git
-                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
-                    user, repo = pieces[0], "/".join(pieces[1:])
-
-            # `domain` may be an alias configured in ssh
-            try:
-                ssh_output = self.getoutput("ssh -G " + domain)
-            except:  # noqa intended unconditional except
-                # This is just an attempt at being smart. Let's not crash if
-                # it didn't work
-                pass
-            if ssh_output:
-                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
-                if match:
-                    domain = match.group(1)
-
-        else:
-            # HTTP repository
-            if hosting_name == 'codebasehq':
-                # format is {user}.codebasehq.com/{project}/{repo}.git
-                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
-                domain, project, repo = remote.split("/", 2)
-                # user is first segment of domain
-                user, domain = domain.split('.', 1)
-            else:
-                # format is {domain}/{user}/{repo}.git
-                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
-                domain, user, repo = remote.split("://")[-1].split("/", 2)
-                project = None
+        if not hosting_name or not hosting:
+            raise NotImplementedError('"{}" not in known Git hosts'.format(remote))
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
@@ -145,9 +105,9 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Build the URL
         url = hosting[view_type].format(
             domain=domain,
-            user=user,
-            project=project,
-            repo=repo,
+            owner=repo_obj.owner,
+            project=repo_obj.project,
+            repo=repo_obj.repo_name,
             revision=revision,
             remote_path=remote_path,
             filename=filename)
