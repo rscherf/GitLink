@@ -52,7 +52,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 repo.domain = match.group(1) if match else repo.domain
 
         # Find top level repo in current dir structure
-        remote_path = self.getoutput("git rev-parse --show-prefix")
+        remote_path = self.getoutput("git rev-parse --show-prefix").removeprefix('/')
 
         # Find the current revision
         settings = sublime.load_settings("Preferences.sublime-settings")
