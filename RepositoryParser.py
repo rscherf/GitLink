@@ -39,7 +39,6 @@ class RepositoryParser(object):
             git_url = re.sub(r'\b:\b', '/', git_url, count=1)
         parsed_url = urlparse(git_url)
         self._pr = parsed_url
-        print(parsed_url)
 
         self.scheme = parsed_url.scheme
         try:
