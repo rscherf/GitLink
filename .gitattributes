@@ -1,0 +1,4 @@
+/test_* export-ignore
+
+*.sublime-project export-ignore
+/.git* export-ignore
