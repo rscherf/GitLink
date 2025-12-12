@@ -1,5 +1,5 @@
 import unittest
-from RepositoryParser import RepositoryParser
+from repoparse.RepositoryParser import RepositoryParser
 
 
 class RepositoryParserTestCase(unittest.TestCase):
