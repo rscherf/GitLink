@@ -53,6 +53,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
+        file = remote_path + filename
 
         # Find the current revision
         settings = sublime.load_settings("Preferences.sublime-settings")
@@ -71,11 +72,9 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         # Choose the view type we'll use
         if 'blame' in args and args['blame']:
-            url = repo.get_blame_url(remote_path + filename, revision,
-                                     first_line, last_line)
+            url = repo.get_blame_url(file, revision, first_line, last_line)
         else:
-            url = repo.get_source_url(remote_path + filename, revision,
-                                      first_line, last_line)
+            url = repo.get_source_url(file, revision, first_line, last_line)
 
         if args['web']:
             webbrowser.open_new_tab(url)
