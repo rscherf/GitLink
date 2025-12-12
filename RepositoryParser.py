@@ -59,7 +59,7 @@ class RepositoryParser(object):
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]
                 self.project = split_path[1]
-            self.domain = self.domain.removeprefix(self.owner + '.')
+            self.domain = re.sub(r'^{}\.'.format(self.owner), '', self.domain)
 
         elif 'gitlab' in self.domain and len(split_path) > 3:
             self.owner = '/'.join(split_path[1:-1])

@@ -52,7 +52,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 repo.domain = match.group(1) if match else repo.domain
 
         # Find top level repo in current dir structure
-        remote_path = self.getoutput("git rev-parse --show-prefix").removeprefix('/')
+        remote_path = self.getoutput("git rev-parse --show-prefix")
 
         # Find the current revision
         settings = sublime.load_settings("Preferences.sublime-settings")
@@ -71,10 +71,10 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         # Choose the view type we'll use
         if 'blame' in args and args['blame']:
-            url = repo.get_blame_url(remote_path + '/' + filename, revision,
+            url = repo.get_blame_url(remote_path + filename, revision,
                                      first_line, last_line)
         else:
-            url = repo.get_source_url(remote_path + '/' + filename, revision,
+            url = repo.get_source_url(remote_path + filename, revision,
                                       first_line, last_line)
 
         if args['web']:
