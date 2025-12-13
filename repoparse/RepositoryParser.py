@@ -29,13 +29,7 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-',
         },
-        'codeberg': {
-            'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
-            'line_param_sep': '-L',
-        },
-        'gitea': {
+        'forgejo': {
             'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
             'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
             'line_param': '#L',
@@ -47,6 +41,10 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-',
         },
+    }
+    REPO_ALIASES = {
+        'gitea': 'forgejo',
+        'codeberg': 'forgejo',
     }
 
     def __init__(self, git_url, ref_type='abbrev'):
@@ -73,32 +71,42 @@ class RepositoryParser(object):
         self.repo_name = split_path[-1]
         self.project = None
 
+        self.host_type, self.host_formats = self._get_repo_host()
+
         # Extra rules for specific hosts
-        if 'codebasehq.com' in self.domain:
+        if self.host_type == 'codebasehq':
             self.project = split_path[2]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]
                 self.project = split_path[1]
             self.domain = re.sub(r'^{}\.'.format(self.owner), '', self.domain)
 
-        elif 'gitlab' in self.domain and len(split_path) > 3:
+        elif self.host_type == 'gitlab' and len(split_path) > 3:
             self.owner = '/'.join(split_path[1:-1])
 
     def _get_repo_host(self):
         # Select the right hosting configuration
-        for repo_host_name, repo_host_obj in self.REPO_HOSTS.items():
-            if repo_host_name in self.domain:
+        success = False
+        for repo_host_type, repo_host_fmts in self.REPO_HOSTS.items():
+            if repo_host_type in self.domain:
                 # We found a match, so keep these variable assignments
+                success = True
                 break
-        if not repo_host_name:
+        if not success:
+            for repo_alias, alias_target in self.REPO_ALIASES.items():
+                if repo_alias in self.domain:
+                    # We found a match, so keep these variable assignments
+                    repo_host_type = alias_target
+                    repo_host_fmts = self.REPO_HOSTS[alias_target]
+                    success = True
+                    break
+        if not success:
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
-        return repo_host_name, repo_host_obj
+        return repo_host_type, repo_host_fmts
 
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
-        _, repo_host_obj = self._get_repo_host()
-
         rev = revision
-        if any(h in self.domain for h in {'codeberg', 'gitea'}):
+        if self.host_type == 'forgejo':
             if self.ref_type == 'abbrev':
                 rev = 'branch/' + revision
             elif self.ref_type == 'commithash':
@@ -106,7 +114,7 @@ class RepositoryParser(object):
             else:
                 raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
-        url = repo_host_obj[fmt_id].format(
+        url = self.host_formats[fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
@@ -115,9 +123,9 @@ class RepositoryParser(object):
             file=file)
 
         if line_start:
-            url += repo_host_obj['line_param'] + str(line_start)
+            url += self.host_formats['line_param'] + str(line_start)
             if line_end and line_end != line_start:
-                url += repo_host_obj['line_param_sep'] + str(line_end)
+                url += self.host_formats['line_param_sep'] + str(line_end)
 
         return url
 
