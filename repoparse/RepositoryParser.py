@@ -29,10 +29,17 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-',
         },
+        'codeberg': {
+            'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
+            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
+            'line_param': '#L',
+            'line_param_sep': '-L',
+        },
     }
 
-    def __init__(self, git_url):
+    def __init__(self, git_url, ref_type='abbrev'):
         self.git_url = git_url
+        self.ref_type = ref_type
 
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
@@ -77,12 +84,21 @@ class RepositoryParser(object):
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         _, hosting = self._get_hosting_rule()
 
+        rev = revision
+        if 'codeberg' in self.domain:
+            if self.ref_type == 'abbrev':
+                rev = 'branch/' + revision
+            elif self.ref_type == 'commithash':
+                rev = 'commit/' + revision
+            else:
+                raise NotImplementedError('Unknown ref type: ' + self.ref_type)
+
         url = hosting[fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
             repo=self.repo_name,
-            revision=revision,
+            revision=rev,
             file=file)
 
         if line_start:

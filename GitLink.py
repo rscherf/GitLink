@@ -33,13 +33,23 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Switch to cwd of file
         os.chdir(path + "/")
 
+        # Find the current revision
+        settings = sublime.load_settings("Preferences.sublime-settings")
+        ref_type = settings.get('gitlink_revision_type', 'abbrev')
+        if ref_type == 'commithash':
+            revision = self.getoutput("git rev-parse HEAD")
+        elif ref_type == 'abbrev':
+            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
+        else:
+            raise NotImplementedError('Unknown ref setting: ' + ref_type)
+
         # Find the remote of the current branch
         branch_name = self.getoutput("git symbolic-ref --short HEAD")
         remote_name = self.getoutput(
             "git config --get branch.{}.remote".format(branch_name), 'origin'
         )
         remote = self.getoutput("git remote get-url {}".format(remote_name))
-        repo = RepositoryParser(remote)
+        repo = RepositoryParser(remote, ref_type)
 
         if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh
@@ -54,13 +64,6 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
         file = remote_path + filename
-
-        # Find the current revision
-        settings = sublime.load_settings("Preferences.sublime-settings")
-        if settings.get('gitlink_revision_type') == 'commithash':
-            revision = self.getoutput("git rev-parse HEAD")
-        else:
-            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
 
         if args['line']:
             region = self.view.sel()[0]

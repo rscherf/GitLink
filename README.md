@@ -6,6 +6,7 @@ Sublime Text plugin to derive shareable URLs to files in your source repositorie
 * <http://bitbucket.org>
 * <https://about.gitlab.com>
 * <http://codebasehq.com>
+* <http://codeberg.org>
 
 ## How it works
 
