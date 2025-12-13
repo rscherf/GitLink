@@ -35,6 +35,12 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-L',
         },
+        'sr.ht': {
+            'url': 'https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}',
+            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
+            'line_param': '#L',
+            'line_param_sep': '-',
+        },
     }
 
     def __init__(self, git_url, ref_type='abbrev'):
@@ -44,7 +50,7 @@ class RepositoryParser(object):
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
         if 'ssh://' in git_url:
-            git_url = re.sub(r'\b:\b', '/', git_url, count=1)
+            git_url = re.sub(r'\b:(?=[\w~])', '/', git_url, count=1)
         parsed_url = urlparse(git_url)
         self._pr = parsed_url
 
