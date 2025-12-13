@@ -74,10 +74,10 @@ class RepositoryParser(object):
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
         return hosting_name, hosting
 
-    def get_source_url(self, file, revision, line_start=0, line_end=0):
+    def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         _, hosting = self._get_hosting_rule()
 
-        url = hosting['url'].format(
+        url = hosting[fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
@@ -91,21 +91,9 @@ class RepositoryParser(object):
                 url += hosting['line_param_sep'] + str(line_end)
 
         return url
+
+    def get_source_url(self, file, revision, line_start=0, line_end=0):
+        return self._get_formatted_url('url', file, revision, line_start, line_end)
 
     def get_blame_url(self, file, revision, line_start=0, line_end=0):
-        _, hosting = self._get_hosting_rule()
-
-        url = hosting['blame_url'].format(
-            domain=self.domain,
-            owner=self.owner,
-            project=self.project,
-            repo=self.repo_name,
-            revision=revision,
-            file=file)
-
-        if line_start:
-            url += hosting['line_param'] + str(line_start)
-            if line_end:
-                url += hosting['line_param_sep'] + str(line_end)
-
-        return url
+        return self._get_formatted_url('blame_url', file, revision, line_start, line_end)
