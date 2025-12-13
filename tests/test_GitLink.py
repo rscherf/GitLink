@@ -29,3 +29,13 @@ class GitLinkTestCase(TestCase):
         self.view.run_command('gitlink', {'web': False, 'line': False, 'blame': True})
         yield lambda: sublime.get_clipboard() != ""
         self.assertEqual('https://github.com/rscherf/Switcher/blame/master/README.md', sublime.get_clipboard())
+
+    def test_copy_url_line(self):
+        self.view.run_command('gitlink', {'web': False, 'line': True})
+        yield lambda: sublime.get_clipboard() != ""
+        self.assertEqual('https://github.com/rscherf/Switcher/blob/master/README.md#L1-L1', sublime.get_clipboard())
+
+    def test_copy_blame_line(self):
+        self.view.run_command('gitlink', {'web': False, 'line': True, 'blame': True})
+        yield lambda: sublime.get_clipboard() != ""
+        self.assertEqual('https://github.com/rscherf/Switcher/blame/master/README.md#L1-L1', sublime.get_clipboard())
