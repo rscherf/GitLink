@@ -84,18 +84,18 @@ class RepositoryParser(object):
         elif 'gitlab' in self.domain and len(split_path) > 3:
             self.owner = '/'.join(split_path[1:-1])
 
-    def _get_hosting_rule(self):
+    def _get_repo_host(self):
         # Select the right hosting configuration
-        for hosting_name, hosting in self.REPO_HOSTS.items():
-            if hosting_name in self.domain:
+        for repo_host_name, repo_host_obj in self.REPO_HOSTS.items():
+            if repo_host_name in self.domain:
                 # We found a match, so keep these variable assignments
                 break
-        if not hosting_name or not hosting:
+        if not repo_host_name:
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
-        return hosting_name, hosting
+        return repo_host_name, repo_host_obj
 
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
-        _, hosting = self._get_hosting_rule()
+        _, repo_host_obj = self._get_repo_host()
 
         rev = revision
         if any(h in self.domain for h in {'codeberg', 'gitea'}):
@@ -106,7 +106,7 @@ class RepositoryParser(object):
             else:
                 raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
-        url = hosting[fmt_id].format(
+        url = repo_host_obj[fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
