@@ -115,9 +115,9 @@ class RepositoryParser(object):
             file=file)
 
         if line_start:
-            url += hosting['line_param'] + str(line_start)
-            if line_end:
-                url += hosting['line_param_sep'] + str(line_end)
+            url += repo_host_obj['line_param'] + str(line_start)
+            if line_end and line_end != line_start:
+                url += repo_host_obj['line_param_sep'] + str(line_end)
 
         return url
 
