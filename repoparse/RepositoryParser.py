@@ -35,6 +35,12 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-L',
         },
+        'gitea': {
+            'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
+            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
+            'line_param': '#L',
+            'line_param_sep': '-L',
+        },
         'sr.ht': {
             'url': 'https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}',
             'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
@@ -92,7 +98,7 @@ class RepositoryParser(object):
         _, hosting = self._get_hosting_rule()
 
         rev = revision
-        if 'codeberg' in self.domain:
+        if any(h in self.domain for h in {'codeberg', 'gitea'}):
             if self.ref_type == 'abbrev':
                 rev = 'branch/' + revision
             elif self.ref_type == 'commithash':
