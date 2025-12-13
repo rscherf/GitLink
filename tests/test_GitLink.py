@@ -18,7 +18,7 @@ class GitLinkTestCase(TestCase):
 
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
-        self.assertTrue(self.view.file_name().endswith('Switcher/README.md'))
+        self.assertTrue(self.view.file_name().replace('\\', '/').endswith('Switcher/README.md'))
 
     def test_copy_url(self):
         self.view.run_command('gitlink', {'web': False, 'line': False})
