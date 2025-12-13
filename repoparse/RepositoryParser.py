@@ -43,6 +43,7 @@ class RepositoryParser(object):
 
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
+        if 'ssh://' in git_url:
             git_url = re.sub(r'\b:\b', '/', git_url, count=1)
         parsed_url = urlparse(git_url)
         self._pr = parsed_url
