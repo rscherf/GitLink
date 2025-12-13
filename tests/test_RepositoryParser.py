@@ -42,6 +42,63 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+    def test_bitbucket_ssh(self):
+        parse_result = RepositoryParser('git@bitbucket.org:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5:7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5:7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_bitbucket_https(self):
+        parse_result = RepositoryParser('https://user@bitbucket.org/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5:7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5:7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_bitbucket_https_no_user(self):
+        parse_result = RepositoryParser('https://bitbucket.org/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md#cl-5:7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5:7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
     def test_gitlab_ssh(self):
         parse_result = RepositoryParser('git@gitlab.com:user/repo.git')
         self.assertEqual('gitlab.com', parse_result.domain)
