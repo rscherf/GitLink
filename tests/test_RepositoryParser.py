@@ -1,8 +1,8 @@
-import unittest
-from repoparse.RepositoryParser import RepositoryParser
+from unittest import TestCase
+from ..repoparse.RepositoryParser import RepositoryParser
 
 
-class RepositoryParserTestCase(unittest.TestCase):
+class RepositoryParserTestCase(TestCase):
 
     def test_github_ssh(self):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
