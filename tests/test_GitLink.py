@@ -15,6 +15,7 @@ class GitLinkTestCase(TestCase):
             self.view.set_scratch(True)
             self.view.window().focus_view(self.view)
             self.view.window().run_command("close_file")
+        subprocess.getoutput('rm -r Switcher/')
 
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
