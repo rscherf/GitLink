@@ -2,14 +2,15 @@
 
 # GitLink
 Sublime Text plugin to derive shareable URLs to files in your source repositories. No more traversing your file structure finding the file you are working on. With support for:
-* <https://github.com>
-* <https://bitbucket.org>
-* <https://about.gitlab.com>
-* <https://codebasehq.com>
-* <https://codeberg.org>
-* <https://sr.ht>
-* <https://gitea.com>
-* <https://gitee.com>
+* [GitHub](https://github.com)
+* [Bitbucket](https://bitbucket.org)
+* [GitLab](https://about.gitlab.com)
+* [CodebaseHQ](https://codebasehq.com)
+* [Forgejo/Codeberg](https://codeberg.org)
+* [Sourcehut](https://sr.ht)
+* [Gitea](https://gitea.com)
+* [Gitee](https://gitee.com)
+* [CGit](https://git.zx2c4.com/cgit/about/)
 
 ## How it works
 

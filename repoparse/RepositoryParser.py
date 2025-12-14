@@ -47,6 +47,12 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-',
         },
+        'cgit': {
+            'url': 'https://{domain}/{owner}/{repo}/tree/{file}?id={revision}',
+            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{file}?id={revision}',
+            'line_param': '#n',
+            # 'line_param_sep': '-',
+        },
     }
     REPO_ALIASES = {
         'gitea': 'forgejo',
