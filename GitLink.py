@@ -4,33 +4,7 @@ import webbrowser
 import sublime
 import sublime_plugin
 import subprocess
-
-HOSTINGS = {
-    'github': {
-        'url': 'https://github.com/{user}/{repo}/blob/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://github.com/{user}/{repo}/blame/{revision}/{remote_path}{filename}',
-        'line_param': '#L',
-        'line_param_sep': '-L'
-    },
-    'bitbucket': {
-        'url': 'https://bitbucket.org/{user}/{repo}/src/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://bitbucket.org/{user}/{repo}/annotate/{revision}/{remote_path}{filename}',
-        'line_param': '#cl-',
-        'line_param_sep': ':'
-    },
-    'codebasehq': {
-        'url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}{remote_path}/{filename}',
-        'blame_url': 'https://{user}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}{remote_path}/{filename}',
-        'line_param': '#L',
-        'line_param_sep': ':'
-    },
-    'gitlab': {
-        'url': 'https://{domain}/{user}/{repo}/-/blob/{revision}/{remote_path}{filename}',
-        'blame_url': 'https://{domain}/{user}/{repo}/-/blame/{revision}/{remote_path}{filename}',
-        'line_param': '#L',
-        'line_param_sep': '-'
-    }
-}
+from .repoparse.RepositoryParser import RepositoryParser
 
 
 class GitlinkCommand(sublime_plugin.TextCommand):
@@ -59,107 +33,51 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Switch to cwd of file
         os.chdir(path + "/")
 
+        # Find the current revision
+        settings = sublime.load_settings("Preferences.sublime-settings")
+        ref_type = settings.get('gitlink_revision_type', 'abbrev')
+        if ref_type == 'commithash':
+            revision = self.getoutput("git rev-parse HEAD")
+        elif ref_type == 'abbrev':
+            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
+        else:
+            raise NotImplementedError('Unknown ref setting: ' + ref_type)
+
         # Find the remote of the current branch
         branch_name = self.getoutput("git symbolic-ref --short HEAD")
         remote_name = self.getoutput(
             "git config --get branch.{}.remote".format(branch_name), 'origin'
         )
         remote = self.getoutput("git remote get-url {}".format(remote_name))
-        remote = re.sub('.git$', '', remote)
+        repo = RepositoryParser(remote, ref_type)
 
-        # Select the right hosting configuration
-        for hosting_name, hosting in HOSTINGS.items():
-            if hosting_name in remote:
-                # We found a match, so keep these variable assignments
-                break
-
-        # Use ssh, except when the remote url starts with http:// or https://
-        use_ssh = re.match(r'^https?://', remote) is None
-        if use_ssh:
-            # Allow `ssh://` and a port to be part of the remote
-            project = None
-            match = re.match(
-                r'^(?:ssh://)?([^:]+):\d*/?([^/]+)/([^/]+)',
-                remote
-            )
-            if match:
-                pieces = match.groups()
-                domain, user, repo = pieces
-            else:
-                # failsafe if regex doesn't match
-                # Below index lookups always succeed, nu matter whether the
-                # split character exists
-                domain = remote.split(':', 1)[0].split('@', 1)[-1]
-                pieces = remote.split(':', 1)[-1].split("/", 2)
-                if hosting_name == 'codebasehq':
-                    # format is codebasehq.com:{user}/{project}/{repo}.git
-                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
-                    user, project, repo = pieces[0], pieces[1], "/".join(pieces[2:])
-                else:
-                    # format is {domain}:{user}/{repo}.git
-                    # the repo part can contain slashes like gitlab.com:<org>/<group>/<subgroup>/<repo>.git
-                    user, repo = pieces[0], "/".join(pieces[1:])
-
+        if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh
             try:
-                ssh_output = self.getoutput("ssh -G " + domain)
+                ssh_output = self.getoutput("ssh -G " + repo.domain)
             except:  # noqa intended unconditional except
-                # This is just an attempt at being smart. Let's not crash if
-                # it didn't work
                 pass
-            if ssh_output:
-                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
-                if match:
-                    domain = match.group(1)
-
-        else:
-            # HTTP repository
-            if hosting_name == 'codebasehq':
-                # format is {user}.codebasehq.com/{project}/{repo}.git
-                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
-                domain, project, repo = remote.split("/", 2)
-                # user is first segment of domain
-                user, domain = domain.split('.', 1)
             else:
-                # format is {domain}/{user}/{repo}.git
-                # the repo part can contain slashes like https://gitlab.com/<org>/<group>/<subgroup>/<repo>.git
-                domain, user, repo = remote.split("://")[-1].split("/", 2)
-                project = None
+                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+                repo.domain = match.group(1) if match else repo.domain
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput("git rev-parse --show-prefix")
-
-        # Find the current revision
-        settings = sublime.load_settings("Preferences.sublime-settings")
-        if settings.get('gitlink_revision_type') == 'commithash':
-            revision = self.getoutput("git rev-parse HEAD")
-        else:
-            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
-
-        # Choose the view type we'll use
-        if 'blame' in args and args['blame']:
-            view_type = 'blame_url'
-        else:
-            view_type = 'url'
-
-        # Build the URL
-        url = hosting[view_type].format(
-            domain=domain,
-            user=user,
-            project=project,
-            repo=repo,
-            revision=revision,
-            remote_path=remote_path,
-            filename=filename)
+        file = remote_path + filename
 
         if args['line']:
             region = self.view.sel()[0]
             first_line = self.view.rowcol(region.begin())[0] + 1
             last_line = self.view.rowcol(region.end())[0] + 1
-            if first_line == last_line:
-                url += "{0}{1}".format(hosting['line_param'], first_line)
-            else:
-                url += "{0}{1}{2}{3}".format(hosting['line_param'], first_line, hosting['line_param_sep'], last_line)
+        else:
+            first_line = 0
+            last_line = 0
+
+        # Choose the view type we'll use
+        if 'blame' in args and args['blame']:
+            url = repo.get_blame_url(file, revision, first_line, last_line)
+        else:
+            url = repo.get_source_url(file, revision, first_line, last_line)
 
         if args['web']:
             webbrowser.open_new_tab(url)
