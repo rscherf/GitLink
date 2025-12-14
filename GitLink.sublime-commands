@@ -1,6 +1,6 @@
 [
     {
-        "caption": "GitLink: Settings",
+        "caption": "Preferences: GitLink Settings",
         "command": "edit_settings",
         "args": {
             "base_file": "${packages}/GitLink/GitLink.sublime-settings",
