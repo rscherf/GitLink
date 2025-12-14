@@ -8,8 +8,30 @@
     //  - "commithash": Use the current SHA
     "revision_type": "abbrev",
 
+    // A map of additional matches to a repo_hosts key
+    // Example:
+    // {
+    //     "\bgit\\.example\\.com\b": "gitlab",
+    // },
     "user_repo_aliases": {},
+
+    // A map of Git service providers to format objects.
+    // Example:
+    // {
+    //     "gitfu": {
+    //         "domain_match": "\\bgitfu\\.",
+    //         "urls": {
+    //             "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+    //             "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+    //         },
+    //         "line_params": {
+    //             "start": "#L:",
+    //             "end": ":",
+    //         },
+    //     },
+    // },
     "user_repo_hosts": {},
+
 
     //////////////////////
     // Default Settings //

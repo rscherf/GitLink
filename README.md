@@ -64,10 +64,34 @@ To install manually, you can clone the Git repository directly:
 
 ## Configuration
 
+Things work out of the box for several Git hosts.
+To customize further,
+use the **Preferences: GitLink Settings** command
+to open the settings.
+Defaults are on the left,
+and your changes are on the right.
+
+### Repo matching
+
+If you self-host a Git provider,
+you can link your domain to its format
+with `"user_repo_aliases"`:
+Make a map of (JSON-escaped) domain-matching regular expressions
+to the ID of the Git software your server runs.
+
+If you need to create a new Git provider,
+first consider making a PR here.
+Otherwise, use `"user_repo_hosts"`
+and follow the sample in the settings file,
+or copy and modify one
+from the defaults below it.
+
+### Link format
+
 To switch to generating permanent links
-that reference a git commit hash instead of branch name,
-add `"gitlink_revision_type": "commithash"`
-to your *Preferences.sublime-settings* file.
+that reference a Git commit hash instead of branch name,
+set `"revision_type": "commithash"`.
+Commits not pushed to the server will 404.
 
 
 ## Contribute
