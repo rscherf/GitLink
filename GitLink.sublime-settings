@@ -114,5 +114,27 @@
                 "end": "-",
             },
         },
+        "gitee": {
+            "domain_match": "\\bgitee\\b",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "end": "-",
+            },
+        },
+        "cgit": {
+            "domain_match": "\\bcgit\\b",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?id={revision}",
+            },
+            "line_params": {
+                "start": "#n",
+                // "end": "-",
+            },
+        },
     },
 }

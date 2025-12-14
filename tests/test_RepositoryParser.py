@@ -440,3 +440,71 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://git.sr.ht/~user/repo/blame/master/README.md#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_gitee_ssh(self):
+        parse_result = RepositoryParser('git@gitee.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('gitee.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_gitee_https(self):
+        parse_result = RepositoryParser('https://gitee.com/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('gitee.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://gitee.com/user/repo/blob/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://gitee.com/user/repo/blame/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_cgit_ssh(self):
+        parse_result = RepositoryParser('git@cgit.example.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('cgit.example.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+
+    def test_cgit_https(self):
+        parse_result = RepositoryParser('https://cgit.example.com/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('cgit.example.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
