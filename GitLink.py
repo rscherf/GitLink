@@ -34,8 +34,8 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         os.chdir(path + "/")
 
         # Find the current revision
-        settings = sublime.load_settings("Preferences.sublime-settings")
-        ref_type = settings.get('gitlink_revision_type', 'abbrev')
+        settings = sublime.load_settings('GitLink.sublime-settings')
+        ref_type = settings.get('revision_type')
         if ref_type == 'commithash':
             revision = self.getoutput("git rev-parse HEAD")
         elif ref_type == 'abbrev':
