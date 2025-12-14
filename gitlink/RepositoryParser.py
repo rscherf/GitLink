@@ -92,7 +92,7 @@ class RepositoryParser(object):
 
         if line_start:
             url += self.host_formats['line_params']['start'] + str(line_start)
-            if line_end and line_end != line_start:
+            if line_end and line_end != line_start and 'separator' in self.host_formats['line_params']:
                 url += self.host_formats['line_params']['separator'] + str(line_end)
 
         return url
