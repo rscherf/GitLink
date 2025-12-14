@@ -9,6 +9,7 @@ Sublime Text plugin to derive shareable URLs to files in your source repositorie
 * <https://codeberg.org>
 * <https://sr.ht>
 * <https://gitea.com>
+* <https://gitee.com>
 
 ## How it works
 

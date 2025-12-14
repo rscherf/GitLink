@@ -41,6 +41,12 @@ class RepositoryParser(object):
             'line_param': '#L',
             'line_param_sep': '-',
         },
+        'gitee': {
+            'url': 'https://{domain}/{owner}/{repo}/blob/{revision}/{file}',
+            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
+            'line_param': '#L',
+            'line_param_sep': '-',
+        },
     }
     REPO_ALIASES = {
         'gitea': 'forgejo',
