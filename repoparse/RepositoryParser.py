@@ -1,5 +1,5 @@
 import re
-from urllib.parse import urlparse
+from urllib.parse import quote, urlparse
 
 
 class RepositoryParser(object):
@@ -132,7 +132,7 @@ class RepositoryParser(object):
             project=self.project,
             repo=self.repo_name,
             revision=rev,
-            file=file)
+            file=quote(file))
 
         if line_start:
             url += self.host_formats['line_param'] + str(line_start)

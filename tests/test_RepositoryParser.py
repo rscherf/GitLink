@@ -99,6 +99,44 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+    def test_github_url_space(self):
+        parse_result = RepositoryParser('git@github.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt',
+                         parse_result.get_source_url('path with/spaces.txt', 'master'))
+        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt#L5',
+                         parse_result.get_source_url('path with/spaces.txt', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt#L5-L7',
+                         parse_result.get_source_url('path with/spaces.txt', 'master', 5, 7))
+        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt',
+                         parse_result.get_blame_url('path with/spaces.txt', 'master'))
+        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt#L5',
+                         parse_result.get_blame_url('path with/spaces.txt', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt#L5-L7',
+                         parse_result.get_blame_url('path with/spaces.txt', 'master', 5, 7))
+
+    def test_github_url_hash(self):
+        parse_result = RepositoryParser('git@github.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt',
+                         parse_result.get_source_url('C#.txt', 'master'))
+        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt#L5',
+                         parse_result.get_source_url('C#.txt', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt#L5-L7',
+                         parse_result.get_source_url('C#.txt', 'master', 5, 7))
+        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt',
+                         parse_result.get_blame_url('C#.txt', 'master'))
+        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt#L5',
+                         parse_result.get_blame_url('C#.txt', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt#L5-L7',
+                         parse_result.get_blame_url('C#.txt', 'master', 5, 7))
+
     def test_bitbucket_ssh(self):
         parse_result = RepositoryParser('git@bitbucket.org:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
