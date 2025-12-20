@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+		},
+	],
+	"build_systems": [
+		{
+			// https://github.com/SublimeText/UnitTesting
+			"name": "Test Current Package",
+			"target": "unit_testing",
+			"package": "GitLink",
+			"failfast": false,
+		},
+	],
+}
