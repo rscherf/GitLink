@@ -51,7 +51,7 @@ in a new tab of your default web browser
 
 ## Installation
 
-The easiest way is to install is using [Package Control][].
+The easiest way is to install is using [Package Control][pc].
 
 To install manually, you can clone the Git repository directly:
 * Mac:
