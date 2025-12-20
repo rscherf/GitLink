@@ -8,7 +8,7 @@ class RepositoryParser(object):
         'github': {
             'url': 'https://github.com/{owner}/{repo}/blob/{revision}/{file}',
             'blame_url': 'https://github.com/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
+            'line_param': '?plain=1#L',
             'line_param_sep': '-L',
         },
         'bitbucket': {
@@ -26,13 +26,13 @@ class RepositoryParser(object):
         'gitlab': {
             'url': 'https://{domain}/{owner}/{repo}/-/blob/{revision}/{file}',
             'blame_url': 'https://{domain}/{owner}/{repo}/-/blame/{revision}/{file}',
-            'line_param': '#L',
+            'line_param': '?plain=1#L',
             'line_param_sep': '-',
         },
         'forgejo': {
             'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
             'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
+            'line_param': '?display=source#L',
             'line_param_sep': '-L',
         },
         'sr.ht': {

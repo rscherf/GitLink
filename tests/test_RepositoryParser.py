@@ -12,15 +12,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_github_ssh_with_scheme(self):
@@ -31,15 +31,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_github_https(self):
@@ -50,15 +50,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_github_https_basicauth(self):
@@ -69,15 +69,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_github_https_basicauth_pw(self):
@@ -88,15 +88,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/README.md#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_github_url_space(self):
@@ -107,15 +107,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt',
                          parse_result.get_source_url('path with/spaces.txt', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt?plain=1#L5',
                          parse_result.get_source_url('path with/spaces.txt', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt?plain=1#L5-L7',
                          parse_result.get_source_url('path with/spaces.txt', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt',
                          parse_result.get_blame_url('path with/spaces.txt', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt?plain=1#L5',
                          parse_result.get_blame_url('path with/spaces.txt', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/path%20with/spaces.txt?plain=1#L5-L7',
                          parse_result.get_blame_url('path with/spaces.txt', 'master', 5, 7))
 
     def test_github_url_hash(self):
@@ -126,15 +126,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt',
                          parse_result.get_source_url('C#.txt', 'master'))
-        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt#L5',
+        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt?plain=1#L5',
                          parse_result.get_source_url('C#.txt', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt?plain=1#L5-L7',
                          parse_result.get_source_url('C#.txt', 'master', 5, 7))
         self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt',
                          parse_result.get_blame_url('C#.txt', 'master'))
-        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt#L5',
+        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt?plain=1#L5',
                          parse_result.get_blame_url('C#.txt', 'master', 5))
-        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt#L5-L7',
+        self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt?plain=1#L5-L7',
                          parse_result.get_blame_url('C#.txt', 'master', 5, 7))
 
     def test_bitbucket_ssh(self):
@@ -201,15 +201,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md?plain=1#L5-7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitlab_https(self):
@@ -220,15 +220,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md?plain=1#L5-7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/user/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitlab_selfhost_ssh(self):
@@ -238,15 +238,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md#L5',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md?plain=1#L5-7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md#L5',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitlab_selfhost_https(self):
@@ -257,15 +257,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md#L5',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md?plain=1#L5-7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md#L5',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitlab_groups_ssh(self):
@@ -276,15 +276,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md?plain=1#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md?plain=1#L5-7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md#L5',
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md#L5-7',
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_codebasehq_ssh(self):
@@ -335,15 +335,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_codeberg_https_branch(self):
@@ -354,15 +354,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/blame/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_codeberg_ssh_sha(self):
@@ -373,15 +373,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_codeberg_https_sha(self):
@@ -392,15 +392,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md#L5',
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md#L5-L7',
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitea_ssh_branch(self):
@@ -411,15 +411,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitea_https_branch(self):
@@ -430,15 +430,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/blame/branch/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitea_ssh_sha(self):
@@ -449,15 +449,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_gitea_https_sha(self):
@@ -468,15 +468,15 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md#L5',
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md#L5-L7',
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_sourcehut_ssh(self):
