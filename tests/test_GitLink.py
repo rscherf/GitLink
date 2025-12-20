@@ -1,12 +1,14 @@
 import sublime
 
+from os.path import abspath, dirname, join as pjoin
 from unittesting import DeferrableViewTestCase
 
 
 class GitLinkTestCase(DeferrableViewTestCase):
 
     def setUp(self):
-        self.view = sublime.active_window().open_file('tests/Switcher/README.md')
+        self.readme_path = pjoin(abspath(dirname(__file__)), 'Switcher', 'README.md')
+        self.view = sublime.active_window().open_file(self.readme_path)
         yield lambda: not self.view.is_loading()
 
     def tearDown(self):
