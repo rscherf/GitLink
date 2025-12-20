@@ -7,6 +7,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
     def setUp(self):
         self.view = sublime.active_window().open_file('tests/Switcher/README.md')
+        yield lambda: not self.view.is_loading()
 
     def tearDown(self):
         if self.view:
@@ -17,6 +18,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
         self.assertTrue(self.view.file_name().replace('\\', '/').endswith('Switcher/README.md'))
+        self.assertEqual('Switcher', self.view.substr(self.view.line(0)))
 
     def test_copy_url(self):
         sublime.set_clipboard('')
