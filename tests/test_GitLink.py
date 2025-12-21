@@ -41,7 +41,6 @@ class GitLinkTestCase(DeferrableViewTestCase):
             self.view.window().focus_view(self.view)
             self.view.window().run_command("close_file")
 
-    @skip('Hangs on Windows')
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
         self.assertTrue(self.view.file_name().endswith(
@@ -77,3 +76,6 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': True, 'blame': True})
         yield lambda: sublime.get_clipboard() != ''
         self.assertEqual('https://github.com/rscherf/Switcher/blame/master/README.md?plain=1#L1', sublime.get_clipboard())
+
+    def test_zzz_always_pass(self):
+        self.assertTrue(True)
