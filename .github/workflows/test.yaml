@@ -21,3 +21,4 @@ jobs:
       - uses: SublimeText/UnitTesting/actions/run-tests@v1
         with:
           package-name: GitLink
+          coverage: true
