@@ -10,7 +10,7 @@ With support for:
 * [Bitbucket][]
 * [GitLab][]
 * [CodebaseHQ][]
-* [Forgejo][]/[Codeberg][]
+* [Forgejo][] / [Codeberg][]
 * [Sourcehut][]
 * [Gitea][]
 * [Gitee][]
@@ -77,6 +77,7 @@ I know all of you can make this way better than me.
 
 1. Fork/clone the repository.
 1. Add whatever you'd like.
+1. Run tests with the [UnitTesting][] package.
 1. Submit a Pull Request.
 
 
@@ -100,4 +101,5 @@ I know all of you can make this way better than me.
 [cgit]: https://git.zx2c4.com/cgit/about/
 
 [pc]: https://packagecontrol.io
+[unittesting]: https://packagecontrol.io/packages/UnitTesting
 [twitter]: https://twitter.com/ryanscherf
