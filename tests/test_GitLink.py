@@ -8,6 +8,9 @@ from unittesting import DeferrableViewTestCase
 
 
 class GitLinkTestCase(DeferrableViewTestCase):
+    REPO_URL = 'https://github.com/rscherf/Switcher.git'
+    REPO_NAME = 'Switcher'
+    README_NAME = 'README.md'
 
     @classmethod
     def setUpClass(cls):
@@ -16,9 +19,9 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
         # Set up the test repo
         cls.my_path = abspath(dirname(__file__))
-        subprocess.call(['git', 'clone', 'https://github.com/rscherf/Switcher.git'], cwd=cls.my_path)
-        cls.repo_path = pjoin(cls.my_path, 'Switcher')
-        cls.readme_path =  pjoin(cls.repo_path, 'README.md')
+        subprocess.call(['git', 'clone', cls.REPO_URL], cwd=cls.my_path)
+        cls.repo_path = pjoin(cls.my_path, cls.REPO_NAME)
+        cls.readme_path =  pjoin(cls.repo_path, cls.README_NAME)
 
     @classmethod
     def tearDownClass(cls):
@@ -26,7 +29,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         sublime.set_clipboard(cls.orig_clipboard)
 
         # Delete the test repo
-        subprocess.call(['rm', '-r', 'Switcher'], cwd=cls.my_path)
+        subprocess.call(['rm', '-r', cls.REPO_NAME], cwd=cls.my_path)
 
     def setUp(self):
         self.view = sublime.active_window().open_file(self.readme_path)
@@ -41,7 +44,8 @@ class GitLinkTestCase(DeferrableViewTestCase):
     @skipIf(os_name == 'nt', 'Hangs on Windows')
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
-        self.assertTrue(self.view.file_name().replace('\\', '/').endswith('Switcher/README.md'))
+        self.assertTrue(self.view.file_name().endswith(
+            pjoin(self.REPO_NAME, self.README_NAME)))
         self.assertEqual('Switcher', self.view.substr(self.view.line(0)))
 
     def test_clipboard_exists(self):
