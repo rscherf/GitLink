@@ -20,5 +20,6 @@ jobs:
           sublime-text-version: ${{ matrix.st-version }}
       - uses: SublimeText/UnitTesting/actions/run-tests@v1
         with:
-          coverage: true
           package-name: GitLink
+          coverage: true
+          capture_console: true
