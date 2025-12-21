@@ -15,7 +15,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         # Set up the test repo
         my_path = abspath(dirname(__file__))
         subprocess.getoutput(
-            'cd ' + my_path + ' && '
+            'cd "' + my_path + '" && '
             'git clone https://github.com/rscherf/Switcher.git')
         cls.repo_path = pjoin(my_path, 'Switcher')
         cls.readme_path =  pjoin(cls.repo_path, 'README.md')
@@ -27,8 +27,8 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
         # Delete the test repo
         subprocess.getoutput(
-            'cd ' + cls.repo_path + '/../.. && '
-            'rm -r ' + cls.repo_path)
+            'cd "' + cls.repo_path + '/../.." && '
+            'rm -r "' + cls.repo_path + '"')
 
     def setUp(self):
         self.view = sublime.active_window().open_file(self.readme_path)
