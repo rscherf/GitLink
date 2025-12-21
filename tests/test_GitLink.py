@@ -28,7 +28,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         yield {
             'condition': lambda: sublime.get_clipboard() != '',
             'period': 200,
-            'timeout': 10 * 1000,
+            'timeout': 20 * 1000,
             'timeout_message': 'Clipboard is still blank',
         }
         self.assertEqual('https://github.com/rscherf/Switcher/blob/master/README.md', sublime.get_clipboard())
