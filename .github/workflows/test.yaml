@@ -22,4 +22,3 @@ jobs:
         with:
           package-name: GitLink
           coverage: true
-          capture_console: true
