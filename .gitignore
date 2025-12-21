@@ -1,3 +1,6 @@
 # Compiled files
 __pycache__/
 *.pyc
+
+# Test repo
+Switcher/
