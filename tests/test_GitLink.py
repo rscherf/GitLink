@@ -25,7 +25,12 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_copy_url(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': False})
-        yield lambda: sublime.get_clipboard() != ""
+        yield {
+            'condition': lambda: sublime.get_clipboard() != '',
+            'period': 200,
+            'timeout': 10 * 1000,
+            'timeout_message': 'Clipboard is still blank',
+        }
         self.assertEqual('https://github.com/rscherf/Switcher/blob/master/README.md', sublime.get_clipboard())
 
     def test_copy_blame(self):
