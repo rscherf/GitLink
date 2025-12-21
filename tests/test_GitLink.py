@@ -6,6 +6,14 @@ from unittesting import DeferrableViewTestCase
 
 class GitLinkTestCase(DeferrableViewTestCase):
 
+    @classmethod
+    def setUpClass(cls):
+        cls.orig_clipboard = sublime.get_clipboard()
+
+    @classmethod
+    def tearDownClass(cls):
+        sublime.set_clipboard(cls.orig_clipboard)
+
     def setUp(self):
         self.readme_path = pjoin(abspath(dirname(__file__)), 'Switcher', 'README.md')
         self.view = sublime.active_window().open_file(self.readme_path)
