@@ -8,7 +8,10 @@ jobs:
       fail-fast: false
       matrix:
         st-version: [3, 4]
-        os: ["ubuntu-latest", "macOS-latest", "windows-latest"]
+        os:
+          - "ubuntu-latest"
+          - "macOS-latest"
+          - "windows-latest"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v5
@@ -16,8 +19,9 @@ jobs:
           submodules: recursive
       - uses: SublimeText/UnitTesting/actions/setup@v1
         with:
+          package-name: GitLink
           sublime-text-version: ${{ matrix.st-version }}
       - uses: SublimeText/UnitTesting/actions/run-tests@v1
         with:
-          coverage: true
-          # codecov-upload: true
+          package-name: GitLink
+          # coverage: true

@@ -12,7 +12,6 @@
 			"target": "unit_testing",
 			"package": "GitLink",
 			"failfast": false,
-			"working_dir": "$project_path",
 		},
 	],
 }

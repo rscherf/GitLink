@@ -1,3 +1,0 @@
-[submodule "tests/Switcher"]
-	path = tests/Switcher
-	url = https://github.com/rscherf/Switcher.git
