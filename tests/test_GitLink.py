@@ -3,7 +3,7 @@ import subprocess
 
 from os import name as os_name
 from os.path import abspath, dirname, join as pjoin
-from unittest import skipIf
+from unittest import skip
 from unittesting import DeferrableViewTestCase
 
 
@@ -41,7 +41,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
             self.view.window().focus_view(self.view)
             self.view.window().run_command("close_file")
 
-    @skipIf(os_name == 'nt', 'Hangs on Windows')
+    @skip('Hangs on Windows')
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
         self.assertTrue(self.view.file_name().endswith(
