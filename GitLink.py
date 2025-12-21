@@ -26,7 +26,6 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, **args):
         # Current file path & filename
-        print('running GitlinkCommand')
 
         # only works on current open file
         path, filename = os.path.split(self.view.file_name())
@@ -43,8 +42,6 @@ class GitlinkCommand(sublime_plugin.TextCommand):
             revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
         else:
             raise NotImplementedError('Unknown ref setting: ' + ref_type)
-
-        print('ran a Git command successfully')
 
         # Find the remote of the current branch
         branch_name = self.getoutput("git symbolic-ref --short HEAD")

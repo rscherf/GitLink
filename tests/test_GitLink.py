@@ -1,4 +1,5 @@
 import sublime
+import subprocess
 
 from os.path import abspath, dirname, join as pjoin
 from unittesting import DeferrableViewTestCase
@@ -8,14 +9,29 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
     @classmethod
     def setUpClass(cls):
+        # Prep clipboard to return later
         cls.orig_clipboard = sublime.get_clipboard()
+
+        # Set up the test repo
+        my_path = abspath(dirname(__file__))
+        clone_path = pjoin(my_path, 'Switcher')
+        print(clone_path)
+        exitcode, _ = subprocess.getstatusoutput(
+            'cd ' + my_path + ' && '
+            'git clone https://github.com/rscherf/Switcher.git Switcher')
+        print(_)
+        cls.repo_path = clone_path # pjoin(clone_path, 'Switcher')
+        cls.readme_path =  pjoin(cls.repo_path, 'README.md')
 
     @classmethod
     def tearDownClass(cls):
+        # Restore the clipboard
         sublime.set_clipboard(cls.orig_clipboard)
 
+        # Delete the test repo
+        subprocess.getoutput('rm -r ' + cls.repo_path)
+
     def setUp(self):
-        self.readme_path = pjoin(abspath(dirname(__file__)), 'Switcher', 'README.md')
         self.view = sublime.active_window().open_file(self.readme_path)
         yield lambda: not self.view.is_loading()
 
