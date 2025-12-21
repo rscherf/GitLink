@@ -22,6 +22,12 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.assertTrue(self.view.file_name().replace('\\', '/').endswith('Switcher/README.md'))
         self.assertEqual('Switcher', self.view.substr(self.view.line(0)))
 
+    def test_clipboard_exists(self):
+        sublime.set_clipboard('')
+        self.assertFalse(sublime.get_clipboard())
+        sublime.set_clipboard('test string')
+        self.assertEqual('test string', sublime.get_clipboard())
+
     def test_copy_url(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': False})
