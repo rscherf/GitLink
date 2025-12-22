@@ -10,8 +10,10 @@
 			// https://github.com/SublimeText/UnitTesting
 			"name": "Test Current Package",
 			"target": "unit_testing",
+			"working_dir": "$project_path",
 			"package": "GitLink",
 			"failfast": false,
+			"coverage": true,
 		},
 	],
 }
