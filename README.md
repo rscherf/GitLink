@@ -75,7 +75,7 @@ and your changes are on the right.
 
 If you self-host a Git provider,
 you can link your domain to its format
-with `"user_repo_aliases"`:
+with `"user_repo_lookup"`:
 Make a map of (JSON-escaped) domain-matching regular expressions
 to the ID of the Git software your server runs.
 

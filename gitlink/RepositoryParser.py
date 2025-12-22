@@ -10,8 +10,8 @@ class RepositoryParser(object):
         settings = sublime.load_settings('GitLink.sublime-settings')
         self.REPO_HOSTS = dict(settings.get('user_repo_hosts'))
         self.REPO_HOSTS.update(settings.get('default_repo_hosts'))
-        self.REPO_ALIASES = dict(settings.get('user_repo_aliases'))
-        self.REPO_ALIASES.update(settings.get('default_repo_aliases'))
+        self.REPO_LOOKUP = dict(settings.get('user_repo_lookup'))
+        self.REPO_LOOKUP.update(settings.get('default_repo_lookup'))
 
     def __init__(self, git_url, ref_type='abbrev'):
         self._load_settings()
@@ -55,19 +55,13 @@ class RepositoryParser(object):
     def _get_repo_host(self):
         # Select the right hosting configuration
         success = False
-        for repo_host_type, repo_host_fmts in self.REPO_HOSTS.items():
-            if re.search(repo_host_fmts['domain_match'], self.domain):
+        for domain_regex, repo_host in self.REPO_LOOKUP.items():
+            if re.search(domain_regex, self.domain):
                 # We found a match, so keep these variable assignments
+                repo_host_type = repo_host
+                repo_host_fmts = self.REPO_HOSTS[repo_host]
                 success = True
                 break
-        if not success:
-            for repo_alias, alias_target in self.REPO_ALIASES.items():
-                if re.search(repo_alias, self.domain):
-                    # We found a match, so keep these variable assignments
-                    repo_host_type = alias_target
-                    repo_host_fmts = self.REPO_HOSTS[alias_target]
-                    success = True
-                    break
         if not success:
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
         return repo_host_type, repo_host_fmts
