@@ -10,10 +10,10 @@ from .gitlink.RepositoryParser import RepositoryParser
 class GitlinkCommand(sublime_plugin.TextCommand):
     cwd = os.getcwd()
 
-    def getoutput(self, command, fallback=None, cwd=None, **kwargs):
+    def getoutput(self, args, fallback=None, cwd=None, **kwargs):
         working_dir = cwd if cwd else self.cwd
         proc = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,
+            args, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
             cwd=working_dir, **kwargs
         )
         out, err = proc.communicate()
@@ -23,7 +23,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 return fallback
 
             raise RuntimeError("Failed to run: '{}' (code:{}) with error: {}".format(
-                command, return_code, err.decode().strip())
+                args, return_code, err.decode().strip())
             )
         return out.decode().strip()
 
@@ -37,24 +37,24 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         settings = sublime.load_settings("Preferences.sublime-settings")
         ref_type = settings.get('gitlink_revision_type', 'abbrev')
         if ref_type == 'commithash':
-            revision = self.getoutput("git rev-parse HEAD")
+            revision = self.getoutput(['git', 'rev-parse', 'HEAD'])
         elif ref_type == 'abbrev':
-            revision = self.getoutput("git rev-parse --abbrev-ref HEAD")
+            revision = self.getoutput(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
         else:
             raise NotImplementedError('Unknown ref setting: ' + ref_type)
 
         # Find the remote of the current branch
-        branch_name = self.getoutput("git symbolic-ref --short HEAD")
+        branch_name = self.getoutput(['git', 'symbolic-ref', '--short', 'HEAD'])
         remote_name = self.getoutput(
-            "git config --get branch.{}.remote".format(branch_name), 'origin'
-        )
-        remote = self.getoutput("git remote get-url {}".format(remote_name))
+            ['git', 'config', '--get branch.{}.remote'.format(branch_name)],
+            fallback='origin')
+        remote = self.getoutput(['git', 'remote', 'get-url', remote_name])
         repo = RepositoryParser(remote, ref_type)
 
         if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh
             try:
-                ssh_output = self.getoutput("ssh -G " + repo.domain)
+                ssh_output = self.getoutput(['ssh', '-G', repo.domain])
             except:  # noqa intended unconditional except
                 pass
             else:
@@ -62,7 +62,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 repo.domain = match.group(1) if match else repo.domain
 
         # Find top level repo in current dir structure
-        remote_path = self.getoutput("git rev-parse --show-prefix")
+        remote_path = self.getoutput(['git', 'rev-parse', '--show-prefix'])
         file = remote_path + filename
 
         if args['line']:
