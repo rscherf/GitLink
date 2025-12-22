@@ -26,7 +26,7 @@
     //         },
     //         "line_params": {
     //             "start": "#L:",
-    //             "end": ":",
+    //             "separator": ":",
     //         },
     //     },
     // },
@@ -56,7 +56,7 @@
             },
             "line_params": {
                 "start": "?plain=1#L",
-                "end": "-L",
+                "separator": "-L",
             },
         },
         "bitbucket": {
@@ -67,7 +67,7 @@
             },
             "line_params": {
                 "start": "#cl-",
-                "end": ":",
+                "separator": ":",
             },
         },
         "codebase": {
@@ -78,7 +78,7 @@
             },
             "line_params": {
                 "start": "#L",
-                "end": ":",
+                "separator": ":",
             },
         },
         "gitlab": {
@@ -89,7 +89,7 @@
             },
             "line_params": {
                 "start": "?plain=1#L",
-                "end": "-",
+                "separator": "-",
             },
         },
         "forgejo": {
@@ -100,7 +100,7 @@
             },
             "line_params": {
                 "start": "?display=source#L",
-                "end": "-L",
+                "separator": "-L",
             },
         },
         "sourcehut": {
@@ -111,7 +111,7 @@
             },
             "line_params": {
                 "start": "#L",
-                "end": "-",
+                "separator": "-",
             },
         },
         "gitee": {
@@ -122,7 +122,7 @@
             },
             "line_params": {
                 "start": "#L",
-                "end": "-",
+                "separator": "-",
             },
         },
         "cgit": {
@@ -133,7 +133,7 @@
             },
             "line_params": {
                 "start": "#n",
-                // "end": "-",
+                // "separator": "-",
             },
         },
     },
