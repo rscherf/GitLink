@@ -4,7 +4,7 @@ import webbrowser
 import sublime
 import sublime_plugin
 import subprocess
-from .gitlink.RepositoryParser import RepositoryParser
+from .RepositoryParser import RepositoryParser
 
 
 class GitlinkCommand(sublime_plugin.TextCommand):
