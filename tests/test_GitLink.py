@@ -41,8 +41,8 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
     def setUp(self):
         self.view = sublime.active_window().open_file(self.readme_path)
-        yield lambda: {
-            'condition': not self.view.is_loading(),
+        yield {
+            'condition': lambda: not self.view.is_loading(),
             'period': 53,
             'timeout': 8000,
             'timeout_message': 'View not ready',
