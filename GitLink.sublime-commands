@@ -1,5 +1,13 @@
 [
     {
+        "caption": "GitLink: Settings",
+        "command": "edit_settings",
+        "args": {
+            "base_file": "${packages}/GitLink/GitLink.sublime-settings",
+            "default": "{\n\t// Add your overrides here for settings on the left\n\t$0\n}\n",
+        }
+    },
+    {
         "caption": "GitLink: Copy Git URL to file",
         "command": "gitlink",
         "args": {

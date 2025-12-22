@@ -1,0 +1,118 @@
+{
+    ///////////////////
+    // User Settings //
+    ///////////////////
+
+    // Set the format for links.
+    //  - "abbrev": Abbreviate the current HEAD
+    //  - "commithash": Use the current SHA
+    "revision_type": "abbrev",
+
+    "user_repo_aliases": {},
+    "user_repo_hosts": {},
+
+    //////////////////////
+    // Default Settings //
+    ////////////////////////////////////////////////////////////////////////////
+    // If you override default rules, they will not be updated in the future. //
+    // If you want to add new rules, add them in user settings.               //
+    ////////////////////////////////////////////////////////////////////////////
+
+    // A map of additional matches to a repo_hosts key
+    "default_repo_aliases": {
+        "\\bcodeberg\\.": "forgejo",
+        "\\bgitea\\.": "forgejo",
+    },
+
+    // A map of repo hosts to formatting objects
+    "default_repo_hosts": {
+        "github": {
+            "domain_match": "\\bgithub\\.",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "?plain=1#L",
+                "end": "-L",
+            },
+        },
+        "bitbucket": {
+            "domain_match": "\\bbitbucket\\.",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/src/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/annotate/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#cl-",
+                "end": ":",
+            },
+        },
+        "codebase": {
+            "domain_match": "\\bcodebasehq\\.",
+            "urls": {
+                "source": "https://{owner}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}/{file}",
+                "blame": "https://{owner}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "end": ":",
+            },
+        },
+        "gitlab": {
+            "domain_match": "\\bgitlab\\.",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/-/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/-/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "?plain=1#L",
+                "end": "-",
+            },
+        },
+        "forgejo": {
+            "domain_match": "\\bforgejo\\.",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/src/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "?display=source#L",
+                "end": "-L",
+            },
+        },
+        "sourcehut": {
+            "domain_match": "\\bgit\\.sr\\.ht\\b",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "end": "-",
+            },
+        },
+        "gitee": {
+            "domain_match": "\\bgitee\\b",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "end": "-",
+            },
+        },
+        "cgit": {
+            "domain_match": "\\bcgit\\b",
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?id={revision}",
+            },
+            "line_params": {
+                "start": "#n",
+                // "end": "-",
+            },
+        },
+    },
+}
