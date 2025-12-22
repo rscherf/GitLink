@@ -17,7 +17,7 @@ class RepositoryParser(object):
             'line_param': '#cl-',
             'line_param_sep': ':',
         },
-        'codebasehq': {
+        'codebase': {
             'url': 'https://{owner}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}/{file}',
             'blame_url': 'https://{owner}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}/{file}',
             'line_param': '#L',
@@ -86,7 +86,7 @@ class RepositoryParser(object):
         self.host_type, self.host_formats = self._get_repo_host()
 
         # Extra rules for specific hosts
-        if self.host_type == 'codebasehq':
+        if self.host_type == 'codebase':
             self.project = split_path[2]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]

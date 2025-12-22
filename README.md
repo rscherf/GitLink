@@ -9,7 +9,7 @@ With support for:
 * [GitHub][]
 * [Bitbucket][]
 * [GitLab][]
-* [CodebaseHQ][]
+* [Codebase][]
 * [Forgejo][] / [Codeberg][]
 * [Sourcehut][]
 * [Gitea][]
@@ -92,7 +92,7 @@ I know all of you can make this way better than me.
 [github]: https://github.com
 [bitbucket]: https://bitbucket.org
 [gitLab]: https://about.gitlab.com
-[codebasehq]: https://codebasehq.com
+[codebase]: https://codebasehq.com
 [forgejo]: https://forgejo.org
 [codeberg]: https://codeberg.org
 [sourcehut]: https://sr.ht
