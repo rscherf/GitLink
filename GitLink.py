@@ -8,10 +8,13 @@ from .gitlink.RepositoryParser import RepositoryParser
 
 
 class GitlinkCommand(sublime_plugin.TextCommand):
+    cwd = os.getcwd()
 
-    def getoutput(self, command, fallback=None):
+    def getoutput(self, command, fallback=None, cwd=None, **kwargs):
+        working_dir = cwd if cwd else self.cwd
         proc = subprocess.Popen(
             command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True,
+            cwd=working_dir, **kwargs
         )
         out, err = proc.communicate()
         return_code = proc.returncode
@@ -28,10 +31,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
         # Current file path & filename
 
         # only works on current open file
-        path, filename = os.path.split(self.view.file_name())
-
-        # Switch to cwd of file
-        os.chdir(path + "/")
+        self.cwd, filename = os.path.split(self.view.file_name())
 
         # Find the current revision
         settings = sublime.load_settings("Preferences.sublime-settings")
