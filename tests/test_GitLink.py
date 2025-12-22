@@ -10,6 +10,12 @@ class GitLinkTestCase(DeferrableViewTestCase):
     REPO_URL = 'https://github.com/rscherf/Switcher.git'
     REPO_NAME = 'Switcher'
     README_NAME = 'README.md'
+    YIELD_OBJ = {
+        'condition': lambda: sublime.get_clipboard() != '',
+        'period': 53,
+        'timeout': 8000,
+        'timeout_message': 'Clipboard still empty',
+    }
 
 
     @classmethod
@@ -59,7 +65,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_copy_url(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': False})
-        yield lambda: sublime.get_clipboard() != ''
+        yield self.YIELD_OBJ
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blob/master/README.md',
             sublime.get_clipboard())
@@ -67,7 +73,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_copy_blame(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': False, 'blame': True})
-        yield lambda: sublime.get_clipboard() != ''
+        yield self.YIELD_OBJ
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blame/master/README.md',
             sublime.get_clipboard())
@@ -75,7 +81,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_copy_url_line(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': True})
-        yield lambda: sublime.get_clipboard() != ''
+        yield self.YIELD_OBJ
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blob/master/README.md?plain=1#L1',
             sublime.get_clipboard())
@@ -83,7 +89,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
     def test_copy_blame_line(self):
         sublime.set_clipboard('')
         self.view.run_command('gitlink', {'web': False, 'line': True, 'blame': True})
-        yield lambda: sublime.get_clipboard() != ''
+        yield self.YIELD_OBJ
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blame/master/README.md?plain=1#L1',
             sublime.get_clipboard())
