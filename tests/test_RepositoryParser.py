@@ -8,6 +8,7 @@ class RepositoryParserTestCase(TestCase):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -65,6 +66,7 @@ class RepositoryParserTestCase(TestCase):
         parse_result = RepositoryParser('https://me@github.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('me', parse_result.logon_user)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',

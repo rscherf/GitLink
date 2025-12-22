@@ -72,9 +72,9 @@ class RepositoryParser(object):
 
         self.scheme = parsed_url.scheme
         try:
-            self.ssh_user, self.domain = parsed_url.netloc.split('@')
+            self.logon_user, self.domain = parsed_url.netloc.split('@')
         except:
-            self.ssh_user = None
+            self.logon_user = None
             self.domain = parsed_url.netloc
 
         path = re.sub(r'\.git$', '', parsed_url.path)
