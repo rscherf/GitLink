@@ -571,6 +571,8 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_cgit_https(self):
         parse_result = RepositoryParser('https://cgit.example.com/user/repo.git')
@@ -586,3 +588,5 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
