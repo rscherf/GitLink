@@ -1,65 +1,21 @@
 import re
+import sublime
+
 from urllib.parse import quote, urlparse
 
 
 class RepositoryParser(object):
 
-    REPO_HOSTS = {
-        'github': {
-            'url': 'https://github.com/{owner}/{repo}/blob/{revision}/{file}',
-            'blame_url': 'https://github.com/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '?plain=1#L',
-            'line_param_sep': '-L',
-        },
-        'bitbucket': {
-            'url': 'https://bitbucket.org/{owner}/{repo}/src/{revision}/{file}',
-            'blame_url': 'https://bitbucket.org/{owner}/{repo}/annotate/{revision}/{file}',
-            'line_param': '#cl-',
-            'line_param_sep': ':',
-        },
-        'codebase': {
-            'url': 'https://{owner}.{domain}/projects/{project}/repositories/{repo}/blob/{revision}/{file}',
-            'blame_url': 'https://{owner}.{domain}/projects/{project}/repositories/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
-            'line_param_sep': ':',
-        },
-        'gitlab': {
-            'url': 'https://{domain}/{owner}/{repo}/-/blob/{revision}/{file}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/-/blame/{revision}/{file}',
-            'line_param': '?plain=1#L',
-            'line_param_sep': '-',
-        },
-        'forgejo': {
-            'url': 'https://{domain}/{owner}/{repo}/src/{revision}/{file}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '?display=source#L',
-            'line_param_sep': '-L',
-        },
-        'sr.ht': {
-            'url': 'https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
-            'line_param_sep': '-',
-        },
-        'gitee': {
-            'url': 'https://{domain}/{owner}/{repo}/blob/{revision}/{file}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{revision}/{file}',
-            'line_param': '#L',
-            'line_param_sep': '-',
-        },
-        'cgit': {
-            'url': 'https://{domain}/{owner}/{repo}/tree/{file}?id={revision}',
-            'blame_url': 'https://{domain}/{owner}/{repo}/blame/{file}?id={revision}',
-            'line_param': '#n',
-            # 'line_param_sep': '-',
-        },
-    }
-    REPO_ALIASES = {
-        'gitea': 'forgejo',
-        'codeberg': 'forgejo',
-    }
+    def _load_settings(self):
+        settings = sublime.load_settings('GitLink.sublime-settings')
+        self.REPO_HOSTS = dict(settings.get('user_repo_hosts'))
+        self.REPO_HOSTS.update(settings.get('default_repo_hosts'))
+        self.REPO_LOOKUP = dict(settings.get('user_repo_lookup'))
+        self.REPO_LOOKUP.update(settings.get('default_repo_lookup'))
 
     def __init__(self, git_url, ref_type='abbrev'):
+        self._load_settings()
+
         self.git_url = git_url
         self.ref_type = ref_type
 
@@ -99,19 +55,13 @@ class RepositoryParser(object):
     def _get_repo_host(self):
         # Select the right hosting configuration
         success = False
-        for repo_host_type, repo_host_fmts in self.REPO_HOSTS.items():
-            if repo_host_type in self.domain:
+        for domain_regex, repo_host in self.REPO_LOOKUP.items():
+            if re.search(domain_regex, self.domain):
                 # We found a match, so keep these variable assignments
+                repo_host_type = repo_host
+                repo_host_fmts = self.REPO_HOSTS[repo_host]
                 success = True
                 break
-        if not success:
-            for repo_alias, alias_target in self.REPO_ALIASES.items():
-                if repo_alias in self.domain:
-                    # We found a match, so keep these variable assignments
-                    repo_host_type = alias_target
-                    repo_host_fmts = self.REPO_HOSTS[alias_target]
-                    success = True
-                    break
         if not success:
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
         return repo_host_type, repo_host_fmts
@@ -126,7 +76,7 @@ class RepositoryParser(object):
             else:
                 raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
-        url = self.host_formats[fmt_id].format(
+        url = self.host_formats['urls'][fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
@@ -135,14 +85,14 @@ class RepositoryParser(object):
             file=quote(file))
 
         if line_start:
-            url += self.host_formats['line_param'] + str(line_start)
-            if line_end and line_end != line_start:
-                url += self.host_formats['line_param_sep'] + str(line_end)
+            url += self.host_formats['line_params']['start'] + str(line_start)
+            if line_end and line_end != line_start and 'separator' in self.host_formats['line_params']:
+                url += self.host_formats['line_params']['separator'] + str(line_end)
 
         return url
 
     def get_source_url(self, file, revision, line_start=0, line_end=0):
-        return self._get_formatted_url('url', file, revision, line_start, line_end)
+        return self._get_formatted_url('source', file, revision, line_start, line_end)
 
     def get_blame_url(self, file, revision, line_start=0, line_end=0):
-        return self._get_formatted_url('blame_url', file, revision, line_start, line_end)
+        return self._get_formatted_url('blame', file, revision, line_start, line_end)
