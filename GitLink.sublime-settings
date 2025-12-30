@@ -51,6 +51,7 @@
         "\\bgitea\\.": "forgejo",
         "\\bgit\\.sr\\.ht\\b": "sourcehut",
         "\\bgitee\\b": "gitee",
+        "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
     },
 
@@ -124,6 +125,16 @@
             "line_params": {
                 "start": "#L",
                 "separator": "-",
+            },
+        },
+        "gerrit": {
+            "urls": {
+                "source": "https://{domain}/{repo}/+/{revision}/{file}",
+                "blame": "https://{domain}/{repo}/+blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#",
+                // "separator": "-",
             },
         },
         "cgit": {
