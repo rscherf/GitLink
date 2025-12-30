@@ -632,3 +632,42 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://gerrit.example.com/repo/+blame/master/README.md#5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+    def test_gitweb_ssh(self):
+        parse_result = RepositoryParser('git@gitweb.example.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('gitweb.example.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md#l5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md#l5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_gitweb_https(self):
+        parse_result = RepositoryParser('https://gitweb.example.com/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('gitweb.example.com', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md#l5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md#l5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))

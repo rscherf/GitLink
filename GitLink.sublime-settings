@@ -53,6 +53,7 @@
         "\\bgitee\\b": "gitee",
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
+        "\\bgitweb\\b": "gitweb",
     },
 
     // A map of repo hosts to formatting objects
@@ -144,6 +145,16 @@
             },
             "line_params": {
                 "start": "#n",
+                // "separator": "-",
+            },
+        },
+        "gitweb": {
+            "urls": {
+                "source": "https://{domain}/{repo}/blob/{revision}:/{file}",
+                "blame": "https://{domain}/{repo}/blame/{revision}:/{file}",
+            },
+            "line_params": {
+                "start": "#l",
                 // "separator": "-",
             },
         },
