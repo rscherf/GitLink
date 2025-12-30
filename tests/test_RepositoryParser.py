@@ -567,6 +567,8 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_source_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
                          parse_result.get_blame_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
@@ -584,6 +586,8 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_source_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
                          parse_result.get_blame_url('README.md', 'master'))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
