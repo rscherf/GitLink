@@ -53,6 +53,7 @@
         "\\bgitee\\b": "gitee",
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
+        "\\bgit\\.launchpad\\.net\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
         "\\bgit\\.code\\.sf\\.net\\b": "sourceforge",
     },
