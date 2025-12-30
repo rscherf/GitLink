@@ -54,6 +54,7 @@
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
+        "\\bgit\\.code\\.sf\\.net\\b": "sourceforge",
     },
 
     // A map of repo hosts to formatting objects
@@ -156,6 +157,13 @@
             "line_params": {
                 "start": "#l",
                 // "separator": "-",
+            },
+        },
+        "sourceforge": {
+            // SourceForge provides neither line anchors nor blame
+            "urls": {
+                "source": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
+                "blame": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
             },
         },
     },

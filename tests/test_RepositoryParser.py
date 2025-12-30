@@ -633,7 +633,6 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gerrit.example.com/repo/+blame/master/README.md#5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
-
     def test_gitweb_ssh(self):
         parse_result = RepositoryParser('git@gitweb.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -670,4 +669,42 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_sourceforge_git(self):
+        parse_result = RepositoryParser('git://git.code.sf.net/p/user/repo')
+        self.assertEqual('git', parse_result.scheme)
+        self.assertEqual('git.code.sf.net', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_sourceforge_https(self):
+        parse_result = RepositoryParser('https://git.code.sf.net/p/user/repo')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('git.code.sf.net', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
