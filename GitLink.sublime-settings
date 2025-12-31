@@ -69,16 +69,6 @@
 
     // A map of repo hosts to formatting objects
     "default_repo_hosts": {
-        "github": {
-            "urls": {
-                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
-                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
-            },
-            "line_params": {
-                "start": "?plain=1#L",
-                "separator": "-L",
-            },
-        },
         "bitbucket": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/src/{revision}/{file}",
@@ -87,6 +77,16 @@
             "line_params": {
                 "start": "#cl-",
                 "separator": ":",
+            },
+        },
+        "cgit": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?id={revision}",
+            },
+            "line_params": {
+                "start": "#n",
+                // "separator": "-",
             },
         },
         "codebase": {
@@ -99,16 +99,6 @@
                 "separator": ":",
             },
         },
-        "gitlab": {
-            "urls": {
-                "source": "https://{domain}/{owner}/{repo}/-/blob/{revision}/{file}",
-                "blame": "https://{domain}/{owner}/{repo}/-/blame/{revision}/{file}",
-            },
-            "line_params": {
-                "start": "?plain=1#L",
-                "separator": "-",
-            },
-        },
         "forgejo": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/src/{revision}/{file}",
@@ -119,13 +109,23 @@
                 "separator": "-L",
             },
         },
-        "sourcehut": {
+        "github": {
             "urls": {
-                "source": "https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}",
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
                 "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
             },
             "line_params": {
-                "start": "#L",
+                "start": "?plain=1#L",
+                "separator": "-L",
+            },
+        },
+        "gitlab": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/-/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/-/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "?plain=1#L",
                 "separator": "-",
             },
         },
@@ -139,14 +139,14 @@
                 "separator": "-",
             },
         },
-        "phabricator": {
+        "gitweb": {
             "urls": {
-                "source": "https://{domain}/{owner}/{repo}/browse/{revision}/{file}",
-                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+                "source": "https://{domain}/{repo}/blob/{revision}:/{file}",
+                "blame": "https://{domain}/{repo}/blame/{revision}:/{file}",
             },
             "line_params": {
-                "start": "#L",
-                "separator": "-",
+                "start": "#l",
+                // "separator": "-",
             },
         },
         "gerrit": {
@@ -159,24 +159,24 @@
                 // "separator": "-",
             },
         },
-        "cgit": {
+        "phabricator": {
             "urls": {
-                "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
-                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?id={revision}",
+                "source": "https://{domain}/{owner}/{repo}/browse/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
             },
             "line_params": {
-                "start": "#n",
-                // "separator": "-",
+                "start": "#L",
+                "separator": "-",
             },
         },
-        "gitweb": {
+        "sourcehut": {
             "urls": {
-                "source": "https://{domain}/{repo}/blob/{revision}:/{file}",
-                "blame": "https://{domain}/{repo}/blame/{revision}:/{file}",
+                "source": "https://{domain}/{owner}/{repo}/tree/{revision}/item/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
             },
             "line_params": {
-                "start": "#l",
-                // "separator": "-",
+                "start": "#L",
+                "separator": "-",
             },
         },
         "sourceforge": {
