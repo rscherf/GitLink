@@ -53,6 +53,7 @@
         "\\bgogs\\.": "forgejo",
         "\\bphabricator\\b": "phabricator",
         "\\bphorge\\b": "phabricator",
+        "\\brhodecode\\b": "rhodecode",
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
@@ -174,6 +175,16 @@
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/browse/{revision}/{file}",
                 "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "separator": "-",
+            },
+        },
+        "rhodecode": {
+            "urls": {
+                "source": "https://{domain}/{repo}/files/{revision}/{file}",
+                "blame": "https://{domain}/{repo}/annotate/{revision}/{file}",
             },
             "line_params": {
                 "start": "#L",

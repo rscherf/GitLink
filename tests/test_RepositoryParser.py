@@ -904,3 +904,48 @@ class RepoParserPhorge(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserRhodeCode(TestCase):
+
+    def test_rhode_ssh(self):
+        parse_result = RepositoryParser('ssh://rhodecode@code.rhodecode.com:3022/repo')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('code.rhodecode.com', parse_result.domain)
+        self.assertEqual('rhodecode', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_rhode_https(self):
+        parse_result = RepositoryParser('https://code.rhodecode.com/repo')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('code.rhodecode.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://code.rhodecode.com/repo/files/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
