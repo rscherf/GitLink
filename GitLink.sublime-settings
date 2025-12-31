@@ -42,23 +42,29 @@
 
     // A map of domain matches to a repo_hosts key
     "default_repo_lookup": {
+
+        // Cloud and self-hostable patterns
         "\\bgithub\\.": "github",
-        "\\bbitbucket\\.": "bitbucket",
         "\\bgitlab\\.": "gitlab",
+        "\\bbitbucket\\.": "bitbucket",
         "\\bcodebasehq\\.": "codebase",
         "\\bforgejo\\.": "forgejo",
-        "\\bcodeberg\\.": "forgejo",
         "\\bgitea\\.": "forgejo",
         "\\bgogs\\.": "forgejo",
-        "\\bgit\\.sr\\.ht\\b": "sourcehut",
-        "\\bgitee\\b": "gitee",
         "\\bphabricator\\b": "phabricator",
         "\\bphorge\\b": "phabricator",
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
-        "\\bgit\\.launchpad\\.net\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
-        "\\bgit\\.code\\.sf\\.net\\b": "sourceforge",
+
+        // Specific sites
+        "^codeberg\\.org$": "forgejo",
+        "^git\\.sr\\.ht$": "sourcehut",
+        "^gitee\\.com$": "gitee",
+        "^git\\.code\\.sf\\.net$": "sourceforge",
+        "^git\\.launchpad\\.net$": "cgit",
+        "^invent\\.kde\\.org$": "gitlab",
+        "^salsa\\.debian\\.org$": "gitlab",
     },
 
     // A map of repo hosts to formatting objects
