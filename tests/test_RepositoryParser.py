@@ -9,6 +9,7 @@ class RepoParserGitHub(TestCase):
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
         self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -28,6 +29,8 @@ class RepoParserGitHub(TestCase):
         parse_result = RepositoryParser('ssh://git@github.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -47,6 +50,8 @@ class RepoParserGitHub(TestCase):
         parse_result = RepositoryParser('https://github.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -67,6 +72,7 @@ class RepoParserGitHub(TestCase):
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
         self.assertEqual('me', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -86,6 +92,8 @@ class RepoParserGitHub(TestCase):
         parse_result = RepositoryParser('https://me:password@github.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('me', parse_result.logon_user)
+        self.assertEqual('password', parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/README.md',
@@ -105,6 +113,8 @@ class RepoParserGitHub(TestCase):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/path%20with/spaces.txt',
@@ -124,6 +134,8 @@ class RepoParserGitHub(TestCase):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://github.com/user/repo/blob/master/C%23.txt',
@@ -146,6 +158,8 @@ class RepoParserBitbucket(TestCase):
         parse_result = RepositoryParser('git@bitbucket.org:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
@@ -162,9 +176,11 @@ class RepoParserBitbucket(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_bitbucket_https(self):
-        parse_result = RepositoryParser('https://user@bitbucket.org/user/repo.git')
+        parse_result = RepositoryParser('https://me@bitbucket.org/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual('me', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
@@ -184,6 +200,8 @@ class RepoParserBitbucket(TestCase):
         parse_result = RepositoryParser('https://bitbucket.org/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('bitbucket.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://bitbucket.org/user/repo/src/master/README.md',
@@ -203,7 +221,10 @@ class RepoParserGitLab(TestCase):
 
     def test_gitlab_ssh(self):
         parse_result = RepositoryParser('git@gitlab.com:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitlab.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md',
@@ -223,6 +244,8 @@ class RepoParserGitLab(TestCase):
         parse_result = RepositoryParser('https://gitlab.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitlab.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/user/repo/-/blob/master/README.md',
@@ -240,7 +263,10 @@ class RepoParserGitLab(TestCase):
 
     def test_gitlab_selfhost_ssh(self):
         parse_result = RepositoryParser('git@gitlab.selfhost.io:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitlab.selfhost.io', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md',
@@ -260,6 +286,8 @@ class RepoParserGitLab(TestCase):
         parse_result = RepositoryParser('https://gitlab.selfhost.io/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitlab.selfhost.io', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blob/master/README.md',
@@ -279,6 +307,8 @@ class RepoParserGitLab(TestCase):
         parse_result = RepositoryParser('git@gitlab.com:group1/group2/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitlab.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('group1/group2', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md',
@@ -301,6 +331,8 @@ class RepoParserCodebase(TestCase):
         parse_result = RepositoryParser('git@codebasehq.com:user/project/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('codebasehq.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('project', parse_result.project)
@@ -321,6 +353,8 @@ class RepoParserCodebase(TestCase):
         parse_result = RepositoryParser('https://user.codebasehq.com/project/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('codebasehq.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('project', parse_result.project)
@@ -344,6 +378,8 @@ class RepoParserCodeberg(TestCase):
         parse_result = RepositoryParser('git@codeberg.org:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md',
@@ -363,6 +399,8 @@ class RepoParserCodeberg(TestCase):
         parse_result = RepositoryParser('https://codeberg.org/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/branch/master/README.md',
@@ -382,6 +420,8 @@ class RepoParserCodeberg(TestCase):
         parse_result = RepositoryParser('git@codeberg.org:user/repo.git', 'commithash')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
@@ -401,6 +441,8 @@ class RepoParserCodeberg(TestCase):
         parse_result = RepositoryParser('https://codeberg.org/user/repo.git', 'commithash')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
@@ -423,6 +465,8 @@ class RepoParserGitea(TestCase):
         parse_result = RepositoryParser('git@gitea.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md',
@@ -442,6 +486,8 @@ class RepoParserGitea(TestCase):
         parse_result = RepositoryParser('https://gitea.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/branch/master/README.md',
@@ -461,6 +507,8 @@ class RepoParserGitea(TestCase):
         parse_result = RepositoryParser('git@gitea.com:user/repo.git', 'commithash')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
@@ -480,6 +528,8 @@ class RepoParserGitea(TestCase):
         parse_result = RepositoryParser('https://gitea.com/user/repo.git', 'commithash')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
@@ -502,6 +552,8 @@ class RepoParserSourcehut(TestCase):
         parse_result = RepositoryParser('git@git.sr.ht:~user/repo')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('git.sr.ht', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('~user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://git.sr.ht/~user/repo/tree/master/item/README.md',
@@ -521,6 +573,8 @@ class RepoParserSourcehut(TestCase):
         parse_result = RepositoryParser('https://git.sr.ht/~user/repo')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('git.sr.ht', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('~user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://git.sr.ht/~user/repo/tree/master/item/README.md',
@@ -543,6 +597,8 @@ class RepoParserGitee(TestCase):
         parse_result = RepositoryParser('git@gitee.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitee.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitee.com/user/repo/blob/master/README.md',
@@ -562,6 +618,8 @@ class RepoParserGitee(TestCase):
         parse_result = RepositoryParser('https://gitee.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitee.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitee.com/user/repo/blob/master/README.md',
@@ -584,6 +642,8 @@ class RepoParserCGit(TestCase):
         parse_result = RepositoryParser('git@cgit.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('cgit.example.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
@@ -603,6 +663,8 @@ class RepoParserCGit(TestCase):
         parse_result = RepositoryParser('https://cgit.example.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('cgit.example.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
@@ -625,6 +687,8 @@ class RepoParserGerrit(TestCase):
         parse_result = RepositoryParser('git@gerrit.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gerrit.example.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gerrit.example.com/repo/+/master/README.md',
@@ -644,6 +708,8 @@ class RepoParserGerrit(TestCase):
         parse_result = RepositoryParser('https://gerrit.example.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gerrit.example.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gerrit.example.com/repo/+/master/README.md',
@@ -666,6 +732,8 @@ class RepoParserGitWeb(TestCase):
         parse_result = RepositoryParser('git@gitweb.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitweb.example.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md',
@@ -685,6 +753,8 @@ class RepoParserGitWeb(TestCase):
         parse_result = RepositoryParser('https://gitweb.example.com/user/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitweb.example.com', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://gitweb.example.com/repo/blob/master:/README.md',
@@ -707,6 +777,8 @@ class RepoParserSourceforge(TestCase):
         parse_result = RepositoryParser('git://git.code.sf.net/p/user/repo')
         self.assertEqual('git', parse_result.scheme)
         self.assertEqual('git.code.sf.net', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
@@ -726,6 +798,8 @@ class RepoParserSourceforge(TestCase):
         parse_result = RepositoryParser('https://git.code.sf.net/p/user/repo')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('git.code.sf.net', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
         self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
@@ -748,6 +822,8 @@ class RepoParserPhorge(TestCase):
         parse_result = RepositoryParser('ssh://git@we.phorge.it/user/repo-id/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('we.phorge.it', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo-id', parse_result.repo_name)
         self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md',
@@ -767,6 +843,8 @@ class RepoParserPhorge(TestCase):
         parse_result = RepositoryParser('https://we.phorge.it/user/repo-id/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('we.phorge.it', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo-id', parse_result.repo_name)
         self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md',
