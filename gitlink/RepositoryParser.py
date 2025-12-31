@@ -44,7 +44,8 @@ class RepositoryParser(object):
 
         self.host_type, self.host_template = self._get_repo_host()
 
-        # Extra rules for specific hosts
+        ### Extra rules for specific hosts ####################################
+
         if self.host_type == 'codebase':
             self.project = split_path[2]
             if 'http' in self.scheme:
@@ -60,6 +61,14 @@ class RepositoryParser(object):
 
         elif self.host_type == 'phabricator':
             self.repo_name = split_path[2]
+
+        elif self.host_type == 'rhodecode':
+            if self.scheme == 'ssh':
+                split_path = split_path[1:]
+            self.owner = None
+            self.repo_name = split_path[1]
+
+        ### End extra host rules ##############################################
 
     def _get_repo_host(self):
         # Select the right hosting configuration
