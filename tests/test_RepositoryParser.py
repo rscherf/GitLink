@@ -2,7 +2,7 @@ from unittest import TestCase
 from ..gitlink.RepositoryParser import RepositoryParser
 
 
-class RepositoryParserTestCase(TestCase):
+class RepoParserGitHub(TestCase):
 
     def test_github_ssh(self):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
@@ -139,6 +139,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://github.com/user/repo/blame/master/C%23.txt?plain=1#L5-L7',
                          parse_result.get_blame_url('C#.txt', 'master', 5, 7))
 
+
+class RepoParserBitbucket(TestCase):
+
     def test_bitbucket_ssh(self):
         parse_result = RepositoryParser('git@bitbucket.org:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -195,6 +198,8 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://bitbucket.org/user/repo/annotate/master/README.md#cl-5:7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+class RepoParserGitLab(TestCase):
 
     def test_gitlab_ssh(self):
         parse_result = RepositoryParser('git@gitlab.com:user/repo.git')
@@ -289,7 +294,10 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
-    def test_codebasehq_ssh(self):
+
+class RepoParserCodebase(TestCase):
+
+    def test_codebase_ssh(self):
         parse_result = RepositoryParser('git@codebasehq.com:user/project/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('codebasehq.com', parse_result.domain)
@@ -309,7 +317,7 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://user.codebasehq.com/projects/project/repositories/repo/blame/master/README.md#L5:7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
-    def test_codebasehq_https(self):
+    def test_codebase_https(self):
         parse_result = RepositoryParser('https://user.codebasehq.com/project/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('codebasehq.com', parse_result.domain)
@@ -328,6 +336,9 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://user.codebasehq.com/projects/project/repositories/repo/blame/master/README.md#L5:7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserCodeberg(TestCase):
 
     def test_codeberg_ssh_branch(self):
         parse_result = RepositoryParser('git@codeberg.org:user/repo.git')
@@ -405,6 +416,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+
+class RepoParserGitea(TestCase):
+
     def test_gitea_ssh_branch(self):
         parse_result = RepositoryParser('git@gitea.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -481,6 +495,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+
+class RepoParserSourcehut(TestCase):
+
     def test_sourcehut_ssh(self):
         parse_result = RepositoryParser('git@git.sr.ht:~user/repo')
         self.assertEqual('ssh', parse_result.scheme)
@@ -518,6 +535,9 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://git.sr.ht/~user/repo/blame/master/README.md#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserGitee(TestCase):
 
     def test_gitee_ssh(self):
         parse_result = RepositoryParser('git@gitee.com:user/repo.git')
@@ -557,6 +577,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gitee.com/user/repo/blame/master/README.md#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+
+class RepoParserCGit(TestCase):
+
     def test_cgit_ssh(self):
         parse_result = RepositoryParser('git@cgit.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -594,6 +617,9 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserGerrit(TestCase):
 
     def test_gerrit_ssh(self):
         parse_result = RepositoryParser('git@gerrit.example.com:user/repo.git')
@@ -633,6 +659,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gerrit.example.com/repo/+blame/master/README.md#5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+
+class RepoParserGitWeb(TestCase):
+
     def test_gitweb_ssh(self):
         parse_result = RepositoryParser('git@gitweb.example.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -671,6 +700,9 @@ class RepositoryParserTestCase(TestCase):
         self.assertEqual('https://gitweb.example.com/repo/blame/master:/README.md#l5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+
+class RepoParserSourceforge(TestCase):
+
     def test_sourceforge_git(self):
         parse_result = RepositoryParser('git://git.code.sf.net/p/user/repo')
         self.assertEqual('git', parse_result.scheme)
@@ -708,6 +740,9 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserPhorge(TestCase):
 
     def test_phorge_ssh(self):
         parse_result = RepositoryParser('ssh://git@we.phorge.it/user/repo-id/repo.git')
