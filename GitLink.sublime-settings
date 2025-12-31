@@ -49,9 +49,16 @@
         "\\bforgejo\\.": "forgejo",
         "\\bcodeberg\\.": "forgejo",
         "\\bgitea\\.": "forgejo",
+        "\\bgogs\\.": "forgejo",
         "\\bgit\\.sr\\.ht\\b": "sourcehut",
         "\\bgitee\\b": "gitee",
+        "\\bphabricator\\b": "phabricator",
+        "\\bphorge\\b": "phabricator",
+        "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
+        "\\bgit\\.launchpad\\.net\\b": "cgit",
+        "\\bgitweb\\b": "gitweb",
+        "\\bgit\\.code\\.sf\\.net\\b": "sourceforge",
     },
 
     // A map of repo hosts to formatting objects
@@ -126,6 +133,26 @@
                 "separator": "-",
             },
         },
+        "phabricator": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/browse/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "separator": "-",
+            },
+        },
+        "gerrit": {
+            "urls": {
+                "source": "https://{domain}/{repo}/+/{revision}/{file}",
+                "blame": "https://{domain}/{repo}/+blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#",
+                // "separator": "-",
+            },
+        },
         "cgit": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
@@ -134,6 +161,23 @@
             "line_params": {
                 "start": "#n",
                 // "separator": "-",
+            },
+        },
+        "gitweb": {
+            "urls": {
+                "source": "https://{domain}/{repo}/blob/{revision}:/{file}",
+                "blame": "https://{domain}/{repo}/blame/{revision}:/{file}",
+            },
+            "line_params": {
+                "start": "#l",
+                // "separator": "-",
+            },
+        },
+        "sourceforge": {
+            // SourceForge provides neither line anchors nor blame
+            "urls": {
+                "source": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
+                "blame": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
             },
         },
     },

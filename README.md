@@ -10,11 +10,14 @@ With support for:
 * [Bitbucket][]
 * [GitLab][]
 * [Codebase][]
-* [Forgejo][] / [Codeberg][]
+* [Gogs][] and its fork tree, [Gitea][] and [Forgejo][] / [Codeberg][]
 * [Sourcehut][]
-* [Gitea][]
+* [Gerrit][]
 * [Gitee][]
 * [CGit][]
+* [GitWeb][]
+* [Phabricator][] / [Phorge][]
+* [SourceForge][] (no blame or line numbers)
 
 
 ## How it works
@@ -115,14 +118,20 @@ I know all of you can make this way better than me.
 
 [github]: https://github.com
 [bitbucket]: https://bitbucket.org
-[gitLab]: https://about.gitlab.com
+[gitlab]: https://about.gitlab.com
 [codebase]: https://codebasehq.com
+[gogs]: https://gogs.io
+[gitea]: https://gitea.com
 [forgejo]: https://forgejo.org
 [codeberg]: https://codeberg.org
 [sourcehut]: https://sr.ht
-[gitea]: https://gitea.com
+[gerrit]: https://www.gerritcodereview.com
 [gitee]: https://gitee.com
 [cgit]: https://git.zx2c4.com/cgit/about/
+[gitweb]: https://repo.or.cz/git.git
+[phabricator]: https://phacility.com/phabricator
+[phorge]: https://we.phorge.it
+[sourceforge]: https://sourceforge.net
 
 [pc]: https://packagecontrol.io
 [unittesting]: https://packagecontrol.io/packages/UnitTesting

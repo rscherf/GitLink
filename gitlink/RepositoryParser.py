@@ -52,6 +52,12 @@ class RepositoryParser(object):
         elif self.host_type == 'gitlab' and len(split_path) > 3:
             self.owner = '/'.join(split_path[1:-1])
 
+        elif self.host_type == 'sourceforge' and self.owner == 'p':
+            self.owner = split_path[2]
+
+        elif self.host_type == 'phabricator':
+            self.repo_name = split_path[2]
+
     def _get_repo_host(self):
         # Select the right hosting configuration
         success = False
@@ -84,7 +90,7 @@ class RepositoryParser(object):
             revision=rev,
             file=quote(file))
 
-        if line_start:
+        if line_start and 'line_params' in self.host_formats:
             url += self.host_formats['line_params']['start'] + str(line_start)
             if line_end and line_end != line_start and 'separator' in self.host_formats['line_params']:
                 url += self.host_formats['line_params']['separator'] + str(line_end)
