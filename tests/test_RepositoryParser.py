@@ -424,18 +424,18 @@ class RepoParserCodeberg(TestCase):
         self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
-                         parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5',
-                         parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md',
-                         parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5',
-                         parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md',
+                         parse_result.get_source_url('README.md', 'deadbeef'))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5, 7))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md',
+                         parse_result.get_blame_url('README.md', 'deadbeef'))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
     def test_codeberg_https_sha(self):
         parse_result = RepositoryParser('https://codeberg.org/user/repo.git', 'commithash')
@@ -445,18 +445,18 @@ class RepoParserCodeberg(TestCase):
         self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md',
-                         parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5',
-                         parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/src/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md',
-                         parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5',
-                         parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://codeberg.org/user/repo/blame/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md',
+                         parse_result.get_source_url('README.md', 'deadbeef'))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://codeberg.org/user/repo/src/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5, 7))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md',
+                         parse_result.get_blame_url('README.md', 'deadbeef'))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://codeberg.org/user/repo/blame/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
 
 class RepoParserGitea(TestCase):
@@ -511,18 +511,18 @@ class RepoParserGitea(TestCase):
         self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
-                         parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5',
-                         parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md',
-                         parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5',
-                         parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md',
+                         parse_result.get_source_url('README.md', 'deadbeef'))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5, 7))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md',
+                         parse_result.get_blame_url('README.md', 'deadbeef'))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
     def test_gitea_https_sha(self):
         parse_result = RepositoryParser('https://gitea.com/user/repo.git', 'commithash')
@@ -532,18 +532,18 @@ class RepoParserGitea(TestCase):
         self.assertEqual(None, parse_result.logon_password)
         self.assertEqual('user', parse_result.owner)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md',
-                         parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5',
-                         parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/src/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md',
-                         parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5',
-                         parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://gitea.com/user/repo/blame/commit/master/README.md?display=source#L5-L7',
-                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md',
+                         parse_result.get_source_url('README.md', 'deadbeef'))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://gitea.com/user/repo/src/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5, 7))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md',
+                         parse_result.get_blame_url('README.md', 'deadbeef'))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md?display=source#L5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://gitea.com/user/repo/blame/commit/deadbeef/README.md?display=source#L5-L7',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
 
 class RepoParserSourcehut(TestCase):
