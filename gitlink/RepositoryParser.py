@@ -1,7 +1,26 @@
 import re
 import sublime
 
+from enum import Enum
 from urllib.parse import quote, urlparse
+
+
+class RevType(Enum):
+    """Setting options for revision type"""
+
+    ABBREV = ('abbrev', ['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
+    COMMIT_HASH = ('commithash', ['git', 'rev-parse', 'HEAD'])
+
+    def __init__(self, stg_value, git_args):
+        self.setting_value = stg_value
+        self.git_args = git_args
+
+    @staticmethod
+    def from_setting(stg_value):
+        for rev_type in RevType:
+            if rev_type.setting_value == stg_value:
+                return rev_type
+        raise KeyError(stg_value + ' not found in RevType')
 
 
 class RepositoryParser(object):
@@ -13,11 +32,11 @@ class RepositoryParser(object):
         self.REPO_LOOKUP = dict(settings.get('user_repo_lookup'))
         self.REPO_LOOKUP.update(settings.get('default_repo_lookup'))
 
-    def __init__(self, git_url, ref_type='abbrev'):
+    def __init__(self, git_url, rev_type=RevType.ABBREV):
         self._load_settings()
 
         self.git_url = git_url
-        self.ref_type = ref_type
+        self.rev_type = rev_type
 
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
@@ -86,12 +105,10 @@ class RepositoryParser(object):
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         rev = revision
         if self.host_type == 'forgejo':
-            if self.ref_type == 'abbrev':
+            if self.rev_type == RevType.ABBREV:
                 rev = 'branch/' + revision
-            elif self.ref_type == 'commithash':
+            elif self.rev_type == RevType.COMMIT_HASH:
                 rev = 'commit/' + revision
-            else:
-                raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
         url = self.host_template['urls'][fmt_id].format(
             domain=self.domain,
