@@ -49,6 +49,7 @@
         "\\bforgejo\\.": "forgejo",
         "\\bcodeberg\\.": "forgejo",
         "\\bgitea\\.": "forgejo",
+        "\\bgogs\\.": "forgejo",
         "\\bgit\\.sr\\.ht\\b": "sourcehut",
         "\\bgitee\\b": "gitee",
         "\\bphabricator\\b": "phabricator",
