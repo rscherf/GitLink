@@ -27,10 +27,13 @@ class RepositoryParser(object):
         self._pr = parsed_url
 
         self.scheme = parsed_url.scheme
+        self.logon_user = None
+        self.logon_password = None
         try:
             self.logon_user, self.domain = parsed_url.netloc.split('@')
+            if ':' in self.logon_user:
+                self.logon_user, self.logon_password = self.logon_user.split(':')
         except:
-            self.logon_user = None
             self.domain = parsed_url.netloc
 
         path = re.sub(r'\.git$', '', parsed_url.path)
