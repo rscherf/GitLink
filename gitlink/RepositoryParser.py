@@ -39,7 +39,7 @@ class RepositoryParser(object):
         self.repo_name = split_path[-1]
         self.project = None
 
-        self.host_type, self.host_formats = self._get_repo_host()
+        self.host_type, self.host_template = self._get_repo_host()
 
         # Extra rules for specific hosts
         if self.host_type == 'codebase':
@@ -65,12 +65,12 @@ class RepositoryParser(object):
             if re.search(domain_regex, self.domain):
                 # We found a match, so keep these variable assignments
                 repo_host_type = repo_host
-                repo_host_fmts = self.REPO_HOSTS[repo_host]
+                repo_host_tpl = self.REPO_HOSTS[repo_host]
                 success = True
                 break
         if not success:
             raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
-        return repo_host_type, repo_host_fmts
+        return repo_host_type, repo_host_tpl
 
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         rev = revision
@@ -82,7 +82,7 @@ class RepositoryParser(object):
             else:
                 raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
-        url = self.host_formats['urls'][fmt_id].format(
+        url = self.host_template['urls'][fmt_id].format(
             domain=self.domain,
             owner=self.owner,
             project=self.project,
@@ -90,10 +90,10 @@ class RepositoryParser(object):
             revision=rev,
             file=quote(file))
 
-        if line_start and 'line_params' in self.host_formats:
-            url += self.host_formats['line_params']['start'] + str(line_start)
-            if line_end and line_end != line_start and 'separator' in self.host_formats['line_params']:
-                url += self.host_formats['line_params']['separator'] + str(line_end)
+        if line_start and 'line_params' in self.host_template:
+            url += self.host_template['line_params']['start'] + str(line_start)
+            if line_end and line_end != line_start and 'separator' in self.host_template['line_params']:
+                url += self.host_template['line_params']['separator'] + str(line_end)
 
         return url
 
