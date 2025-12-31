@@ -51,6 +51,8 @@
         "\\bgitea\\.": "forgejo",
         "\\bgit\\.sr\\.ht\\b": "sourcehut",
         "\\bgitee\\b": "gitee",
+        "\\bphabricator\\b": "phabricator",
+        "\\bphorge\\b": "phabricator",
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
         "\\bgit\\.launchpad\\.net\\b": "cgit",
@@ -123,6 +125,16 @@
         "gitee": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                "separator": "-",
+            },
+        },
+        "phabricator": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/browse/{revision}/{file}",
                 "blame": "https://{domain}/{owner}/{repo}/blame/{revision}/{file}",
             },
             "line_params": {

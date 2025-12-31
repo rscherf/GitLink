@@ -708,3 +708,41 @@ class RepositoryParserTestCase(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://sourceforge.net/p/user/repo/ci/master/tree/README.md',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_phorge_ssh(self):
+        parse_result = RepositoryParser('ssh://git@we.phorge.it/user/repo-id/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('we.phorge.it', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo-id', parse_result.repo_name)
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_phorge_https(self):
+        parse_result = RepositoryParser('https://we.phorge.it/user/repo-id/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('we.phorge.it', parse_result.domain)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo-id', parse_result.repo_name)
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://we.phorge.it/user/repo-id/browse/master/README.md#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://we.phorge.it/user/repo-id/blame/master/README.md#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))

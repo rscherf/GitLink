@@ -55,6 +55,9 @@ class RepositoryParser(object):
         elif self.host_type == 'sourceforge' and self.owner == 'p':
             self.owner = split_path[2]
 
+        elif self.host_type == 'phabricator':
+            self.repo_name = split_path[2]
+
     def _get_repo_host(self):
         # Select the right hosting configuration
         success = False
