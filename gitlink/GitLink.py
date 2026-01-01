@@ -28,18 +28,12 @@ class GitlinkCommand(TextCommand):
         return out.decode().strip()
 
     def lookup_ssh_host(self, hostname, config_file=None):
-        try:
-            ssh_args = ['ssh', '-G', hostname]
-            if config_file:
-                ssh_args += ['-F', config_file]
-            ssh_output = self.getoutput(ssh_args)
-        except:  # noqa intended unconditional except
-            pass
-        else:
-            match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
-            if match:
-                return match.group(1)
-        return hostname
+        ssh_args = ['ssh', '-G', hostname]
+        if config_file:
+            ssh_args += ['-F', config_file]
+        ssh_output = self.getoutput(ssh_args, 'hostname ' + hostname)
+        match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+        return match.group(1) if match else hostname
 
     def run(self, edit, **args):
         # Current file path & filename
