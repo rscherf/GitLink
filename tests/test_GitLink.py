@@ -4,6 +4,7 @@ import subprocess
 from os import getenv
 from os.path import abspath, dirname, join as pjoin
 from unittesting import DeferrableViewTestCase
+from ..gitlink.GitLink import GitlinkCommand
 
 
 class GitLinkTestCase(DeferrableViewTestCase):
@@ -16,6 +17,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         'timeout': 8000,
         'timeout_message': 'Clipboard still empty',
     }
+    SSH_CONFIG = 'test.ssh_config'
 
 
     @classmethod
@@ -28,6 +30,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         subprocess.call(['git', 'clone', cls.REPO_URL], cwd=cls.my_path)
         cls.repo_path = pjoin(cls.my_path, cls.REPO_NAME)
         cls.readme_path =  pjoin(cls.repo_path, cls.README_NAME)
+        cls.ssh_config_path = pjoin(cls.my_path, cls.SSH_CONFIG)
 
     @classmethod
     def tearDownClass(cls):
@@ -54,6 +57,16 @@ class GitLinkTestCase(DeferrableViewTestCase):
             self.view.window().focus_view(self.view)
             self.view.window().run_command("close_file")
 
+
+    def test_ssh_lookup(self):
+        self.assertEqual(
+            'github.com',
+            GitlinkCommand(self.view).lookup_ssh_host(
+                'gh', self.ssh_config_path))
+        self.assertEqual(
+            'example.com',
+            GitlinkCommand(self.view).lookup_ssh_host(
+                'pinkfoo', self.ssh_config_path))
 
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
