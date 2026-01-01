@@ -56,6 +56,7 @@
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
+        "\\bpagure\\b": "pagure",
 
         // Specific sites
         "^codeberg\\.org$": "forgejo",
@@ -157,6 +158,16 @@
             "line_params": {
                 "start": "#",
                 // "separator": "-",
+            },
+        },
+        "pagure": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/f/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?identifier={revision}",
+            },
+            "line_params": {
+                "start": "#_",
+                "separator": "-",
             },
         },
         "phabricator": {
