@@ -771,6 +771,51 @@ class RepoParserGitWeb(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
 
+class RepoParserPagure(TestCase):
+
+    def test_pagure_ssh(self):
+        parse_result = RepositoryParser('git@pagure.io:user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('pagure.io', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md#_5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md#_5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master#_5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master#_5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_pagure_https(self):
+        parse_result = RepositoryParser('https://pagure.io/user/repo.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('pagure.io', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md#_5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://pagure.io/user/repo/blob/master/f/README.md#_5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master#_5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://pagure.io/user/repo/blame/README.md?identifier=master#_5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
 class RepoParserSourceforge(TestCase):
 
     def test_sourceforge_git(self):
