@@ -59,14 +59,19 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
 
     def test_ssh_lookup(self):
+        cmd = GitlinkCommand(self.view)
         self.assertEqual(
             'github.com',
-            GitlinkCommand(self.view).lookup_ssh_host(
-                'gh', self.ssh_config_path))
+            cmd.lookup_ssh_host('gh', self.ssh_config_path))
         self.assertEqual(
             'example.com',
-            GitlinkCommand(self.view).lookup_ssh_host(
-                'pinkfoo', self.ssh_config_path))
+            cmd.lookup_ssh_host('pinkfoo', self.ssh_config_path))
+
+    def test_getoutput(self):
+        cmd = GitlinkCommand(self.view)
+        self.assertEqual('foo', cmd.getoutput(['echo', 'foo']))
+        self.assertEqual('fallback', cmd.getoutput(['false'], 'fallback'))
+        self.assertRaises(RuntimeError, lambda: cmd.getoutput(['false']))
 
     def test_repo_file_view(self):
         self.assertTrue(self.view.is_valid())
