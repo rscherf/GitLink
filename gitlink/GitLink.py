@@ -2,12 +2,12 @@ import os
 import re
 import webbrowser
 import sublime
-import sublime_plugin
 import subprocess
+from sublime_plugin import TextCommand
 from .RepositoryParser import RepositoryParser
 
 
-class GitlinkCommand(sublime_plugin.TextCommand):
+class GitlinkCommand(TextCommand):
     cwd = os.getcwd()
 
     def getoutput(self, args, fallback=None, cwd=None, **kwargs):
@@ -26,6 +26,20 @@ class GitlinkCommand(sublime_plugin.TextCommand):
                 args, return_code, err.decode().strip())
             )
         return out.decode().strip()
+
+    def lookup_ssh_host(self, hostname, config_file=None):
+        try:
+            ssh_args = ['ssh', '-G', hostname]
+            if config_file:
+                ssh_args += ['-F', config_file]
+            ssh_output = self.getoutput(ssh_args)
+        except:  # noqa intended unconditional except
+            pass
+        else:
+            match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+            if match:
+                return match.group(1)
+        return hostname
 
     def run(self, edit, **args):
         # Current file path & filename
@@ -53,13 +67,7 @@ class GitlinkCommand(sublime_plugin.TextCommand):
 
         if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh
-            try:
-                ssh_output = self.getoutput(['ssh', '-G', repo.domain])
-            except:  # noqa intended unconditional except
-                pass
-            else:
-                match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
-                repo.domain = match.group(1) if match else repo.domain
+            repo.domain = self.lookup_ssh_host(repo.domain)
 
         # Find top level repo in current dir structure
         remote_path = self.getoutput(['git', 'rev-parse', '--show-prefix'])

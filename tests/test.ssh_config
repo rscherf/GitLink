@@ -1,0 +1,6 @@
+Host gh
+    Hostname github.com
+    RequestTTY no
+
+Host *foo
+    Hostname example.com
