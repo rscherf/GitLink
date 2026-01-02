@@ -49,14 +49,15 @@ in a new tab of your default web browser
 ## Installation
 
 The easiest way is to install is using [Package Control][pc].
+Search for **GitLink** in the PC client plugin and install.
 
-To install manually, you can clone the Git repository directly:
-* Mac:
-  * `cd ~/Library/Application Support/Sublime Text/Packages/`
-* Linux:
-  * `cd ~/.config/sublime-text/Packages`
-* `git clone git@github.com:rscherf/GitLink.git`
-* Restart Sublime Text
+To install manually,
+clone or symlink `https://github.com/rscherf/GitLink.git`
+(or your fork)
+into the Sublime Text `Packages` folder:
++ Mac: `~/Library/Application Support/Sublime Text/Packages/`
++ Linux: `~/.config/sublime-text/Packages`
++ Windows: `%APPDATA%\Sublime Text\Packages`
 
 
 ## Git service provider support
