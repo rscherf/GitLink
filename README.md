@@ -158,10 +158,10 @@ I know all of you can make this way better than me.
 1. Use it however you'd like.
 
 
-[^cgit]: Linked to `cgit`
-[^forgejo]: Linked to `forgejo`
-[^gitlab]: Linked to `gitlab`
-[^sourceforge]: [SourceForge][] does not support blame or line numbers.
+[^cgit]: Linked to `cgit`  
+[^forgejo]: Linked to `forgejo`  
+[^gitlab]: Linked to `gitlab`  
+[^sourceforge]: [SourceForge][] does not support blame or line numbers.  
 
 
 [support]: #git-service-provider-support
