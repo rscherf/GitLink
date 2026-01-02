@@ -5,6 +5,7 @@
     "args" : {
       "line" : false,
       "web"  : true,
+      "blame": false,
     },
   },
   {
@@ -13,6 +14,7 @@
     "args" : {
       "line" : false,
       "web"  : false,
+      "blame": false,
     },
   },
 ]
