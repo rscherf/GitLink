@@ -88,16 +88,16 @@ and
 
 ### With domain [configuration][]
 
-If you have a supported host
-and their ID (like `gitlab`) in the hostname,
-it will work with no configuration.
-
 Any of the above plus
 [CGit][],
 [Gerrit][],
 [GitWeb][] (comes with Git),
 and
 [Forgejo][]
+
+If you have a supported host
+with their ID (like `gitlab`) in the hostname,
+no configuration is required.
 
 ### With full [configuration][]
 
@@ -108,7 +108,7 @@ if it would help others.
 
 ## Configuration
 
-Things work out of the box for several Git hosts.
+Things work out of the box for [many Git hosts][support].
 To customize further,
 use the **Preferences: GitLink Settings** command
 to open the settings.
