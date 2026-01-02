@@ -4,12 +4,11 @@ Sublime Text plugin to derive shareable URLs
 to files in your source repositories.
 No more traversing your file structure
 to find the file you are working on.
-With support for:
-
-* [GitHub][]
-* [Bitbucket][]
-* [GitLab][]
-* and many more; see below.
+With support for
+[GitHub][],
+[Bitbucket][],
+[GitLab][],
+and many more. See below.
 
 
 ## How it works
@@ -94,39 +93,47 @@ Commits not pushed to the server will 404.
 
 ## Git service provider support
 
+Hosts are listed alphabetically. 
+
 ### Upon install
 
-* [Arch Linux][] (GitLab)
-* [Bitbucket][]
-* [Codebase][]
-* [Codeberg][] (Forgejo)
-* [Debian Salsa][] (GitLab)
-* [GitHub][]
-* [GitLab][]
-* [Gitea][]
-* [Gitee][]
-* [GNOME][] (GitLab)
-* [Gogs][]
-* [Launchpad][] (CGit)
-* [KDE Invent][] (GitLab)
-* [Pagure][]
-* [Phabricator][]
-* [Phorge][]
-* [RhodeCode][]
-* [Sourcehut][]
-* [SourceForge][] (no blame or line numbers)
+[Arch Linux][] (GitLab),
+[Bitbucket][],
+[Codebase][],
+[Codeberg][] (Forgejo),
+[Debian Salsa][] (GitLab),
+[GitHub][],
+[GitLab][],
+[Gitea][],
+[Gitee][],
+[GNOME][] (GitLab),
+[Gogs][],
+[Launchpad][] (CGit),
+[KDE Invent][] (GitLab),
+Fedora [Pagure][],
+[Phabricator][],
+[Phorge][],
+[RhodeCode][],
+[Sourcehut][],
+and
+[SourceForge][] (SourceForge does not support blame or line numbers)
 
 ### With domain configuration
 
-* Any of the above, plus
-* [CGit][]
-* [Gerrit][]
-* [GitWeb][]
-* [Forgejo][]
+If you have a supported host
+and their ID (like `gitlab`) in the hostname,
+it will work with no configuration.
+
+Any of the above plus
+[CGit][],
+[Gerrit][],
+[GitWeb][] (comes with Git),
+and
+[Forgejo][]
 
 ### With full configuration
 
-* Any site you want?
+Any site you want.
 
 
 ## Contribute
