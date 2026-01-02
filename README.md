@@ -4,20 +4,11 @@ Sublime Text plugin to derive shareable URLs
 to files in your source repositories.
 No more traversing your file structure
 to find the file you are working on.
-With support for:
-
-* [GitHub][]
-* [Bitbucket][]
-* [GitLab][]
-* [Codebase][]
-* [Gogs][] and its fork tree, [Gitea][] and [Forgejo][] / [Codeberg][]
-* [Sourcehut][]
-* [Gerrit][]
-* [Gitee][]
-* [CGit][]
-* [GitWeb][]
-* [Phabricator][] / [Phorge][]
-* [SourceForge][] (no blame or line numbers)
+With support for
+[GitHub][],
+[Bitbucket][],
+[GitLab][],
+and [many more][support].
 
 
 ## How it works
@@ -26,7 +17,9 @@ With support for:
 |:-:|:-:|
 |![Right click in the sidebar][sidebar-menu]|![Right click in a file][context-menu]|
 
-Or search for "GitLink" in the Command Palette.
+Or search for "GitLink" in the Command Palette
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+(<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on MacOS).
 
 
 ### Copy URLs to files
@@ -56,19 +49,67 @@ in a new tab of your default web browser
 ## Installation
 
 The easiest way is to install is using [Package Control][pc].
+Search for **GitLink** in the PC client plugin and install.
 
-To install manually, you can clone the Git repository directly:
-* Mac:
-  * `cd ~/Library/Application Support/Sublime Text/Packages/`
-* Linux:
-  * `cd ~/.config/sublime-text/Packages`
-* `git clone git@github.com:rscherf/GitLink.git`
-* Restart Sublime Text
+To install manually,
+clone or symlink `https://github.com/rscherf/GitLink.git`
+(or your fork)
+into the Sublime Text `Packages` folder:
++ Mac: `~/Library/Application Support/Sublime Text/Packages`
++ Linux: `~/.config/sublime-text/Packages`
++ Windows: `%APPDATA%\Sublime Text\Packages`
+
+
+## Git service provider support
+
+Hosts are listed alphabetically.
+
+### Upon install
+
+[Arch Linux][][^gitlab],
+[Bitbucket][],
+[Codebase][],
+[Codeberg][][^forgejo],
+[Debian Salsa][][^gitlab],
+[GitHub][],
+[GitLab][],
+[Gitea][],
+[Gitee][],
+[GNOME][][^gitlab],
+[Gogs][],
+[Launchpad][][^cgit],
+[KDE Invent][][^gitlab],
+Fedora [Pagure][],
+[Phabricator][],
+[Phorge][],
+[RhodeCode][],
+[Sourcehut][],
+and
+[SourceForge][][^sourceforge]
+
+### With domain [configuration][]
+
+Any of the above plus
+[CGit][],
+[Gerrit][],
+[GitWeb][] (comes with Git),
+and
+[Forgejo][]
+
+If you have a supported host
+with their ID (like `gitlab`) in the hostname,
+no configuration is required.
+
+### With full [configuration][]
+
+Any site you want.
+Please open an issue or PR
+if it would help others.
 
 
 ## Configuration
 
-Things work out of the box for several Git hosts.
+Things work out of the box for [many Git hosts][support].
 To customize further,
 use the **Preferences: GitLink Settings** command
 to open the settings.
@@ -103,7 +144,7 @@ Commits not pushed to the server will 404.
 Git and Sublime Text are powerful;
 I know all of you can make this way better than me.
 
-1. Fork/clone the repository.
+1. Fork / clone the repository.
 1. Add whatever you'd like.
 1. Run tests with the [UnitTesting][] package.
 1. Submit a Pull Request.
@@ -112,27 +153,43 @@ I know all of you can make this way better than me.
 ## Copyright
 
 1. Star the Github repository.
-1. Follow [ryanscherf][twitter] on Twitter,
+1. Follow [@ryanscherf][twitter] on Twitter,
    and tell me how much you love this plugin.
 1. Use it however you'd like.
 
 
-[github]: https://github.com
+[^cgit]: Linked to `cgit`
+[^forgejo]: Linked to `forgejo`
+[^gitlab]: Linked to `gitlab`
+[^sourceforge]: [SourceForge][] does not support blame or line numbers.
+
+
+[support]: #git-service-provider-support
+[configuration]: #configuration
+
+[arch linux]: https://gitlab.archlinux.org
 [bitbucket]: https://bitbucket.org
-[gitlab]: https://about.gitlab.com
-[codebase]: https://codebasehq.com
-[gogs]: https://gogs.io
-[gitea]: https://gitea.com
-[forgejo]: https://forgejo.org
-[codeberg]: https://codeberg.org
-[sourcehut]: https://sr.ht
-[gerrit]: https://www.gerritcodereview.com
-[gitee]: https://gitee.com
 [cgit]: https://git.zx2c4.com/cgit/about/
-[gitweb]: https://repo.or.cz/git.git
+[codebase]: https://codebasehq.com
+[codeberg]: https://codeberg.org
+[debian salsa]: https://salsa.debian.org
+[forgejo]: https://forgejo.org
+[gerrit]: https://www.gerritcodereview.com
+[gitea]: https://gitea.com
+[gitee]: https://gitee.com
+[github]: https://github.com
+[gitlab]: https://about.gitlab.com
+[gitweb]: https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb
+[gnome]: https://gitlab.gnome.org
+[gogs]: https://gogs.io
+[kde invent]: https://invent.kde.org
+[launchpad]: https://code.launchpad.net
+[pagure]: https://pagure.io
 [phabricator]: https://phacility.com/phabricator
 [phorge]: https://we.phorge.it
+[rhodecode]: https://rhodecode.com
 [sourceforge]: https://sourceforge.net
+[sourcehut]: https://sr.ht
 
 [sidebar-menu]: demo/sidebar-menu.png
 [context-menu]: demo/context-menu.png
