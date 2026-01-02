@@ -55,7 +55,7 @@ To install manually,
 clone or symlink `https://github.com/rscherf/GitLink.git`
 (or your fork)
 into the Sublime Text `Packages` folder:
-+ Mac: `~/Library/Application Support/Sublime Text/Packages/`
++ Mac: `~/Library/Application Support/Sublime Text/Packages`
 + Linux: `~/.config/sublime-text/Packages`
 + Windows: `%APPDATA%\Sublime Text\Packages`
 
