@@ -111,6 +111,16 @@
                 "separator": "-L",
             },
         },
+        "gerrit": {
+            "urls": {
+                "source": "https://{domain}/{repo}/+/{revision}/{file}",
+                "blame": "https://{domain}/{repo}/+blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#",
+                // "separator": "-",
+            },
+        },
         "github": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
@@ -148,16 +158,6 @@
             },
             "line_params": {
                 "start": "#l",
-                // "separator": "-",
-            },
-        },
-        "gerrit": {
-            "urls": {
-                "source": "https://{domain}/{repo}/+/{revision}/{file}",
-                "blame": "https://{domain}/{repo}/+blame/{revision}/{file}",
-            },
-            "line_params": {
-                "start": "#",
                 // "separator": "-",
             },
         },

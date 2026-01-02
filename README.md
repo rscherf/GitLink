@@ -9,15 +9,7 @@ With support for:
 * [GitHub][]
 * [Bitbucket][]
 * [GitLab][]
-* [Codebase][]
-* [Gogs][] and its fork tree, [Gitea][] and [Forgejo][] / [Codeberg][]
-* [Sourcehut][]
-* [Gerrit][]
-* [Gitee][]
-* [CGit][]
-* [GitWeb][]
-* [Phabricator][] / [Phorge][]
-* [SourceForge][] (no blame or line numbers)
+* and many more; see below.
 
 
 ## How it works
@@ -26,7 +18,9 @@ With support for:
 |:-:|:-:|
 |![Right click in the sidebar][sidebar-menu]|![Right click in a file][context-menu]|
 
-Or search for "GitLink" in the Command Palette.
+Or search for "GitLink" in the Command Palette
+<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd>
+(<kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>P</kbd> on MacOS).
 
 
 ### Copy URLs to files
@@ -98,6 +92,43 @@ set `"revision_type": "commithash"`.
 Commits not pushed to the server will 404.
 
 
+## Git service provider support
+
+### Upon install
+
+* [Arch Linux][] (GitLab)
+* [Bitbucket][]
+* [Codebase][]
+* [Codeberg][] (Forgejo)
+* [Debian Salsa][] (GitLab)
+* [GitHub][]
+* [GitLab][]
+* [Gitea][]
+* [Gitee][]
+* [GNOME][] (GitLab)
+* [Gogs][]
+* [Launchpad][] (CGit)
+* [KDE Invent][] (GitLab)
+* [Pagure][]
+* [Phabricator][]
+* [Phorge][]
+* [RhodeCode][]
+* [Sourcehut][]
+* [SourceForge][] (no blame or line numbers)
+
+### With domain configuration
+
+* Any of the above, plus
+* [CGit][]
+* [Gerrit][]
+* [GitWeb][]
+* [Forgejo][]
+
+### With full configuration
+
+* Any site you want?
+
+
 ## Contribute
 
 Git and Sublime Text are powerful;
@@ -112,27 +143,34 @@ I know all of you can make this way better than me.
 ## Copyright
 
 1. Star the Github repository.
-1. Follow [ryanscherf][twitter] on Twitter,
+1. Follow [@ryanscherf][twitter] on Twitter,
    and tell me how much you love this plugin.
 1. Use it however you'd like.
 
 
-[github]: https://github.com
+[arch linux]: https://gitlab.archlinux.org
 [bitbucket]: https://bitbucket.org
-[gitlab]: https://about.gitlab.com
-[codebase]: https://codebasehq.com
-[gogs]: https://gogs.io
-[gitea]: https://gitea.com
-[forgejo]: https://forgejo.org
-[codeberg]: https://codeberg.org
-[sourcehut]: https://sr.ht
-[gerrit]: https://www.gerritcodereview.com
-[gitee]: https://gitee.com
 [cgit]: https://git.zx2c4.com/cgit/about/
-[gitweb]: https://repo.or.cz/git.git
+[codebase]: https://codebasehq.com
+[codeberg]: https://codeberg.org
+[debian salsa]: https://salsa.debian.org
+[forgejo]: https://forgejo.org
+[gerrit]: https://www.gerritcodereview.com
+[gitea]: https://gitea.com
+[gitee]: https://gitee.com
+[github]: https://github.com
+[gitlab]: https://about.gitlab.com
+[gitweb]: https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb
+[gnome]: https://gitlab.gnome.org
+[gogs]: https://gogs.io
+[kde invent]: https://invent.kde.org
+[launchpad]: https://code.launchpad.net
+[pagure]: https://pagure.io
 [phabricator]: https://phacility.com/phabricator
 [phorge]: https://we.phorge.it
+[rhodecode]: https://rhodecode.com
 [sourceforge]: https://sourceforge.net
+[sourcehut]: https://sr.ht
 
 [sidebar-menu]: demo/sidebar-menu.png
 [context-menu]: demo/context-menu.png
