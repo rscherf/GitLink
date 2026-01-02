@@ -18,31 +18,11 @@
                 },
             },
             {
-                "caption": "Copy Git URL to line",
-                "id": "gitlink-link-line",
-                "command": "gitlink",
-                "args": {
-                    "line": true,
-                    "web": false,
-                    "blame": false,
-                },
-            },
-            {
                 "caption": "Copy Git Blame URL to file",
                 "id": "gitlink-link-file",
                 "command": "gitlink",
                 "args": {
                     "line": false,
-                    "web": false,
-                    "blame": true,
-                },
-            },
-            {
-                "caption": "Copy Git Blame URL to line",
-                "id": "gitlink-link-line",
-                "command": "gitlink",
-                "args": {
-                    "line": true,
                     "web": false,
                     "blame": true,
                 },
@@ -62,31 +42,11 @@
                 },
             },
             {
-                "caption": "Open Git URL to line",
-                "id": "gitlink-link-line",
-                "command": "gitlink",
-                "args": {
-                    "line": true,
-                    "web": true,
-                    "blame": false
-                }
-            },
-            {
                 "caption": "Open Git Blame URL to file",
                 "id": "gitlink-link-file",
                 "command": "gitlink",
                 "args": {
                     "line": false,
-                    "web": true,
-                    "blame": true,
-                },
-            },
-            {
-                "caption": "Open Git Blame URL to line",
-                "id": "gitlink-link-line",
-                "command": "gitlink",
-                "args": {
-                    "line": true,
                     "web": true,
                     "blame": true,
                 },
