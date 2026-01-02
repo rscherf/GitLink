@@ -8,7 +8,7 @@ With support for
 [GitHub][],
 [Bitbucket][],
 [GitLab][],
-and many more. See below.
+and [many more][support].
 
 
 ## How it works
@@ -59,6 +59,53 @@ To install manually, you can clone the Git repository directly:
 * Restart Sublime Text
 
 
+## Git service provider support
+
+Hosts are listed alphabetically.
+
+### Upon install
+
+[Arch Linux][][^gitlab],
+[Bitbucket][],
+[Codebase][],
+[Codeberg][][^forgejo],
+[Debian Salsa][][^gitlab],
+[GitHub][],
+[GitLab][],
+[Gitea][],
+[Gitee][],
+[GNOME][][^gitlab],
+[Gogs][],
+[Launchpad][][^cgit],
+[KDE Invent][][^gitlab],
+Fedora [Pagure][],
+[Phabricator][],
+[Phorge][],
+[RhodeCode][],
+[Sourcehut][],
+and
+[SourceForge][][^sourceforge]
+
+### With domain [configuration][]
+
+If you have a supported host
+and their ID (like `gitlab`) in the hostname,
+it will work with no configuration.
+
+Any of the above plus
+[CGit][],
+[Gerrit][],
+[GitWeb][] (comes with Git),
+and
+[Forgejo][]
+
+### With full [configuration][]
+
+Any site you want.
+Please open an issue or PR
+if it would help others.
+
+
 ## Configuration
 
 Things work out of the box for several Git hosts.
@@ -91,57 +138,12 @@ set `"revision_type": "commithash"`.
 Commits not pushed to the server will 404.
 
 
-## Git service provider support
-
-Hosts are listed alphabetically. 
-
-### Upon install
-
-[Arch Linux][] (GitLab),
-[Bitbucket][],
-[Codebase][],
-[Codeberg][] (Forgejo),
-[Debian Salsa][] (GitLab),
-[GitHub][],
-[GitLab][],
-[Gitea][],
-[Gitee][],
-[GNOME][] (GitLab),
-[Gogs][],
-[Launchpad][] (CGit),
-[KDE Invent][] (GitLab),
-Fedora [Pagure][],
-[Phabricator][],
-[Phorge][],
-[RhodeCode][],
-[Sourcehut][],
-and
-[SourceForge][] (SourceForge does not support blame or line numbers)
-
-### With domain configuration
-
-If you have a supported host
-and their ID (like `gitlab`) in the hostname,
-it will work with no configuration.
-
-Any of the above plus
-[CGit][],
-[Gerrit][],
-[GitWeb][] (comes with Git),
-and
-[Forgejo][]
-
-### With full configuration
-
-Any site you want.
-
-
 ## Contribute
 
 Git and Sublime Text are powerful;
 I know all of you can make this way better than me.
 
-1. Fork/clone the repository.
+1. Fork / clone the repository.
 1. Add whatever you'd like.
 1. Run tests with the [UnitTesting][] package.
 1. Submit a Pull Request.
@@ -154,6 +156,15 @@ I know all of you can make this way better than me.
    and tell me how much you love this plugin.
 1. Use it however you'd like.
 
+
+[^cgit]: Linked to `cgit`
+[^forgejo]: Linked to `forgejo`
+[^gitlab]: Linked to `gitlab`
+[^sourceforge]: [SourceForge][] does not support blame or line numbers.
+
+
+[support]: #git-service-provider-support
+[configuration]: #configuration
 
 [arch linux]: https://gitlab.archlinux.org
 [bitbucket]: https://bitbucket.org
