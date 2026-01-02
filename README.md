@@ -22,8 +22,9 @@ With support for:
 
 ## How it works
 
-![Right click in side menu](http://f.cl.ly/items/1O100K122E0a1x0y3V1k/Screen%20Shot%202014-10-20%20at%209.46.38%20AM.png)  
-![Right click in a file](http://f.cl.ly/items/3f1r0h0q1t2J003M2W0A/Screen%20Shot%202014-10-20%20at%209.46.24%20AM.png)
+| Sidebar | File content |
+|:-:|:-:|
+|![Right click in the sidebar][sidebar-menu]|![Right click in a file][context-menu]|
 
 Or search for "GitLink" in the Command Palette.
 
@@ -132,6 +133,9 @@ I know all of you can make this way better than me.
 [phabricator]: https://phacility.com/phabricator
 [phorge]: https://we.phorge.it
 [sourceforge]: https://sourceforge.net
+
+[sidebar-menu]: demo/sidebar-menu.png
+[context-menu]: demo/context-menu.png
 
 [pc]: https://packagecontrol.io
 [unittesting]: https://packagecontrol.io/packages/UnitTesting
