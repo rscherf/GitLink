@@ -22,8 +22,9 @@ With support for:
 
 ## How it works
 
-![Right click in the sidebar][sidebar-menu]  
-![Right click in a file][context-menu]
+| Sidebar | File content |
+|:-:|:-:|
+|![Right click in the sidebar][sidebar-menu]|![Right click in a file][context-menu]|
 
 Or search for "GitLink" in the Command Palette.
 
