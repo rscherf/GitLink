@@ -2,7 +2,6 @@
 /.git* export-ignore
 /tests/ export-ignore
 /demo/ export-ignore
-/unittesting.json export-ignore
 
 *.sublime-project export-ignore
 README.md export-ignore

@@ -4,3 +4,7 @@ __pycache__/
 
 # Test repo
 Switcher/
+
+# Local preferences
+/unittesting.json
+/pyrightconfig.json
