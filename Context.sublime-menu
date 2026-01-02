@@ -14,8 +14,8 @@
                 "args": {
                     "line": false,
                     "web": false,
-                    "blame": false
-                }
+                    "blame": false,
+                },
             },
             {
                 "caption": "Copy Git URL to line",
@@ -24,8 +24,8 @@
                 "args": {
                     "line": true,
                     "web": false,
-                    "blame": false
-                }
+                    "blame": false,
+                },
             },
             {
                 "caption": "Copy Git Blame URL to file",
@@ -34,8 +34,8 @@
                 "args": {
                     "line": false,
                     "web": false,
-                    "blame": true
-                }
+                    "blame": true,
+                },
             },
             {
                 "caption": "Copy Git Blame URL to line",
@@ -44,8 +44,8 @@
                 "args": {
                     "line": true,
                     "web": false,
-                    "blame": true
-                }
+                    "blame": true,
+                },
             },
             {
                 "caption": "-",
@@ -58,8 +58,8 @@
                 "args": {
                     "line": false,
                     "web": true,
-                    "blame": false
-                }
+                    "blame": false,
+                },
             },
             {
                 "caption": "Open Git URL to line",
@@ -68,8 +68,8 @@
                 "args": {
                     "line": true,
                     "web": true,
-                    "blame": false
-                }
+                    "blame": false,
+                },
             },
             {
                 "caption": "Open Git Blame URL to file",
@@ -78,8 +78,8 @@
                 "args": {
                     "line": false,
                     "web": true,
-                    "blame": true
-                }
+                    "blame": true,
+                },
             },
             {
                 "caption": "Open Git Blame URL to line",
@@ -88,9 +88,9 @@
                 "args": {
                     "line": true,
                     "web": true,
-                    "blame": true
-                }
-            }
-        ]
-    }
+                    "blame": true,
+                },
+            },
+        ],
+    },
 ]
