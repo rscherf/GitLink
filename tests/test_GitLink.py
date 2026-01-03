@@ -10,6 +10,7 @@ from ..gitlink.GitLink import GitlinkCommand
 class GitLinkTestCase(DeferrableViewTestCase):
     REPO_URL = 'https://github.com/rscherf/Switcher.git'
     REPO_NAME = 'Switcher'
+    REPO_NAME_WORKTREE = 'Switcher-alt'
     README_NAME = 'README.md'
     YIELD_OBJ = {
         'condition': lambda: sublime.get_clipboard() != '',
@@ -22,15 +23,23 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
     @classmethod
     def setUpClass(cls):
+        cls.my_path = abspath(dirname(__file__))
+        cls.ssh_config_path = pjoin(cls.my_path, cls.SSH_CONFIG)
+
         # Prep clipboard to return later
         cls.orig_clipboard = sublime.get_clipboard()
 
         # Set up the test repo
-        cls.my_path = abspath(dirname(__file__))
         subprocess.call(['git', 'clone', cls.REPO_URL], cwd=cls.my_path)
         cls.repo_path = pjoin(cls.my_path, cls.REPO_NAME)
         cls.readme_path =  pjoin(cls.repo_path, cls.README_NAME)
-        cls.ssh_config_path = pjoin(cls.my_path, cls.SSH_CONFIG)
+
+        # Set up an alternate worktree
+        subprocess.call([
+            'git', 'worktree', 'add', '../' + cls.REPO_NAME_WORKTREE,
+            '-b', 'feature'], cwd=cls.repo_path)
+        cls.wktr_path = pjoin(cls.my_path, cls.REPO_NAME_WORKTREE)
+        cls.wktr_readme_path =  pjoin(cls.wktr_path, cls.README_NAME)
 
     @classmethod
     def tearDownClass(cls):
@@ -39,6 +48,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
 
         # Delete the test repo
         if getenv('GITHUB_ACTIONS') != 'true':
+            subprocess.call(['rm', '-r', cls.REPO_NAME_WORKTREE], cwd=cls.my_path)
             subprocess.call(['rm', '-r', cls.REPO_NAME], cwd=cls.my_path)
 
 
@@ -55,7 +65,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         if self.view:
             self.view.set_scratch(True)
             self.view.window().focus_view(self.view)
-            self.view.window().run_command("close_file")
+            self.view.window().run_command('close_file')
 
 
     def test_ssh_lookup(self):
@@ -116,6 +126,18 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blame/master/README.md?plain=1#L1',
             sublime.get_clipboard())
+
+    def test_copy_url_from_worktree(self):
+        wktr_view = sublime.active_window().open_file(self.wktr_readme_path)
+        sublime.set_clipboard('')
+        wktr_view.run_command('gitlink', {'web': False, 'line': False})
+        yield self.YIELD_OBJ
+        self.assertEqual(
+            'https://github.com/rscherf/Switcher/blob/feature/README.md',
+            sublime.get_clipboard())
+        wktr_view.set_scratch(True)
+        wktr_view.window().focus_view(wktr_view)
+        wktr_view.window().run_command('close_file')
 
     def test_zzz_always_pass(self):
         self.assertTrue(True)
