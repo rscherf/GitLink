@@ -68,6 +68,9 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.assertEqual(
             'example.com',
             cmd.lookup_ssh_host('pinkfoo', self.ssh_config_path))
+        self.assertEqual(
+            'bitbucket.org',
+            cmd.lookup_ssh_host('bitbucket.org', self.ssh_config_path))
 
     def test_getoutput(self):
         cmd = GitlinkCommand(self.view)
