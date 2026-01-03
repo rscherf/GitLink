@@ -13,11 +13,14 @@ class RepositoryParser(object):
         self.REPO_LOOKUP = dict(settings.get('user_repo_lookup'))
         self.REPO_LOOKUP.update(settings.get('default_repo_lookup'))
 
-    def __init__(self, git_url, ref_type='abbrev'):
+    def __init__(self, git_url, rev_type='abbrev'):
         self._load_settings()
 
         self.git_url = git_url
-        self.ref_type = ref_type
+        if rev_type in {'abbrev', 'commithash'}:
+            self.rev_type = rev_type
+        else:
+            raise NotImplementedError('Unknown rev type: ' + rev_type)
 
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
@@ -86,12 +89,10 @@ class RepositoryParser(object):
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         rev = revision
         if self.host_type == 'forgejo':
-            if self.ref_type == 'abbrev':
+            if self.rev_type == 'abbrev':
                 rev = 'branch/' + revision
-            elif self.ref_type == 'commithash':
+            elif self.rev_type == 'commithash':
                 rev = 'commit/' + revision
-            else:
-                raise NotImplementedError('Unknown ref type: ' + self.ref_type)
 
         url = self.host_template['urls'][fmt_id].format(
             domain=self.domain,

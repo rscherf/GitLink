@@ -43,13 +43,13 @@ class GitlinkCommand(TextCommand):
 
         # Find the current revision
         settings = sublime.load_settings('GitLink.sublime-settings')
-        ref_type = settings.get('revision_type')
-        if ref_type == 'commithash':
+        rev_type = settings.get('revision_type')
+        if rev_type == 'commithash':
             revision = self.getoutput(['git', 'rev-parse', 'HEAD'])
-        elif ref_type == 'abbrev':
+        elif rev_type == 'abbrev':
             revision = self.getoutput(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
         else:
-            raise NotImplementedError('Unknown ref setting: ' + ref_type)
+            raise NotImplementedError('Unknown ref setting: ' + rev_type)
 
         # Find the remote of the current branch
         branch_name = self.getoutput(['git', 'symbolic-ref', '--short', 'HEAD'])
@@ -57,7 +57,7 @@ class GitlinkCommand(TextCommand):
             ['git', 'config', '--get branch.{}.remote'.format(branch_name)],
             fallback='origin')
         remote = self.getoutput(['git', 'remote', 'get-url', remote_name])
-        repo = RepositoryParser(remote, ref_type)
+        repo = RepositoryParser(remote, rev_type)
 
         if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh

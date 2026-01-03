@@ -2,6 +2,29 @@ from unittest import TestCase
 from ..gitlink.RepositoryParser import RepositoryParser
 
 
+class RepoParserUnknown(TestCase):
+
+    def test_unknown_repo_ssh(self):
+        self.assertRaises(
+            NotImplementedError,
+            lambda: RepositoryParser('git@gitxx.com:user/repo.git'))
+
+    def test_unknown_repo_https(self):
+        self.assertRaises(
+            NotImplementedError,
+            lambda: RepositoryParser('https://gitxx.com:user/repo.git'))
+
+    def test_unknown_rev_type_ssh(self):
+        self.assertRaises(
+            NotImplementedError,
+            lambda: RepositoryParser('git@github.com:user/repo.git', 'foo'))
+
+    def test_unknown_rev_type_https(self):
+        self.assertRaises(
+            NotImplementedError,
+            lambda: RepositoryParser('https://github.com:user/repo.git', 'foo'))
+
+
 class RepoParserGitHub(TestCase):
 
     def test_github_ssh(self):
