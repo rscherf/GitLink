@@ -18,19 +18,21 @@ class GitLinkTestCase(DeferrableViewTestCase):
         'timeout_message': 'Clipboard still empty',
     }
     SSH_CONFIG = 'test.ssh_config'
+    REV = 'master'
 
 
     @classmethod
     def setUpClass(cls):
+        cls.my_path = abspath(dirname(__file__))
+        cls.ssh_config_path = pjoin(cls.my_path, cls.SSH_CONFIG)
+
         # Prep clipboard to return later
         cls.orig_clipboard = sublime.get_clipboard()
 
         # Set up the test repo
-        cls.my_path = abspath(dirname(__file__))
         subprocess.call(['git', 'clone', cls.REPO_URL], cwd=cls.my_path)
         cls.repo_path = pjoin(cls.my_path, cls.REPO_NAME)
         cls.readme_path =  pjoin(cls.repo_path, cls.README_NAME)
-        cls.ssh_config_path = pjoin(cls.my_path, cls.SSH_CONFIG)
 
     @classmethod
     def tearDownClass(cls):
@@ -55,7 +57,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         if self.view:
             self.view.set_scratch(True)
             self.view.window().focus_view(self.view)
-            self.view.window().run_command("close_file")
+            self.view.window().run_command('close_file')
 
 
     def test_ssh_lookup(self):
@@ -90,7 +92,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': False})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blob/master/README.md',
+            'https://github.com/rscherf/Switcher/blob/{}/README.md'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_blame(self):
@@ -98,7 +100,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': False, 'blame': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blame/master/README.md',
+            'https://github.com/rscherf/Switcher/blame/{}/README.md'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_url_line(self):
@@ -106,7 +108,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blob/master/README.md?plain=1#L1',
+            'https://github.com/rscherf/Switcher/blob/{}/README.md?plain=1#L1'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_blame_line(self):
@@ -114,8 +116,32 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': True, 'blame': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blame/master/README.md?plain=1#L1',
+            'https://github.com/rscherf/Switcher/blame/{}/README.md?plain=1#L1'.format(self.REV),
             sublime.get_clipboard())
 
     def test_zzz_always_pass(self):
         self.assertTrue(True)
+
+
+class GitLinkWorktreeTestCase(GitLinkTestCase):
+    WORKTREE = 'Switcher-alt'
+    REV = 'feature'
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        # Set up an alternate worktree
+        subprocess.call([
+            'git', 'worktree', 'add', '../' + cls.WORKTREE,
+            '-b', cls.REV], cwd=cls.repo_path)
+        cls.readme_path =  pjoin(cls.my_path, cls.WORKTREE, cls.README_NAME)
+        cls.REPO_ORIG = super().REPO_NAME
+        cls.REPO_NAME = cls.WORKTREE
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+
+        if getenv('GITHUB_ACTIONS') != 'true':
+            subprocess.call(['rm', '-r', cls.REPO_ORIG], cwd=cls.my_path)
