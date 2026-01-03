@@ -1,7 +1,6 @@
 import sublime
 import subprocess
 
-from os import getenv
 from os.path import abspath, dirname, join as pjoin
 from unittesting import DeferrableViewTestCase
 from ..gitlink.GitLink import GitlinkCommand
@@ -10,7 +9,6 @@ from ..gitlink.GitLink import GitlinkCommand
 class GitLinkTestCase(DeferrableViewTestCase):
     REPO_URL = 'https://github.com/rscherf/Switcher.git'
     REPO_NAME = 'Switcher'
-    REPO_NAME_WORKTREE = 'Switcher-alt'
     README_NAME = 'README.md'
     YIELD_OBJ = {
         'condition': lambda: sublime.get_clipboard() != '',
@@ -19,6 +17,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         'timeout_message': 'Clipboard still empty',
     }
     SSH_CONFIG = 'test.ssh_config'
+    REV = 'master'
 
 
     @classmethod
@@ -34,22 +33,13 @@ class GitLinkTestCase(DeferrableViewTestCase):
         cls.repo_path = pjoin(cls.my_path, cls.REPO_NAME)
         cls.readme_path =  pjoin(cls.repo_path, cls.README_NAME)
 
-        # Set up an alternate worktree
-        subprocess.call([
-            'git', 'worktree', 'add', '../' + cls.REPO_NAME_WORKTREE,
-            '-b', 'feature'], cwd=cls.repo_path)
-        cls.wktr_path = pjoin(cls.my_path, cls.REPO_NAME_WORKTREE)
-        cls.wktr_readme_path =  pjoin(cls.wktr_path, cls.README_NAME)
-
     @classmethod
     def tearDownClass(cls):
         # Restore the clipboard
         sublime.set_clipboard(cls.orig_clipboard)
 
         # Delete the test repo
-        if getenv('GITHUB_ACTIONS') != 'true':
-            subprocess.call(['rm', '-r', cls.REPO_NAME_WORKTREE], cwd=cls.my_path)
-            subprocess.call(['rm', '-r', cls.REPO_NAME], cwd=cls.my_path)
+        subprocess.call(['rm', '-r', cls.REPO_NAME], cwd=cls.my_path)
 
 
     def setUp(self):
@@ -100,7 +90,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': False})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blob/master/README.md',
+            'https://github.com/rscherf/Switcher/blob/{}/README.md'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_blame(self):
@@ -108,7 +98,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': False, 'blame': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blame/master/README.md',
+            'https://github.com/rscherf/Switcher/blame/{}/README.md'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_url_line(self):
@@ -116,7 +106,7 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blob/master/README.md?plain=1#L1',
+            'https://github.com/rscherf/Switcher/blob/{}/README.md?plain=1#L1'.format(self.REV),
             sublime.get_clipboard())
 
     def test_copy_blame_line(self):
@@ -124,20 +114,30 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.view.run_command('gitlink', {'web': False, 'line': True, 'blame': True})
         yield self.YIELD_OBJ
         self.assertEqual(
-            'https://github.com/rscherf/Switcher/blame/master/README.md?plain=1#L1',
+            'https://github.com/rscherf/Switcher/blame/{}/README.md?plain=1#L1'.format(self.REV),
             sublime.get_clipboard())
-
-    def test_copy_url_from_worktree(self):
-        wktr_view = sublime.active_window().open_file(self.wktr_readme_path)
-        sublime.set_clipboard('')
-        wktr_view.run_command('gitlink', {'web': False, 'line': False})
-        yield self.YIELD_OBJ
-        self.assertEqual(
-            'https://github.com/rscherf/Switcher/blob/feature/README.md',
-            sublime.get_clipboard())
-        wktr_view.set_scratch(True)
-        wktr_view.window().focus_view(wktr_view)
-        wktr_view.window().run_command('close_file')
 
     def test_zzz_always_pass(self):
         self.assertTrue(True)
+
+
+class GitLinkWorktreeTestCase(GitLinkTestCase):
+    WORKTREE = 'Switcher-alt'
+    REV = 'feature'
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        # Set up an alternate worktree
+        subprocess.call([
+            'git', 'worktree', 'add', '../' + cls.WORKTREE,
+            '-b', cls.REV], cwd=cls.repo_path)
+        cls.readme_path =  pjoin(cls.my_path, cls.WORKTREE, cls.README_NAME)
+        cls.REPO_ORIG = super().REPO_NAME
+        cls.REPO_NAME = cls.WORKTREE
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        subprocess.call(['rm', '-r', cls.REPO_ORIG], cwd=cls.my_path)
