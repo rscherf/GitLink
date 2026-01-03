@@ -4,7 +4,7 @@ import webbrowser
 import sublime
 import subprocess
 from sublime_plugin import TextCommand
-from .RepositoryParser import RepositoryParser
+from .RepositoryParser import RepositoryParser, RevType
 
 
 class GitlinkCommand(TextCommand):
@@ -43,13 +43,8 @@ class GitlinkCommand(TextCommand):
 
         # Find the current revision
         settings = sublime.load_settings('GitLink.sublime-settings')
-        ref_type = settings.get('revision_type')
-        if ref_type == 'commithash':
-            revision = self.getoutput(['git', 'rev-parse', 'HEAD'])
-        elif ref_type == 'abbrev':
-            revision = self.getoutput(['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
-        else:
-            raise NotImplementedError('Unknown ref setting: ' + ref_type)
+        rev_type = RevType.from_setting(settings.get('revision_type'))
+        revision = self.getoutput(rev_type.git_args)
 
         # Find the remote of the current branch
         branch_name = self.getoutput(['git', 'symbolic-ref', '--short', 'HEAD'])
@@ -57,7 +52,7 @@ class GitlinkCommand(TextCommand):
             ['git', 'config', '--get branch.{}.remote'.format(branch_name)],
             fallback='origin')
         remote = self.getoutput(['git', 'remote', 'get-url', remote_name])
-        repo = RepositoryParser(remote, ref_type)
+        repo = RepositoryParser(remote, rev_type)
 
         if 'ssh' in repo.scheme:
             # `domain` may be an alias configured in ssh
