@@ -1,8 +1,8 @@
 import sublime
 import subprocess
 
+from os import getenv
 from os.path import abspath, dirname, join as pjoin
-from shutil import rmtree
 from unittesting import DeferrableViewTestCase
 from ..gitlink.GitLink import GitlinkCommand
 
@@ -40,7 +40,8 @@ class GitLinkTestCase(DeferrableViewTestCase):
         sublime.set_clipboard(cls.orig_clipboard)
 
         # Delete the test repo
-        rmtree(cls.repo_path)
+        if getenv('GITHUB_ACTIONS') != 'true':
+            subprocess.call(['rm', '-r', cls.REPO_NAME], cwd=cls.my_path)
 
 
     def setUp(self):
@@ -134,8 +135,7 @@ class GitLinkWorktreeTestCase(GitLinkTestCase):
         subprocess.call([
             'git', 'worktree', 'add', '../' + cls.WORKTREE,
             '-b', cls.REV], cwd=cls.repo_path)
-        cls.worktree_path =  pjoin(cls.my_path, cls.WORKTREE)
-        cls.readme_path =  pjoin(cls.worktree_path, cls.README_NAME)
+        cls.readme_path =  pjoin(cls.my_path, cls.WORKTREE, cls.README_NAME)
         cls.REPO_ORIG = super().REPO_NAME
         cls.REPO_NAME = cls.WORKTREE
 
@@ -143,5 +143,5 @@ class GitLinkWorktreeTestCase(GitLinkTestCase):
     def tearDownClass(cls):
         super().tearDownClass()
 
-        # Cleanup worktree, too
-        rmtree(cls.worktree_path)
+        if getenv('GITHUB_ACTIONS') != 'true':
+            subprocess.call(['rm', '-r', cls.REPO_ORIG], cwd=cls.my_path)
