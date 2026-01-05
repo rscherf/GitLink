@@ -3,6 +3,7 @@ import subprocess
 
 from os import getenv
 from os.path import abspath, dirname, join as pjoin
+from unittest import skipUnless
 from unittesting import DeferrableViewTestCase
 from ..gitlink.GitLink import GitlinkCommand
 
@@ -121,6 +122,10 @@ class GitLinkTestCase(DeferrableViewTestCase):
         self.assertEqual(
             'https://github.com/rscherf/Switcher/blame/{}/README.md?plain=1#L1'.format(self.REV),
             sublime.get_clipboard())
+
+    @skipUnless(getenv('GITHUB_ACTIONS') == 'true', "Don't spam browser tab opens for testers")
+    def test_open_url(self):
+        self.view.run_command('gitlink', {'web': True, 'line': False, 'blame': False})
 
     def test_zzz_always_pass(self):
         self.assertTrue(True)
