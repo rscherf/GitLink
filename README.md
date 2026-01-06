@@ -84,8 +84,9 @@ Fedora [Pagure][],
 [Phorge][],
 [RhodeCode][],
 [Sourcehut][],
+[SourceForge][][^sourceforge],
 and
-[SourceForge][][^sourceforge]
+[Tangled][]
 
 ### With domain [configuration][]
 
@@ -190,6 +191,7 @@ I know all of you can make this way better than me.
 [rhodecode]: https://rhodecode.com
 [sourceforge]: https://sourceforge.net
 [sourcehut]: https://sr.ht
+[tangled]: https://tangled.org
 
 [sidebar-menu]: demo/sidebar-menu.png
 [context-menu]: demo/context-menu.png

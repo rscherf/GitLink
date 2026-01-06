@@ -58,6 +58,7 @@
         "\\bcgit\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
         "\\bpagure\\b": "pagure",
+        "\\btangled\\b": "tangled",
 
         // Specific sites
         "^codeberg\\.org$": "forgejo",
@@ -206,6 +207,17 @@
             "urls": {
                 "source": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
                 "blame": "https://sourceforge.net/p/{owner}/{repo}/ci/{revision}/tree/{file}",
+            },
+        },
+        "tangled": {
+            // Tangled provides no blame
+            "urls": {
+                "source": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+                "blame": "https://{domain}/{owner}/{repo}/blob/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "?code=true#L",
+                "separator": "-",
             },
         },
     },

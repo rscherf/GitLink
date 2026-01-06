@@ -972,3 +972,36 @@ class RepoParserRhodeCode(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://code.rhodecode.com/repo/annotate/master/README.md#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+
+class RepoParserTangled(TestCase):
+
+    def test_tangled_ssh(self):
+        parse_result = RepositoryParser('git@tangled.org:tangled.org/core')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('tangled.org', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('tangled.org', parse_result.owner)
+        self.assertEqual('core', parse_result.repo_name)
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md?code=true#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md?code=true#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+
+    def test_tangled_https(self):
+        parse_result = RepositoryParser('https://tangled.org/tangled.org/core')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('tangled.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('tangled.org', parse_result.owner)
+        self.assertEqual('core', parse_result.repo_name)
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md?code=true#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://tangled.org/tangled.org/core/blob/master/README.md?code=true#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
