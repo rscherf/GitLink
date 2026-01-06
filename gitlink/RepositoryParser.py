@@ -71,6 +71,11 @@ class RepositoryParser(object):
             self.owner = None
             self.repo_name = split_path[1]
 
+        elif self.host_type == 'assembla':
+            self.domain = re.sub(r'^git\.', '', self.domain)
+            self.owner = None
+            self.repo_name = split_path[1]
+
         ### End extra host rules ##############################################
 
     def _get_repo_host(self):

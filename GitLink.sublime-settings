@@ -59,6 +59,7 @@
         "\\bgitweb\\b": "gitweb",
         "\\bpagure\\b": "pagure",
         "\\btangled\\b": "tangled",
+        "\\bassembla\\b": "assembla",
 
         // Specific sites
         "^codeberg\\.org$": "forgejo",
@@ -72,6 +73,16 @@
 
     // A map of repo hosts to formatting objects
     "default_repo_hosts": {
+        "assembla": {
+            "urls": {
+                "source": "https://app.{domain}/spaces/{repo}/git/source/{revision}/{file}",
+                "blame": "https://app.{domain}/spaces/{repo}/git/source/blame/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#ln",
+                // "separator": ":",
+            },
+        },
         "bitbucket": {
             "urls": {
                 "source": "https://{domain}/{owner}/{repo}/src/{revision}/{file}",

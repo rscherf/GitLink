@@ -67,6 +67,7 @@ Hosts are listed alphabetically.
 ### Upon install
 
 [Arch Linux][][^gitlab],
+[Assembla][],
 [Bitbucket][],
 [Codebase][],
 [Codeberg][][^forgejo],
@@ -169,6 +170,7 @@ I know all of you can make this way better than me.
 [configuration]: #configuration
 
 [arch linux]: https://gitlab.archlinux.org
+[assembla]: https://get.assembla.com
 [bitbucket]: https://bitbucket.org
 [cgit]: https://git.zx2c4.com/cgit/about/
 [codebase]: https://codebasehq.com
