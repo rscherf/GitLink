@@ -50,7 +50,12 @@ class RepositoryParser(object):
 
         ### Extra rules for specific hosts ####################################
 
-        if self.host_type == 'cgit':
+        if self.host_type == 'assembla':
+            self.domain = re.sub(r'^git\.', '', self.domain)
+            self.owner = None
+            self.repo_name = split_path[0]
+
+        elif self.host_type == 'cgit':
             if re.search(r'\bsavannah\b', self.domain):
                 self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
                 if split_path[0] == 'srv':
@@ -70,9 +75,6 @@ class RepositoryParser(object):
         elif self.host_type == 'gitlab':
             self.owner = '/'.join(split_path[:-1])
 
-        elif self.host_type == 'sourceforge' and self.owner == 'p':
-            self.owner = split_path[1]
-
         elif self.host_type == 'phabricator':
             self.repo_name = split_path[1]
 
@@ -82,10 +84,8 @@ class RepositoryParser(object):
             self.owner = None
             self.repo_name = split_path[0]
 
-        elif self.host_type == 'assembla':
-            self.domain = re.sub(r'^git\.', '', self.domain)
-            self.owner = None
-            self.repo_name = split_path[0]
+        elif self.host_type == 'sourceforge' and self.owner == 'p':
+            self.owner = split_path[1]
 
         ### End extra host rules ##############################################
 
