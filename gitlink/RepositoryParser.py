@@ -43,8 +43,8 @@ class RepositoryParser(object):
         self.host_type, self.host_template = self._get_repo_host()
 
         path = re.sub(r'\.git$', '', parsed_url.path)
-        split_path = path.split('/')
-        self.owner = split_path[1]
+        split_path = path.split('/')[1:]
+        self.owner = split_path[0]
         self.repo_name = split_path[-1]
         self.project = None
 
@@ -53,39 +53,39 @@ class RepositoryParser(object):
         if self.host_type == 'cgit':
             if re.search(r'\bsavannah\b', self.domain):
                 self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
-                if split_path[1] == 'srv':
+                if split_path[0] == 'srv':
                     split_path.remove('srv')
-                split_path[1] = 'cgit'
+                split_path[0] = 'cgit'
 
             self.owner = None
-            self.project = '/'.join(split_path[1:-1])
+            self.project = '/'.join(split_path[:-1])
 
         elif self.host_type == 'codebase':
-            self.project = split_path[2]
+            self.project = split_path[1]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]
-                self.project = split_path[1]
+                self.project = split_path[0]
             self.domain = re.sub(r'^{}\.'.format(self.owner), '', self.domain)
 
-        elif self.host_type == 'gitlab' and len(split_path) > 3:
-            self.owner = '/'.join(split_path[1:-1])
+        elif self.host_type == 'gitlab':
+            self.owner = '/'.join(split_path[:-1])
 
         elif self.host_type == 'sourceforge' and self.owner == 'p':
-            self.owner = split_path[2]
+            self.owner = split_path[1]
 
         elif self.host_type == 'phabricator':
-            self.repo_name = split_path[2]
+            self.repo_name = split_path[1]
 
         elif self.host_type == 'rhodecode':
             if self.scheme == 'ssh':
                 split_path = split_path[1:]
             self.owner = None
-            self.repo_name = split_path[1]
+            self.repo_name = split_path[0]
 
         elif self.host_type == 'assembla':
             self.domain = re.sub(r'^git\.', '', self.domain)
             self.owner = None
-            self.repo_name = split_path[1]
+            self.repo_name = split_path[0]
 
         ### End extra host rules ##############################################
 
