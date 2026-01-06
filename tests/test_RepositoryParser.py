@@ -662,45 +662,157 @@ class RepoParserGitee(TestCase):
 class RepoParserCGit(TestCase):
 
     def test_cgit_ssh(self):
-        parse_result = RepositoryParser('git@cgit.example.com:user/repo.git')
+        parse_result = RepositoryParser('git@cgit.example.com:project/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('cgit.example.com', parse_result.domain)
         self.assertEqual('git', parse_result.logon_user)
         self.assertEqual(None, parse_result.logon_password)
-        self.assertEqual('user', parse_result.owner)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('project', parse_result.project)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_cgit_https(self):
-        parse_result = RepositoryParser('https://cgit.example.com/user/repo.git')
+        parse_result = RepositoryParser('https://cgit.example.com/project/repo.git')
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('cgit.example.com', parse_result.domain)
         self.assertEqual(None, parse_result.logon_user)
         self.assertEqual(None, parse_result.logon_password)
-        self.assertEqual('user', parse_result.owner)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('project', parse_result.project)
         self.assertEqual('repo', parse_result.repo_name)
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master',
                          parse_result.get_source_url('README.md', 'master'))
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5))
-        self.assertEqual('https://cgit.example.com/user/repo/tree/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/tree/README.md?id=master#n5',
                          parse_result.get_source_url('README.md', 'master', 5, 7))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master',
                          parse_result.get_blame_url('README.md', 'master'))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5))
-        self.assertEqual('https://cgit.example.com/user/repo/blame/README.md?id=master#n5',
+        self.assertEqual('https://cgit.example.com/project/repo.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_kernelorg_git(self):
+        parse_result = RepositoryParser('git://git.kernel.org/pub/scm/git/git.git')
+        self.assertEqual('git', parse_result.scheme)
+        self.assertEqual('git.kernel.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('pub/scm/git', parse_result.project)
+        self.assertEqual('git', parse_result.repo_name)
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_kernelorg_https(self):
+        parse_result = RepositoryParser('https://git.kernel.org/pub/scm/git/git.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('git.kernel.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('pub/scm/git', parse_result.project)
+        self.assertEqual('git', parse_result.repo_name)
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://git.kernel.org/pub/scm/git/git.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_savannah_git(self):
+        parse_result = RepositoryParser('git://git.git.savannah.gnu.org/patch.git')
+        self.assertEqual('git', parse_result.scheme)
+        self.assertEqual('cgit.git.savannah.gnu.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('cgit', parse_result.project)
+        self.assertEqual('patch', parse_result.repo_name)
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_savannah_git(self):
+        parse_result = RepositoryParser('ssh://git.savannah.gnu.org/srv/git/patch.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('cgit.git.savannah.gnu.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('cgit', parse_result.project)
+        self.assertEqual('patch', parse_result.repo_name)
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_savannah_https(self):
+        parse_result = RepositoryParser('https://https.git.savannah.gnu.org/git/patch.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('cgit.git.savannah.gnu.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('cgit', parse_result.project)
+        self.assertEqual('patch', parse_result.repo_name)
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
 

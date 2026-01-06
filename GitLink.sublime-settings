@@ -64,6 +64,8 @@
         // Specific sites
         "^codeberg\\.org$": "forgejo",
         "^git\\.sr\\.ht$": "sourcehut",
+        "^git\\.kernel\\.org$": "cgit",
+        "\\bgit\\.savannah\\.gnu\\.org$": "cgit",
         "^gitee\\.com$": "gitee",
         "^git\\.code\\.sf\\.net$": "sourceforge",
         "^git\\.launchpad\\.net$": "cgit",
@@ -95,8 +97,8 @@
         },
         "cgit": {
             "urls": {
-                "source": "https://{domain}/{owner}/{repo}/tree/{file}?id={revision}",
-                "blame": "https://{domain}/{owner}/{repo}/blame/{file}?id={revision}",
+                "source": "https://{domain}/{project}/{repo}.git/tree/{file}?id={revision}",
+                "blame": "https://{domain}/{project}/{repo}.git/blame/{file}?id={revision}",
             },
             "line_params": {
                 "start": "#n",

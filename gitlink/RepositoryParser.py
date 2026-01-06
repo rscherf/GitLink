@@ -39,17 +39,28 @@ class RepositoryParser(object):
         except:
             self.domain = parsed_url.netloc
 
+        # Look up the host template
+        self.host_type, self.host_template = self._get_repo_host()
+
         path = re.sub(r'\.git$', '', parsed_url.path)
         split_path = path.split('/')
         self.owner = split_path[1]
         self.repo_name = split_path[-1]
         self.project = None
 
-        self.host_type, self.host_template = self._get_repo_host()
-
         ### Extra rules for specific hosts ####################################
 
-        if self.host_type == 'codebase':
+        if self.host_type == 'cgit':
+            if re.search(r'\bsavannah\b', self.domain):
+                self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
+                if split_path[1] == 'srv':
+                    split_path.remove('srv')
+                split_path[1] = 'cgit'
+
+            self.owner = None
+            self.project = '/'.join(split_path[1:-1])
+
+        elif self.host_type == 'codebase':
             self.project = split_path[2]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]

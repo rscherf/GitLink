@@ -71,15 +71,17 @@ Hosts are listed alphabetically.
 [Bitbucket][],
 [Codebase][],
 [Codeberg][][^forgejo],
-[Debian Salsa][][^gitlab],
+Debian [Salsa][][^gitlab],
 [GitHub][],
 [GitLab][],
 [Gitea][],
 [Gitee][],
 [GNOME][][^gitlab],
+GNU [Savannah][][^cgit],
 [Gogs][],
 [Launchpad][][^cgit],
-[KDE Invent][][^gitlab],
+[Kernel.org][]^cgit],
+KDE [Invent][invent.kde.org][^gitlab],
 Fedora [Pagure][],
 [Phabricator][],
 [Phorge][],
@@ -175,7 +177,6 @@ I know all of you can make this way better than me.
 [cgit]: https://git.zx2c4.com/cgit/about/
 [codebase]: https://codebasehq.com
 [codeberg]: https://codeberg.org
-[debian salsa]: https://salsa.debian.org
 [forgejo]: https://forgejo.org
 [gerrit]: https://www.gerritcodereview.com
 [gitea]: https://gitea.com
@@ -185,12 +186,15 @@ I know all of you can make this way better than me.
 [gitweb]: https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb
 [gnome]: https://gitlab.gnome.org
 [gogs]: https://gogs.io
-[kde invent]: https://invent.kde.org
+[invent.kde.org]: https://invent.kde.org
+[kernel.org]: https://kernel.org
 [launchpad]: https://code.launchpad.net
 [pagure]: https://pagure.io
 [phabricator]: https://phacility.com/phabricator
 [phorge]: https://we.phorge.it
 [rhodecode]: https://rhodecode.com
+[salsa]: https://salsa.debian.org
+[savannah]: https://savannah.gnu.org
 [sourceforge]: https://sourceforge.net
 [sourcehut]: https://sr.ht
 [tangled]: https://tangled.org
