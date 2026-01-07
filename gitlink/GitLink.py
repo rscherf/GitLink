@@ -35,6 +35,14 @@ class GitlinkCommand(TextCommand):
         match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
         return match.group(1) if match else hostname
 
+    def is_enabled(self):
+        try:
+            self.cwd, _ = os.path.split(self.view.file_name())
+            self.getoutput(['git', 'rev-parse', 'HEAD'])
+            return True
+        except:
+            return False
+
     def run(self, edit, **args):
         # Current file path & filename
 
