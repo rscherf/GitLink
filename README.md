@@ -62,7 +62,7 @@ into the Sublime Text `Packages` folder:
 
 ## Git service provider support
 
-Hosts are listed alphabetically.
+Repository hosts are listed alphabetically.
 
 ### Upon install
 
@@ -72,6 +72,7 @@ Hosts are listed alphabetically.
 [Codebase][],
 [Codeberg][][^forgejo],
 Debian [Salsa][][^gitlab],
+[Eclipse][][^gitlab],
 [GitHub][],
 [GitLab][],
 [Gitea][],
@@ -81,7 +82,7 @@ GNU [Savannah][][^cgit],
 [Gogs][],
 [Launchpad][][^cgit],
 [Kernel.org][]^cgit],
-KDE [Invent][invent.kde.org][^gitlab],
+[KDE][][^gitlab],
 Fedora [Pagure][],
 [Phabricator][],
 [Phorge][],
@@ -96,7 +97,7 @@ and
 Any of the above plus
 [CGit][],
 [Gerrit][],
-[GitWeb][] (comes with Git),
+[GitWeb][] (which comes with Git),
 and
 [Forgejo][]
 
@@ -177,6 +178,7 @@ I know all of you can make this way better than me.
 [cgit]: https://git.zx2c4.com/cgit/about/
 [codebase]: https://codebasehq.com
 [codeberg]: https://codeberg.org
+[eclipse]: https://www.eclipse.org
 [forgejo]: https://forgejo.org
 [gerrit]: https://www.gerritcodereview.com
 [gitea]: https://gitea.com
@@ -186,7 +188,7 @@ I know all of you can make this way better than me.
 [gitweb]: https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb
 [gnome]: https://gitlab.gnome.org
 [gogs]: https://gogs.io
-[invent.kde.org]: https://invent.kde.org
+[kde]: https://invent.kde.org
 [kernel.org]: https://kernel.org
 [launchpad]: https://code.launchpad.net
 [pagure]: https://pagure.io
