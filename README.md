@@ -81,7 +81,7 @@ Debian [Salsa][][^gitlab],
 GNU [Savannah][][^cgit],
 [Gogs][],
 [Launchpad][][^cgit],
-[Kernel.org][]^cgit],
+[Kernel.org][kernelorg]^cgit],
 [KDE][][^gitlab],
 Fedora [Pagure][],
 [Phabricator][],
@@ -189,7 +189,7 @@ I know all of you can make this way better than me.
 [gnome]: https://gitlab.gnome.org
 [gogs]: https://gogs.io
 [kde]: https://invent.kde.org
-[kernel.org]: https://kernel.org
+[kernelorg]: https://kernel.org
 [launchpad]: https://code.launchpad.net
 [pagure]: https://pagure.io
 [phabricator]: https://phacility.com/phabricator
