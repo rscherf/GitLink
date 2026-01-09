@@ -997,6 +997,24 @@ class RepoParserPhorge(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
 
+class RepoParserRadicle(TestCase):
+
+    def test_https(self):
+        parse_result = RepositoryParser('https://seed.radicle.garden/z37oHWbEomJXUAqxd9hoQHWkg2pC8.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('seed.radicle.garden', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('z37oHWbEomJXUAqxd9hoQHWkg2pC8', parse_result.repo_name)
+        self.assertEqual('https://app.radicle.xyz/nodes/seed.radicle.garden/rad:z37oHWbEomJXUAqxd9hoQHWkg2pC8/tree/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://app.radicle.xyz/nodes/seed.radicle.garden/rad:z37oHWbEomJXUAqxd9hoQHWkg2pC8/tree/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://app.radicle.xyz/nodes/seed.radicle.garden/rad:z37oHWbEomJXUAqxd9hoQHWkg2pC8/tree/master/README.md#L5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+
+
 class RepoParserRhodeCode(TestCase):
 
     def test_ssh(self):

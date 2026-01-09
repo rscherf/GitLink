@@ -80,6 +80,9 @@ class RepositoryParser(object):
         elif self.host_type == 'phabricator':
             self.repo_name = split_path[1]
 
+        elif self.host_type == 'radicle':
+            self.owner = None
+
         elif self.host_type == 'rhodecode':
             if self.scheme == 'ssh':
                 split_path = split_path[1:]

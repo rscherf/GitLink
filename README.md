@@ -86,6 +86,7 @@ GNU [Savannah][][^cgit],
 Fedora [Pagure][],
 [Phabricator][],
 [Phorge][],
+[Radicle][],
 [RhodeCode][],
 [Sourcehut][],
 [SourceForge][][^sourceforge],
@@ -194,6 +195,7 @@ I know all of you can make this way better than me.
 [pagure]: https://pagure.io
 [phabricator]: https://phacility.com/phabricator
 [phorge]: https://we.phorge.it
+[radicle]: https://radicle.xyz
 [rhodecode]: https://rhodecode.com
 [salsa]: https://salsa.debian.org
 [savannah]: https://savannah.gnu.org

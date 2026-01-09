@@ -60,6 +60,7 @@
         "\\bpagure\\b": "pagure",
         "\\btangled\\b": "tangled",
         "\\bassembla\\b": "assembla",
+        "\\bradicle\\b": "radicle",
 
         // Specific sites
         "^codeberg\\.org$": "forgejo",
@@ -193,6 +194,17 @@
             "line_params": {
                 "start": "#L",
                 "separator": "-",
+            },
+        },
+        "radicle": {
+            // Radicle doesn't seem to support blame publicly
+            "urls": {
+                "source": "https://app.radicle.xyz/nodes/{domain}/rad:{repo}/tree/{revision}/{file}",
+                "blame": "https://app.radicle.xyz/nodes/{domain}/rad:{repo}/tree/{revision}/{file}",
+            },
+            "line_params": {
+                "start": "#L",
+                // "separator": "-",
             },
         },
         "rhodecode": {
