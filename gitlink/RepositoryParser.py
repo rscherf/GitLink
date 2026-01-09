@@ -60,6 +60,8 @@ class RepositoryParser(object):
                 self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
                 if split_path[0] == 'srv':
                     split_path.remove('srv')
+                elif len(split_path) == 1:
+                    split_path.insert(0, '')
                 split_path[0] = 'cgit'
 
             self.owner = None
