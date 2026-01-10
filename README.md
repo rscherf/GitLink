@@ -1,6 +1,6 @@
 # GitLink
 
-Sublime Text plugin to derive shareable URLs
+It's a Sublime Text plugin for shareable URLs
 to files in your source repositories.
 No more traversing your file structure
 to find the file you are working on.
@@ -8,7 +8,9 @@ With support for
 [GitHub][],
 [Bitbucket][],
 [GitLab][],
-and [many more][support].
+and many more.
+See [the full list][support]
+or [configure your own][configuration].
 
 
 ## How it works
@@ -36,6 +38,9 @@ to copy the URL for the current file
 Right click anywhere within the file you are currently editing.
 Your cursor position determines which line number
 will be used for the deeplink.
+If supported by the Git service provider,
+you can select multiple lines
+to deeplink the line range.
 
 
 ### Open URLs in your default browser as a new tab
@@ -93,7 +98,7 @@ Fedora [Pagure][],
 and
 [Tangled][]
 
-### With domain [configuration][]
+### With domain configuration
 
 Any of the above plus
 [CGit][],
@@ -103,10 +108,11 @@ and
 [Forgejo][]
 
 If you have a supported host
-with their ID (like `gitlab`) in the hostname,
-no configuration is required.
+with their host ID in the hostname,
+no configuration is required:
+e.g. `gitlab.example.com`.
 
-### With full [configuration][]
+### With full configuration
 
 Any site you want.
 Please open an issue or PR
@@ -115,7 +121,7 @@ if it would help others.
 
 ## Configuration
 
-Things work out of the box for [many Git hosts][support].
+Things work out of the box for many Git hosts.
 To customize further,
 use the **Preferences: GitLink Settings** command
 to open the settings.
@@ -170,8 +176,8 @@ I know all of you can make this way better than me.
 [^sourceforge]: [SourceForge][] does not support blame or line numbers.  
 
 
-[support]: #git-service-provider-support
-[configuration]: #configuration
+[support]: https://github.com/rscherf/GitLink#git-service-provider-support
+[configuration]: https://github.com/rscherf/GitLink#configuration
 
 [arch linux]: https://gitlab.archlinux.org
 [assembla]: https://get.assembla.com
