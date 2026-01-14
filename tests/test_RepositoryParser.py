@@ -70,6 +70,42 @@ class RepoParserAssembla(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
 
+class RepoParserAzure(TestCase):
+
+    def test_azure_ssh(self):
+        parse_result = RepositoryParser('git@ssh.dev.azure.com:v3/organization/project/repo')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('dev.azure.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('organization', parse_result.owner)
+        self.assertEqual('project', parse_result.project)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+
+    def test_azure_https(self):
+        parse_result = RepositoryParser('https://logon_user:PAT@dev.azure.com/organization/project/_git/repo')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('dev.azure.com', parse_result.domain)
+        self.assertEqual('logon_user', parse_result.logon_user)
+        self.assertEqual('PAT', parse_result.logon_password)
+        self.assertEqual('organization', parse_result.owner)
+        self.assertEqual('project', parse_result.project)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('logon_user', parse_result.logon_user)
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://dev.azure.com/organization/project/_git/repo?version=GBmaster&path=/README.md',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+
+
 class RepoParserBitbucket(TestCase):
 
     def test_ssh(self):

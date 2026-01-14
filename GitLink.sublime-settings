@@ -63,6 +63,7 @@
         "\\bradicle\\b": "radicle",
 
         // Specific sites
+        "\\bdev\\.azure\\.com$": "azure",
         "^codeberg\\.org$": "forgejo",
         "^git\\.sr\\.ht$": "sourcehut",
         "^git\\.kernel\\.org$": "cgit",
@@ -87,6 +88,16 @@
                 "start": "#ln",
                 // "separator": ":",
             },
+        },
+        "azure": {
+            "urls": {
+                "source": "https://{domain}/{owner}/{project}/_git/{repo}?version={revision}&path=/{file}",
+                "blame": "https://{domain}/{owner}/{project}/_git/{repo}?version={revision}&path=/{file}&_a=blame",
+            },
+            // "line_params": {
+            //     "start": "#L",
+            //     "separator": "-",
+            // },
         },
         "bitbucket": {
             "urls": {

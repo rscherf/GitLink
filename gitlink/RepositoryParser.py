@@ -55,6 +55,13 @@ class RepositoryParser(object):
             self.owner = None
             self.repo_name = split_path[0]
 
+        elif self.host_type == 'azure':
+            self.domain = re.sub(r'ssh\.', '', self.domain)
+            if re.match(r'^v\d$', split_path[0]):
+                split_path = split_path[1:]
+            self.owner = split_path[0]
+            self.project = split_path[1]
+
         elif self.host_type == 'cgit':
             if re.search(r'\bsavannah\b', self.domain):
                 self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
@@ -110,11 +117,21 @@ class RepositoryParser(object):
 
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         rev = revision
-        if self.host_type == 'forgejo':
+
+        ### Extra rules for specific hosts ####################################
+
+        if self.host_type == 'azure':
+            if self.rev_type == 'abbrev':
+                # GB for Git Branch?
+                rev = 'GB' + revision
+
+        elif self.host_type == 'forgejo':
             if self.rev_type == 'abbrev':
                 rev = 'branch/' + revision
             elif self.rev_type == 'commithash':
                 rev = 'commit/' + revision
+
+        ### End extra host rules ##############################################
 
         url = self.host_template['urls'][fmt_id].format(
             domain=self.domain,
