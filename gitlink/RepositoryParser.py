@@ -72,7 +72,6 @@ class RepositoryParser(object):
                 split_path[0] = 'cgit'
 
             elif re.search(r'\btuxfamily\b', self.domain):
-                print('tuxfamily')
                 if split_path[0] == 'gitroot':
                     split_path = split_path[1:]
 
