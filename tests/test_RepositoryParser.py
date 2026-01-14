@@ -1,5 +1,21 @@
 from unittest import TestCase
-from ..gitlink.RepositoryParser import RepositoryParser
+from ..gitlink.RepositoryParser import RepositoryParser, RevType
+
+
+class RevTypeTestCase(TestCase):
+
+    def test_revtype_abbrev(self):
+        rev_type = RevType.from_setting('abbrev')
+        self.assertEqual('abbrev', rev_type.setting_value)
+        self.assertEqual(('git', 'rev-parse', '--abbrev-ref', 'HEAD'), tuple(rev_type.git_args))
+
+    def test_revtype_commithash(self):
+        rev_type = RevType.from_setting('commithash')
+        self.assertEqual('commithash', rev_type.setting_value)
+        self.assertEqual(('git', 'rev-parse', 'HEAD'), tuple(rev_type.git_args))
+
+    def test_revtype_unknown(self):
+        self.assertRaises(KeyError, lambda: RevType.from_setting('foo'))
 
 
 class RepoParserUnknown(TestCase):
@@ -13,16 +29,6 @@ class RepoParserUnknown(TestCase):
         self.assertRaises(
             NotImplementedError,
             lambda: RepositoryParser('https://gitxx.com:user/repo.git'))
-
-    def test_ssh_unknown_rev_type(self):
-        self.assertRaises(
-            NotImplementedError,
-            lambda: RepositoryParser('git@github.com:user/repo.git', 'foo'))
-
-    def test_https_unknown_rev_type(self):
-        self.assertRaises(
-            NotImplementedError,
-            lambda: RepositoryParser('https://github.com:user/repo.git', 'foo'))
 
 
 class RepoParserAssembla(TestCase):
@@ -465,7 +471,7 @@ class RepoParserCodeberg(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_ssh_sha(self):
-        parse_result = RepositoryParser('git@codeberg.org:user/repo.git', 'commithash')
+        parse_result = RepositoryParser('git@codeberg.org:user/repo.git', RevType.COMMIT_HASH)
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
         self.assertEqual('git', parse_result.logon_user)
@@ -486,7 +492,7 @@ class RepoParserCodeberg(TestCase):
                          parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
     def test_https_sha(self):
-        parse_result = RepositoryParser('https://codeberg.org/user/repo.git', 'commithash')
+        parse_result = RepositoryParser('https://codeberg.org/user/repo.git', RevType.COMMIT_HASH)
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('codeberg.org', parse_result.domain)
         self.assertEqual(None, parse_result.logon_user)
@@ -597,7 +603,7 @@ class RepoParserGitea(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_ssh_sha(self):
-        parse_result = RepositoryParser('git@gitea.com:user/repo.git', 'commithash')
+        parse_result = RepositoryParser('git@gitea.com:user/repo.git', RevType.COMMIT_HASH)
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
         self.assertEqual('git', parse_result.logon_user)
@@ -618,7 +624,7 @@ class RepoParserGitea(TestCase):
                          parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
     def test_https_sha(self):
-        parse_result = RepositoryParser('https://gitea.com/user/repo.git', 'commithash')
+        parse_result = RepositoryParser('https://gitea.com/user/repo.git', RevType.COMMIT_HASH)
         self.assertEqual('https', parse_result.scheme)
         self.assertEqual('gitea.com', parse_result.domain)
         self.assertEqual(None, parse_result.logon_user)
