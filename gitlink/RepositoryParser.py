@@ -107,12 +107,16 @@ class RepositoryParser(object):
 
     def _get_repo_host(self):
         # Select the right hosting configuration
-        for domain_regex, host_type in self.REPO_LOOKUP.items():
-            if re.search(domain_regex, self.domain):
-                # We found a match, so keep these variable assignments
-                host_template = self.REPO_HOSTS[host_type]
-                return host_type, host_template
-        raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
+        pattern = '|'.join('({})'.format(patt) for patt in self.REPO_LOOKUP.keys())
+        match = re.search(pattern, self.domain)
+        if not match:
+            raise NotImplementedError('"{}" not in known Git hosts'.format(self.domain))
+        host_type = next(
+            host_type for host_type, group
+            in zip(self.REPO_LOOKUP.values(), match.groups())
+            if group is not None
+        )
+        return host_type, self.REPO_HOSTS[host_type]
 
     def _get_formatted_url(self, fmt_id, file, revision, line_start=0, line_end=0):
         rev = revision
