@@ -59,10 +59,15 @@ class RepositoryParser(object):
             if re.search(r'\bsavannah\b', self.domain):
                 self.domain = re.sub(r'^(?:git\.|https\.)?git', 'cgit.git', self.domain)
                 if split_path[0] == 'srv':
-                    split_path.remove('srv')
+                    split_path = split_path[1:]
                 elif len(split_path) == 1:
                     split_path.insert(0, '')
                 split_path[0] = 'cgit'
+
+            elif re.search(r'\btuxfamily\b', self.domain):
+                print('tuxfamily')
+                if split_path[0] == 'gitroot':
+                    split_path = split_path[1:]
 
             self.owner = None
             self.project = '/'.join(split_path[:-1])

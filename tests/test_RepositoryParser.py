@@ -292,6 +292,50 @@ class RepoParserCGit(TestCase):
         self.assertEqual('https://cgit.git.savannah.gnu.org/cgit/patch.git/blame/README.md?id=master#n5',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+    def test_ssh_tuxfamily(self):
+        parse_result = RepositoryParser('ssh://user@git.tuxfamily.org/gitroot/project/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('git.tuxfamily.org', parse_result.domain)
+        self.assertEqual('user', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('project', parse_result.project)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_git_tuxfamily(self):
+        parse_result = RepositoryParser('git://git.tuxfamily.org/gitroot/project/repo.git')
+        self.assertEqual('git', parse_result.scheme)
+        self.assertEqual('git.tuxfamily.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('project', parse_result.project)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/tree/README.md?id=master#n5',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://git.tuxfamily.org/project/repo.git/blame/README.md?id=master#n5',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
 
 class RepoParserCodebase(TestCase):
 

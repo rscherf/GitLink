@@ -95,8 +95,9 @@ Fedora [Pagure][],
 [RhodeCode][],
 [Sourcehut][],
 [SourceForge][][^sourceforge],
+[Tangled][],
 and
-[Tangled][]
+[TuxFamily][][^cgit]
 
 ### With domain configuration
 
@@ -208,6 +209,7 @@ I know all of you can make this way better than me.
 [sourceforge]: https://sourceforge.net
 [sourcehut]: https://sr.ht
 [tangled]: https://tangled.org
+[tuxfamily]: https://www.tuxfamily.org
 
 [sidebar-menu]: demo/sidebar-menu.png
 [context-menu]: demo/context-menu.png

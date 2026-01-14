@@ -72,6 +72,7 @@
         "^git\\.launchpad\\.net$": "cgit",
         "^invent\\.kde\\.org$": "gitlab",
         "^salsa\\.debian\\.org$": "gitlab",
+        "^git\\.tuxfamily\\.org$": "cgit",
     },
 
     // A map of repo hosts to formatting objects
