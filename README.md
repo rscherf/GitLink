@@ -105,11 +105,11 @@ and
 
 Any of the above plus
 [CGit][],
-[Gerrit][],
+[Forgejo][],
 [FusionForge][],
-[GitWeb][],
+[Gerrit][],
 and
-[Forgejo][]
+[GitWeb][]
 
 If you have a supported host
 with their host ID in the hostname,
