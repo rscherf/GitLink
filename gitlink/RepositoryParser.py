@@ -85,6 +85,10 @@ class RepositoryParser(object):
                 self.project = split_path[0]
             self.domain = re.sub(r'^{}\.'.format(self.owner), '', self.domain)
 
+        elif self.host_type == 'fusionforge':
+            self.owner = split_path[-2]
+            self.repo_name = split_path[-1]
+
         elif self.host_type == 'gitlab':
             self.owner = '/'.join(split_path[:-1])
 

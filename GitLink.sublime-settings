@@ -75,6 +75,7 @@
         "^salsa\\.debian\\.org$": "gitlab",
         "^git\\.disroot\\.org$": "forgejo",
         "^git\\.tuxfamily\\.org$": "cgit",
+        "\\bourproject\\.org$": "fusionforge",
     },
 
     // A map of repo hosts to formatting objects
@@ -146,6 +147,16 @@
             },
             "line_params": {
                 "start": "#",
+                // "separator": "-",
+            },
+        },
+        "fusionforge": {
+            "urls": {
+                "source": "https://{domain}/anonscm/gitweb/{owner}/{repo}.git/blob/{revision}:/{file}",
+                "blame": "https://{domain}/anonscm/gitweb/{owner}/{repo}.git/blame/{revision}:/{file}",
+            },
+            "line_params": {
+                "start": "#l",
                 // "separator": "-",
             },
         },

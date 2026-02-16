@@ -507,6 +507,72 @@ class RepoParserCodeberg(TestCase):
                          parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
 
 
+class RepoParserFusionForge(TestCase):
+
+    def test_ssh_ourproject(self):
+        parse_result = RepositoryParser('git+ssh://developername@scm.ourproject.org/srv/git/libreinitiative/libreinitiative.git')
+        self.assertEqual('git+ssh', parse_result.scheme)
+        self.assertEqual('scm.ourproject.org', parse_result.domain)
+        self.assertEqual('developername', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('libreinitiative', parse_result.owner)
+        self.assertEqual('libreinitiative', parse_result.repo_name)
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE',
+                         parse_result.get_source_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5, 7))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE',
+                         parse_result.get_blame_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5, 7))
+
+    def test_https_ourproject_anon(self):
+        parse_result = RepositoryParser('https://scm.ourproject.org/anonscm/git/libreinitiative/libreinitiative.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('scm.ourproject.org', parse_result.domain)
+        self.assertEqual(None, parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('libreinitiative', parse_result.owner)
+        self.assertEqual('libreinitiative', parse_result.repo_name)
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE',
+                         parse_result.get_source_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5, 7))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE',
+                         parse_result.get_blame_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5, 7))
+
+    def test_https_ourproject_auth(self):
+        parse_result = RepositoryParser('https://developername@scm.ourproject.org/authscm/developername/git/libreinitiative/libreinitiative.git')
+        self.assertEqual('https', parse_result.scheme)
+        self.assertEqual('scm.ourproject.org', parse_result.domain)
+        self.assertEqual('developername', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('libreinitiative', parse_result.owner)
+        self.assertEqual('libreinitiative', parse_result.repo_name)
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE',
+                         parse_result.get_source_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blob/master:/LICENSE#l5',
+                         parse_result.get_source_url('LICENSE', 'master', 5, 7))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE',
+                         parse_result.get_blame_url('LICENSE', 'master'))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5))
+        self.assertEqual('https://scm.ourproject.org/anonscm/gitweb/libreinitiative/libreinitiative.git/blame/master:/LICENSE#l5',
+                         parse_result.get_blame_url('LICENSE', 'master', 5, 7))
+
+
 class RepoParserGerrit(TestCase):
 
     def test_ssh(self):
