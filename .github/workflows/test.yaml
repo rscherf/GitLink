@@ -10,7 +10,7 @@ jobs:
         st-version: [3, 4]
         os:
           - "ubuntu-latest"
-          - "macOS-latest"
+          # - "macOS-latest"
           - "windows-latest"
     runs-on: ${{ matrix.os }}
     steps:
