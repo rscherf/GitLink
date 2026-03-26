@@ -73,6 +73,7 @@
         "^git\\.launchpad\\.net$": "cgit",
         "^invent\\.kde\\.org$": "gitlab",
         "^salsa\\.debian\\.org$": "gitlab",
+        "^forge\\.fedoraproject\\.org$": "forgejo",
         "^git\\.disroot\\.org$": "forgejo",
         "^git\\.tuxfamily\\.org$": "cgit",
         "\\bourproject\\.org$": "fusionforge",

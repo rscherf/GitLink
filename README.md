@@ -79,6 +79,7 @@ Repository hosts are listed alphabetically.
 [Codeberg][][^forgejo],
 Debian [Salsa][][^gitlab],
 [Eclipse][][^gitlab],
+[Fedora Forge][][^forgejo],
 [GitHub][],
 [GitLab][],
 [Gitea][],
@@ -90,7 +91,7 @@ GNU [Savannah][][^cgit],
 [Kernel.org][][^cgit],
 [KDE][][^gitlab],
 [Ourproject.org][][^fusionforge],
-Fedora [Pagure][],
+[Pagure][],
 [Phabricator][],
 [Phorge][],
 [Radicle][],
@@ -192,6 +193,7 @@ I know all of you can make this way better than me.
 [codebase]: https://codebasehq.com
 [codeberg]: https://codeberg.org
 [eclipse]: https://www.eclipse.org
+[fedora forge]: https://forge.fedoraproject.org
 [forgejo]: https://forgejo.org
 [fusionforge]: https://en.wikipedia.org/wiki/GForge#FusionForge
 [gerrit]: https://www.gerritcodereview.com
