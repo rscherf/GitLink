@@ -1,7 +1,7 @@
 # Skip packaging for ST download
 /.git* export-ignore
-/tests/ export-ignore
-/demo/ export-ignore
+/.github/** export-ignore
+/demo/** export-ignore
+/tests/** export-ignore
 
 *.sublime-project export-ignore
-README.md export-ignore
