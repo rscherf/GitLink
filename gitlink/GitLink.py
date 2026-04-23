@@ -28,11 +28,12 @@ class GitlinkCommand(TextCommand):
         return out.decode().strip()
 
     def lookup_ssh_host(self, hostname, config_file=None):
+        """Ask SSH to resolve a hostname in case it's an alias"""
         ssh_args = ['ssh', '-G', hostname]
         if config_file:
             ssh_args += ['-F', config_file]
         ssh_output = self.getoutput(ssh_args, 'hostname ' + hostname)
-        match = re.search(r'hostname (.*)', ssh_output, re.MULTILINE)
+        match = re.search(r'^hostname (.*)', ssh_output, re.MULTILINE)
         return match.group(1) if match else hostname
 
     def is_enabled(self):
@@ -63,7 +64,7 @@ class GitlinkCommand(TextCommand):
         repo = RepositoryParser(remote, rev_type)
 
         if 'ssh' in repo.scheme:
-            # `domain` may be an alias configured in ssh
+            # `domain` may be an alias configured in SSH
             repo.domain = self.lookup_ssh_host(repo.domain)
 
         # Find top level repo in current dir structure
