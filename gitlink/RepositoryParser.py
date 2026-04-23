@@ -28,6 +28,7 @@ class RepositoryParser(object):
         self.logon_user = parsed_url.username
         self.logon_password = parsed_url.password
         self.domain = parsed_url.hostname or parsed_url.netloc
+        self.port = parsed_url.port
 
         # Look up the host template
         self.host_type, self.host_template = self._get_repo_host()
