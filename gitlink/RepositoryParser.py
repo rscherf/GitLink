@@ -46,14 +46,9 @@ class RepositoryParser(object):
         self._pr = parsed_url
 
         self.scheme = parsed_url.scheme
-        self.logon_user = None
-        self.logon_password = None
-        try:
-            self.logon_user, self.domain = parsed_url.netloc.split('@')
-            if ':' in self.logon_user:
-                self.logon_user, self.logon_password = self.logon_user.split(':')
-        except:
-            self.domain = parsed_url.netloc
+        self.logon_user = parsed_url.username
+        self.logon_password = parsed_url.password
+        self.domain = parsed_url.hostname or parsed_url.netloc
 
         # Look up the host template
         self.host_type, self.host_template = self._get_repo_host()
