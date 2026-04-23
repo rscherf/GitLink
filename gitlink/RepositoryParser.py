@@ -55,7 +55,7 @@ class RepositoryParser(object):
 
         path = re.sub(r'\.git$', '', parsed_url.path)
         split_path = path.split('/')[1:]
-        self.owner = split_path[0]
+        self.owner = '/'.join(split_path[:-1])
         self.repo_name = split_path[-1]
         self.project = None
 
@@ -90,32 +90,29 @@ class RepositoryParser(object):
             self.project = '/'.join(split_path[:-1])
 
         elif self.host_type == 'codebase':
-            self.project = split_path[1]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]
                 self.project = split_path[0]
+            else:
+                self.owner = split_path[0]
+                self.project = split_path[1]
             self.domain = re.sub(r'^{}\.'.format(self.owner), '', self.domain)
 
         elif self.host_type == 'fusionforge':
             self.owner = split_path[-2]
             self.repo_name = split_path[-1]
 
-        elif self.host_type == 'gitlab':
-            self.owner = '/'.join(split_path[:-1])
-
         elif self.host_type == 'phabricator':
+            self.owner = split_path[0]
             self.repo_name = split_path[1]
 
         elif self.host_type == 'radicle':
             self.owner = None
 
         elif self.host_type == 'rhodecode':
-            if self.scheme == 'ssh':
-                split_path = split_path[1:]
             self.owner = None
-            self.repo_name = split_path[0]
 
-        elif self.host_type == 'sourceforge' and self.owner == 'p':
+        elif self.host_type == 'sourceforge' and split_path[0] == 'p':
             self.owner = split_path[1]
 
         ### End extra host rules ##############################################
