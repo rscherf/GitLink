@@ -8,6 +8,12 @@ from .RevisionType import RevType
 
 class RepositoryParser(object):
 
+    ALTSSH_DOMAINS = {
+        'altssh.bitbucket.org': 'bitbucket.org',
+        'ssh.github.com': 'github.com',
+        'altssh.gitlab.com': 'gitlab.com',
+    }
+
     def _load_settings(self):
         settings = sublime.load_settings('GitLink.sublime-settings')
         self.REPO_HOSTS = dict(settings.get('user_repo_hosts'))
@@ -29,6 +35,9 @@ class RepositoryParser(object):
         self.logon_password = parsed_url.password
         self.domain = parsed_url.hostname or parsed_url.netloc
         self.port = parsed_url.port
+
+        # Handle "Alternative" SSH over 443
+        self.domain = self.ALTSSH_DOMAINS.get(self.domain, self.domain)
 
         # Look up the host template
         self.host_type, self.host_template = self._get_repo_host()
