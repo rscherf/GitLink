@@ -41,26 +41,21 @@ class RepositoryParser(object):
         if re.match(r'^git@', git_url):
             git_url = 'ssh://' + git_url
         if 'ssh://' in git_url:
-            git_url = re.sub(r'\b:(?=[\w~])', '/', git_url, count=1)
+            git_url = re.sub(r'\b:(?!\d)(?=[\w~])', '/', git_url, count=1)
         parsed_url = urlparse(git_url)
         self._pr = parsed_url
 
         self.scheme = parsed_url.scheme
-        self.logon_user = None
-        self.logon_password = None
-        try:
-            self.logon_user, self.domain = parsed_url.netloc.split('@')
-            if ':' in self.logon_user:
-                self.logon_user, self.logon_password = self.logon_user.split(':')
-        except:
-            self.domain = parsed_url.netloc
+        self.logon_user = parsed_url.username
+        self.logon_password = parsed_url.password
+        self.domain = parsed_url.hostname or parsed_url.netloc
 
         # Look up the host template
         self.host_type, self.host_template = self._get_repo_host()
 
         path = re.sub(r'\.git$', '', parsed_url.path)
         split_path = path.split('/')[1:]
-        self.owner = split_path[0]
+        self.owner = '/'.join(split_path[:-1])
         self.repo_name = split_path[-1]
         self.project = None
 
@@ -95,6 +90,7 @@ class RepositoryParser(object):
             self.project = '/'.join(split_path[:-1])
 
         elif self.host_type == 'codebase':
+            self.owner = split_path[0]
             self.project = split_path[1]
             if 'http' in self.scheme:
                 self.owner = self.domain.split('.')[0]
@@ -105,22 +101,18 @@ class RepositoryParser(object):
             self.owner = split_path[-2]
             self.repo_name = split_path[-1]
 
-        elif self.host_type == 'gitlab':
-            self.owner = '/'.join(split_path[:-1])
-
         elif self.host_type == 'phabricator':
+            self.owner = split_path[0]
             self.repo_name = split_path[1]
 
         elif self.host_type == 'radicle':
             self.owner = None
 
         elif self.host_type == 'rhodecode':
-            if self.scheme == 'ssh':
-                split_path = split_path[1:]
             self.owner = None
-            self.repo_name = split_path[0]
+            self.repo_name = split_path[-1]
 
-        elif self.host_type == 'sourceforge' and self.owner == 'p':
+        elif self.host_type == 'sourceforge' and split_path[0] == 'p':
             self.owner = split_path[1]
 
         ### End extra host rules ##############################################

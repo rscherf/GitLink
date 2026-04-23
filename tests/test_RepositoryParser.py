@@ -863,6 +863,27 @@ class RepoParserGitHub(TestCase):
         self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
+    def test_ssh_with_port(self):
+        parse_result = RepositoryParser('ssh://git@github.com:2222/user/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('github.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('user', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blob/master/README.md?plain=1#L5-L7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://github.com/user/repo/blame/master/README.md?plain=1#L5-L7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
     def test_url_space(self):
         parse_result = RepositoryParser('git@github.com:user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
@@ -990,6 +1011,27 @@ class RepoParserGitLab(TestCase):
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5',
                          parse_result.get_blame_url('README.md', 'master', 5))
         self.assertEqual('https://gitlab.selfhost.io/user/repo/-/blame/master/README.md?plain=1#L5-7',
+                         parse_result.get_blame_url('README.md', 'master', 5, 7))
+
+    def test_ssh_groups_with_port(self):
+        parse_result = RepositoryParser('ssh://git@gitlab.com:2222/group1/group2/repo.git')
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('gitlab.com', parse_result.domain)
+        self.assertEqual('git', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual('group1/group2', parse_result.owner)
+        self.assertEqual('repo', parse_result.repo_name)
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md',
+                         parse_result.get_source_url('README.md', 'master'))
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md?plain=1#L5',
+                         parse_result.get_source_url('README.md', 'master', 5))
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blob/master/README.md?plain=1#L5-7',
+                         parse_result.get_source_url('README.md', 'master', 5, 7))
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md',
+                         parse_result.get_blame_url('README.md', 'master'))
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md?plain=1#L5',
+                         parse_result.get_blame_url('README.md', 'master', 5))
+        self.assertEqual('https://gitlab.com/group1/group2/repo/-/blame/master/README.md?plain=1#L5-7',
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_ssh_groups(self):
