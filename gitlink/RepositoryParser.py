@@ -1,26 +1,9 @@
 import re
 import sublime
 
-from enum import Enum
-from urllib.parse import quote, urlparse
-
-
-class RevType(Enum):
-    """Setting options for revision type"""
-
-    ABBREV = ('abbrev', ['git', 'rev-parse', '--abbrev-ref', 'HEAD'])
-    COMMIT_HASH = ('commithash', ['git', 'rev-parse', 'HEAD'])
-
-    def __init__(self, stg_value, git_args):
-        self.setting_value = stg_value
-        self.git_args = git_args
-
-    @staticmethod
-    def from_setting(stg_value):
-        for rev_type in RevType:
-            if rev_type.setting_value == stg_value:
-                return rev_type
-        raise KeyError(stg_value + ' not found in RevType')
+from urllib.parse import quote
+from .GitUriParser import uriparse
+from .RevisionType import RevType
 
 
 class RepositoryParser(object):
@@ -38,11 +21,7 @@ class RepositoryParser(object):
         self.git_url = git_url
         self.rev_type = rev_type
 
-        if re.match(r'^git@', git_url):
-            git_url = 'ssh://' + git_url
-        if 'ssh://' in git_url:
-            git_url = re.sub(r'\b:(?=[\w~])', '/', git_url, count=1)
-        parsed_url = urlparse(git_url)
+        parsed_url = uriparse(git_url)
         self._pr = parsed_url
 
         self.scheme = parsed_url.scheme

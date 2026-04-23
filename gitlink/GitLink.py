@@ -4,7 +4,8 @@ import webbrowser
 import sublime
 import subprocess
 from sublime_plugin import TextCommand
-from .RepositoryParser import RepositoryParser, RevType
+from .RepositoryParser import RepositoryParser
+from .RevisionType import RevType
 
 
 class GitlinkCommand(TextCommand):

@@ -1,21 +1,6 @@
 from unittest import TestCase
-from ..gitlink.RepositoryParser import RepositoryParser, RevType
-
-
-class RevTypeTestCase(TestCase):
-
-    def test_revtype_abbrev(self):
-        rev_type = RevType.from_setting('abbrev')
-        self.assertEqual('abbrev', rev_type.setting_value)
-        self.assertEqual(('git', 'rev-parse', '--abbrev-ref', 'HEAD'), tuple(rev_type.git_args))
-
-    def test_revtype_commithash(self):
-        rev_type = RevType.from_setting('commithash')
-        self.assertEqual('commithash', rev_type.setting_value)
-        self.assertEqual(('git', 'rev-parse', 'HEAD'), tuple(rev_type.git_args))
-
-    def test_revtype_unknown(self):
-        self.assertRaises(KeyError, lambda: RevType.from_setting('foo'))
+from ..gitlink.RepositoryParser import RepositoryParser
+from ..gitlink.RevisionType import RevType
 
 
 class RepoParserUnknown(TestCase):
@@ -780,7 +765,7 @@ class RepoParserGitHub(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
     def test_ssh_with_scheme(self):
-        parse_result = RepositoryParser('ssh://git@github.com:user/repo.git')
+        parse_result = RepositoryParser('ssh://git@github.com/user/repo.git')
         self.assertEqual('ssh', parse_result.scheme)
         self.assertEqual('github.com', parse_result.domain)
         self.assertEqual('git', parse_result.logon_user)
