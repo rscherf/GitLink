@@ -1,0 +1,34 @@
+[{
+    "id": "preferences",
+    "children": [
+        {
+            "id": "package-settings",
+            "children": [
+                {
+                    "caption": "GitLink",
+                    "children": [
+                        {
+                            "caption": "Settings",
+                            "id": "gitlink-settings",
+                            "command": "edit_settings",
+                            "args": {
+                                "base_file": "${packages}/GitLink/GitLink.sublime-settings",
+                                "default": "/* See the left pane for the list of settings and valid values. */\n{\n\t$0\n}\n",
+                            },
+                        },
+                        {
+                            "caption": "Key Bindings",
+                            "id": "gitlink-keymap",
+                            "command": "edit_settings",
+                            "args": {
+                                "base_file": "${packages}/GitLink/Default.sublime-keymap",
+                                "user_file": "${packages}/User/Default (${platform}).sublime-keymap",
+                                "default": "/* See the left pane for the shipped keybindings. */\n[\n\t$0\n]\n",
+                            },
+                        },
+                    ]
+                },
+            ]
+        },
+    ]
+}]
