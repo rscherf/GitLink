@@ -1,0 +1,19 @@
+name: Package Review
+# https://github.com/kaste/st_package_reviewer/tree/main/gh_action_package
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Review this package repository
+        uses: kaste/st_package_reviewer/gh_action_package@111c4a811349e6a34201c71b54d283e8e76040d3
+        with:
+          # path: .
+          package-name: GitLink
+          # st-build: 4180
+          # fail-on-warnings: "true"
