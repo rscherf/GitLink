@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          # Repository checks inspect tags; the checkout action does not fetch
+          # them by default for shallow clones.
+          fetch-depth: 0
 
       - name: Review this package repository
         uses: kaste/st_package_reviewer/gh_action_package@111c4a811349e6a34201c71b54d283e8e76040d3
