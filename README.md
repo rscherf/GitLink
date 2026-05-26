@@ -87,6 +87,7 @@ Debian [Salsa][][^gitlab],
 [GNOME][][^gitlab],
 GNU [Savannah][][^cgit],
 [Gogs][],
+[GotHub][],
 [Launchpad][][^cgit],
 [Kernel.org][][^cgit],
 [KDE][][^gitlab],
@@ -204,6 +205,7 @@ I know all of you can make this way better than me.
 [gitweb]: https://git-scm.com/book/en/v2/Git-on-the-Server-GitWeb
 [gnome]: https://gitlab.gnome.org
 [gogs]: https://gogs.io
+[gothub]: https://gothub.org
 [kde]: https://invent.kde.org
 [kernel.org]: https://kernel.org
 [launchpad]: https://code.launchpad.net
