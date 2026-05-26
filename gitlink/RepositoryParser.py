@@ -1,7 +1,7 @@
 import re
 import sublime
 
-from urllib.parse import quote
+from .WebPath import Path
 from .GitUriParser import uriparse
 from .RevisionType import RevType
 
@@ -33,7 +33,7 @@ class RepositoryParser(object):
         self.scheme = parsed_url.scheme
         self.logon_user = parsed_url.username
         self.logon_password = parsed_url.password
-        self.domain = parsed_url.hostname or parsed_url.netloc
+        self.domain = parsed_url.hostname or parsed_url.netloc or ''
         self.port = parsed_url.port
 
         # Handle "Alternative" SSH over 443
@@ -89,7 +89,10 @@ class RepositoryParser(object):
 
         elif self.host_type == 'fusionforge':
             self.owner = split_path[-2]
-            self.repo_name = split_path[-1]
+
+        elif self.host_type == 'gothub':
+            self.owner = None
+            print(self._pr)
 
         elif self.host_type == 'phabricator':
             self.owner = split_path[0]
@@ -135,6 +138,12 @@ class RepositoryParser(object):
             elif self.rev_type == RevType.COMMIT_HASH:
                 rev = 'commit/' + revision
 
+        elif self.host_type == 'gothub':
+            if self.rev_type == RevType.ABBREV:
+                raise NotImplementedError('GotHub does\'t support abbreviated refs')
+            elif self.rev_type == RevType.COMMIT_HASH:
+                rev = 'commit=' + revision
+
         ### End extra host rules ##############################################
 
         url = self.host_template['urls'][fmt_id].format(
@@ -143,7 +152,7 @@ class RepositoryParser(object):
             project=self.project,
             repo=self.repo_name,
             revision=rev,
-            file=quote(file))
+            file=Path(file))
 
         if line_start and 'line_params' in self.host_template:
             url += self.host_template['line_params']['start'] + str(line_start)

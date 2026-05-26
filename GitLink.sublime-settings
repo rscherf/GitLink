@@ -57,6 +57,7 @@
         "\\bgerrit\\.": "gerrit",
         "\\bcgit\\b": "cgit",
         "\\bgitweb\\b": "gitweb",
+        "\\bgothub\\b": "gothub",
         "\\bpagure\\b": "pagure",
         "\\btangled\\b": "tangled",
         "\\bassembla\\b": "assembla",
@@ -198,6 +199,16 @@
             },
             "line_params": {
                 "start": "#l",
+                // "separator": "-",
+            },
+        },
+        "gothub": {
+            "urls": {
+                "source": "https://{domain}/repos?action=blob&path={repo}.git&{revision}&folder={file.parent}&file={file.name}",
+                "blame": "https://{domain}/repos?action=blame&path={repo}.git&{revision}&folder={file.parent}&file={file.name}",
+            },
+            "line_params": {
+                "start": "#line",
                 // "separator": "-",
             },
         },

@@ -1150,6 +1150,34 @@ class RepoParserGitWeb(TestCase):
                          parse_result.get_blame_url('README.md', 'master', 5, 7))
 
 
+class RepoParserGotHub(TestCase):
+
+    def test_ssh_branch(self):
+        parse_result = RepositoryParser('ssh://anonymous@demo.gothub.org:2236/www.git')
+        self.assertRaises(NotImplementedError, lambda: parse_result.get_source_url('README.md', 'master'))
+
+    def test_ssh_sha(self):
+        parse_result = RepositoryParser('ssh://anonymous@demo.gothub.org:2236/www.git', RevType.COMMIT_HASH)
+        self.assertEqual('ssh', parse_result.scheme)
+        self.assertEqual('demo.gothub.org', parse_result.domain)
+        self.assertEqual('anonymous', parse_result.logon_user)
+        self.assertEqual(None, parse_result.logon_password)
+        self.assertEqual(None, parse_result.owner)
+        self.assertEqual('www', parse_result.repo_name)
+        self.assertEqual('https://demo.gothub.org/repos?action=blob&path=www.git&commit=deadbeef&folder=&file=README.md',
+                         parse_result.get_source_url('README.md', 'deadbeef'))
+        self.assertEqual('https://demo.gothub.org/repos?action=blob&path=www.git&commit=deadbeef&folder=&file=README.md#line5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://demo.gothub.org/repos?action=blob&path=www.git&commit=deadbeef&folder=&file=README.md#line5',
+                         parse_result.get_source_url('README.md', 'deadbeef', 5, 7))
+        self.assertEqual('https://demo.gothub.org/repos?action=blame&path=www.git&commit=deadbeef&folder=&file=README.md',
+                         parse_result.get_blame_url('README.md', 'deadbeef'))
+        self.assertEqual('https://demo.gothub.org/repos?action=blame&path=www.git&commit=deadbeef&folder=&file=README.md#line5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5))
+        self.assertEqual('https://demo.gothub.org/repos?action=blame&path=www.git&commit=deadbeef&folder=&file=README.md#line5',
+                         parse_result.get_blame_url('README.md', 'deadbeef', 5, 7))
+
+
 class RepoParserPagure(TestCase):
 
     def test_ssh(self):
