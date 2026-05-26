@@ -1,10 +1,10 @@
-from pathlib import PosixPath
+from pathlib import PurePosixPath
 from urllib.parse import quote
 
 
 class Path(object):
     def __init__(self, *args, **kwargs):
-        self.real_path = PosixPath(*args, **kwargs)
+        self.real_path = PurePosixPath(*args, **kwargs)
 
     @property
     def name(self):
